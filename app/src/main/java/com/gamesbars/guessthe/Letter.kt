@@ -7,7 +7,7 @@ import android.util.TypedValue
 import android.widget.LinearLayout
 import android.widget.TextView
 
-class Letter(context: Context, id: Int, letter: Char) : TextView(context) {
+class Letter(context: Context, val letterID: Int, val letter: Char) : TextView(context) {
 
     var isChosen: Boolean = false
 

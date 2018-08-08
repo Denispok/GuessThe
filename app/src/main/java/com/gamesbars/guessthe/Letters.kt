@@ -4,10 +4,12 @@ import android.content.Context
 import android.widget.LinearLayout
 import java.util.*
 
-class Letters(context: Context, word: String, val lettersLayout1: LinearLayout, val lettersLayout2: LinearLayout) {
+class Letters(context: Context, word: String) {
     val letterCount = 14
     var alphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя"
     val letters: Array<Letter>
+    lateinit var lettersLayout1: LinearLayout
+    lateinit var lettersLayout2: LinearLayout
 
     init {
         val newLetters = arrayOfNulls<Letter>(letterCount)
@@ -30,10 +32,16 @@ class Letters(context: Context, word: String, val lettersLayout1: LinearLayout, 
             }
         }
         letters = newLetters.requireNoNulls()
+    }
 
-        for (i in 1..letterCount) {
-            if (i <= letterCount / 2) lettersLayout1.addView(letters[i - 1])
-            else lettersLayout2.addView(letters[i - 1])
+    fun addLettersToLayout(linearLayout1: LinearLayout, linearLayout2: LinearLayout) {
+        if (!(this::lettersLayout1.isInitialized && this::lettersLayout2.isInitialized)) {
+            lettersLayout1 = linearLayout1
+            lettersLayout2 = linearLayout2
+            for (i in 1..letterCount) {
+                if (i <= letterCount / 2) lettersLayout1.addView(letters[i - 1])
+                else lettersLayout2.addView(letters[i - 1])
+            }
         }
     }
 }

@@ -48,10 +48,11 @@
         android:layout_weight="1" />
 
     <LinearLayout
-        android:id="@+id/play_word"
+        android:id="@+id/level_word"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:gravity="center"
         android:padding="4dp" />
 
     <LinearLayout
