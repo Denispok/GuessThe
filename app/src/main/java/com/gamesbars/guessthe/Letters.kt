@@ -1,15 +1,16 @@
 package com.gamesbars.guessthe
 
 import android.content.Context
+import android.view.View
 import android.widget.LinearLayout
 import java.util.*
 
 class Letters(context: Context, word: String) {
-    val letterCount = 14
-    var alphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя"
-    val letters: Array<Letter>
-    lateinit var lettersLayout1: LinearLayout
-    lateinit var lettersLayout2: LinearLayout
+    private val letterCount = 14
+    private var alphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя"
+    private val letters: Array<Letter>
+    private lateinit var lettersLayout1: LinearLayout
+    private lateinit var lettersLayout2: LinearLayout
 
     init {
         val newLetters = arrayOfNulls<Letter>(letterCount)
@@ -21,13 +22,13 @@ class Letters(context: Context, word: String) {
                 random = (0 until letterCount).random()
             } while (newLetters[random] != null)
             newLetters[random] = Letter(context, random, letter)
-            alphabet.remove(letter)
+            alphabet = alphabet.remove(letter)
         }
 
         for (id in (0 until letterCount)) {
             if (newLetters[id] == null) {
                 val newLetter = alphabet[(0 until alphabet.length).random()]
-                alphabet.remove(newLetter)
+                alphabet = alphabet.remove(newLetter)
                 newLetters[id] = Letter(context, id, newLetter)
             }
         }
@@ -42,6 +43,12 @@ class Letters(context: Context, word: String) {
                 if (i <= letterCount / 2) lettersLayout1.addView(letters[i - 1])
                 else lettersLayout2.addView(letters[i - 1])
             }
+        }
+    }
+
+    fun setLettersOnClickListener(onClickListener: (View) -> Unit) {
+        for (letter in letters) {
+            letter.setOnClickListener(onClickListener)
         }
     }
 }
