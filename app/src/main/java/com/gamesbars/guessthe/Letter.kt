@@ -8,6 +8,8 @@ import android.os.Handler
 import android.support.v4.content.res.ResourcesCompat
 import android.util.TypedValue
 import android.view.Gravity
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.DecelerateInterpolator
 import android.widget.LinearLayout
 import android.widget.TextView
 
@@ -45,12 +47,15 @@ class Letter(context: Context, val letterID: Int, val letter: Char) : TextView(c
         this.getLocationOnScreen(letterPosition)
         val animationX = ObjectAnimator.ofFloat(this, "translationX", (wordLetterPosition[0] - letterPosition[0]).toFloat())
         val animationY = ObjectAnimator.ofFloat(this, "translationY", (wordLetterPosition[1] - letterPosition[1]).toFloat())
-        val scale = wordLetter.width.toFloat() / width
-        val animationScaleX = ObjectAnimator.ofFloat(this, "scaleX", scale)
-        val animationScaleY = ObjectAnimator.ofFloat(this, "scaleY", scale)
+        val scaleX = wordLetter.width.toFloat() / width
+        val scaleY = wordLetter.height.toFloat() / height
+        val animationScaleX = ObjectAnimator.ofFloat(this, "scaleX", scaleX)
+        val animationScaleY = ObjectAnimator.ofFloat(this, "scaleY", scaleY)
+        val animationAlpha = ObjectAnimator.ofFloat(this, "alpha", 0f)
+        animationAlpha.interpolator = AccelerateInterpolator(3f)
 
         val set = AnimatorSet()
-        set.play(animationX).with(animationY).with(animationScaleX).with(animationScaleY)
+        set.play(animationX).with(animationY).with(animationScaleX).with(animationScaleY).with(animationAlpha)
         set.duration = animationDuration
         set.start()
     }
@@ -63,9 +68,11 @@ class Letter(context: Context, val letterID: Int, val letter: Char) : TextView(c
         val animationY = ObjectAnimator.ofFloat(this, "translationY", 0f)
         val animationScaleX = ObjectAnimator.ofFloat(this, "scaleX", 1f)
         val animationScaleY = ObjectAnimator.ofFloat(this, "scaleY", 1f)
+        val animationAlpha = ObjectAnimator.ofFloat(this, "alpha", 1f)
+        animationAlpha.interpolator = DecelerateInterpolator(3f)
 
         val set = AnimatorSet()
-        set.play(animationX).with(animationY).with(animationScaleX).with(animationScaleY)
+        set.play(animationX).with(animationY).with(animationScaleX).with(animationScaleY).with(animationAlpha)
         set.duration = animationDuration
         set.start()
     }

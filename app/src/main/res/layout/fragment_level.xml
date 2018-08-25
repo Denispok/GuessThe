@@ -8,7 +8,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="44dp"
+        android:layout_height="40dp"
         android:paddingLeft="4dp"
         android:paddingRight="4dp">
 
@@ -21,24 +21,25 @@
 
         <Button
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/button_selector_level"
-            android:text="level 21" />
+            android:background="@drawable/button_selector_level_level"
+            android:text="level 21"
+            android:textColor="@android:color/white" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:background="@drawable/button_selector_level"
+            android:background="@drawable/button_selector_level_coins"
             android:drawablePadding="0dp"
             android:drawableRight="@drawable/baseline_attach_money_black_24"
             android:gravity="center_vertical"
             android:paddingLeft="6dp"
             android:text="500"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
             android:textSize="18sp" />
     </RelativeLayout>
 
@@ -60,19 +61,26 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:orientation="horizontal"
-        android:padding="4dp">
+        android:padding="6dp">
 
         <Button
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_height="match_parent"
+            android:layout_marginEnd="6dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_selector_level_tips"
+            android:text="Подсказки"
+            android:textColor="@android:color/white" />
 
         <Button
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/button_selector_level_get_coins"
+            android:text="Получить монеты"
+            android:textColor="@android:color/white" />
 
     </LinearLayout>
 

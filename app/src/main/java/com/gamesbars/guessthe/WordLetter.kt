@@ -11,12 +11,13 @@ import android.widget.TextView
 class WordLetter(context: Context, val isSpace: Boolean = false) : TextView(context) {
 
     var letter: Letter? = null
+    val dimension: Int
 
     init {
-        setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.word_letter_text_size))
-        setTextColor(Color.BLACK)
+        setTextSize(TypedValue.COMPLEX_UNIT_PX, resources.getDimension(R.dimen.word_letter_text_size))
+        setTextColor(Color.WHITE)
 
-        val dimension = resources.getDimension(R.dimen.word_letter_size).toInt()
+        dimension = resources.getDimension(R.dimen.word_letter_size).toInt()
         val params = LinearLayout.LayoutParams(dimension, dimension)
         val margins = resources.getDimension(R.dimen.word_letter_margins).toInt()
         params.setMargins(margins, margins, margins, margins)
@@ -26,7 +27,7 @@ class WordLetter(context: Context, val isSpace: Boolean = false) : TextView(cont
         setPadding(0, 0, padding, padding)
         isClickable = false
 
-        if (!isSpace) background = ResourcesCompat.getDrawable(resources, R.drawable.letter_selector, null)
+        if (!isSpace) background = ResourcesCompat.getDrawable(resources, R.drawable.word_letter_selector, null)
     }
 
 }

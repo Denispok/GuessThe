@@ -5,15 +5,15 @@
         <layer-list>
             <item android:left="2dp">
                 <shape>
-                    <solid android:color="#afb42b" />
-                    <corners android:bottomLeftRadius="10dip" android:bottomRightRadius="10dip" />
+                    <solid android:color="#41b653" />
+                    <corners android:radius="10dip" />
                 </shape>
             </item>
 
             <item android:bottom="2dp" android:right="2dp">
                 <shape>
-                    <solid android:color="#eeff41" />
-                    <corners android:bottomLeftRadius="10dip" android:bottomRightRadius="10dip" />
+                    <solid android:color="#69de7b" />
+                    <corners android:radius="10dip" />
                 </shape>
             </item>
         </layer-list>

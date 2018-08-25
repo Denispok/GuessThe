@@ -60,6 +60,14 @@ class WordLetters(context: Context, private val word: String) {
             for (letter in wordLetters) {
                 wordLayout.addView(letter)
             }
+            Handler().postDelayed({
+                if (wordLetters[0].x <= 2) {
+                    for (wordLetter in wordLetters) {
+                        val params = LinearLayout.LayoutParams(wordLetter.dimension, wordLetter.dimension, 1f)
+                        wordLetter.layoutParams = params
+                    }
+                }
+            }, 1)
         }
     }
 
