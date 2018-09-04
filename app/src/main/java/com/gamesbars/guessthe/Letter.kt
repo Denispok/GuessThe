@@ -12,13 +12,13 @@ import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import android.widget.LinearLayout
 import android.widget.TextView
+import io.github.inflationx.calligraphy3.TypefaceUtils
 
-class Letter(context: Context, val letterID: Int, val letter: Char) : TextView(context) {
-
-    var isChosen: Boolean = false
+class Letter(context: Context, val letterId: Int, val letter: Char, val wordLetterId: Int? = null, var isChosen: Boolean = false) : TextView(context) {
 
     init {
         text = letter.toString()
+        typeface = TypefaceUtils.load(resources.assets,"fonts/Exo_2/Exo2-Bold.ttf")
         setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.letter_text_size))
         setTextColor(Color.BLACK)
 

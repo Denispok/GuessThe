@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="letter_size">42dp</dimen>
-    <dimen name="letter_text_size">26sp</dimen>
+    <dimen name="letter_text_size">28sp</dimen>
     <dimen name="letter_margins">4dp</dimen>
     <dimen name="letter_padding">3dp</dimen>
     <dimen name="word_letter_size">36dp</dimen>
-    <dimen name="word_letter_text_size">22sp</dimen>
+    <dimen name="word_letter_text_size">28sp</dimen>
     <dimen name="word_letter_margins">2dp</dimen>
     <dimen name="word_padding">2dp</dimen>
 </resources>

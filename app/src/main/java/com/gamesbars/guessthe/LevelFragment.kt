@@ -29,13 +29,15 @@ class LevelFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        loadLevel(arguments!!.getString("pack"))
+        val pack = arguments!!.getString("pack")
+        loadLevel(pack)
 
         wordLetters = WordLetters(context!!, word)
-        letters = Letters(context!!, word)
+        letters = Letters(context!!, word, pack)
         letters.setLettersOnClickListener {
             wordLetters.addLetter(it as Letter)
         }
+        letters.showChosenLetters(wordLetters)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {

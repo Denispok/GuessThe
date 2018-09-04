@@ -7,6 +7,7 @@ import android.util.TypedValue
 import android.view.Gravity
 import android.widget.LinearLayout
 import android.widget.TextView
+import io.github.inflationx.calligraphy3.TypefaceUtils
 
 class WordLetter(context: Context, val isSpace: Boolean = false) : TextView(context) {
 
@@ -14,6 +15,7 @@ class WordLetter(context: Context, val isSpace: Boolean = false) : TextView(cont
     val dimension: Int
 
     init {
+        typeface = TypefaceUtils.load(resources.assets, "fonts/Exo_2/Exo2-Bold.ttf")
         setTextSize(TypedValue.COMPLEX_UNIT_PX, resources.getDimension(R.dimen.word_letter_text_size))
         setTextColor(Color.WHITE)
 

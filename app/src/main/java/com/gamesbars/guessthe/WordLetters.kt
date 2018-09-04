@@ -1,6 +1,7 @@
 package com.gamesbars.guessthe
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Handler
 import android.util.Log
 import android.widget.LinearLayout
@@ -69,6 +70,19 @@ class WordLetters(context: Context, private val word: String) {
                 }
             }, 1)
         }
+    }
+
+    fun letterGuessed(letter: Letter) {
+        val wordLetter = wordLetters[letter.wordLetterId!!]
+        letter.chooseIn(wordLetter, animationDuration)
+        wordLetter.isClickable = false
+        wordLetter.letter = letter
+        Handler().postDelayed({
+            wordLetter.text = letter.text
+            wordLetter.isEnabled = false
+            wordLetter.setTextColor(Color.parseColor("#ff7e00"))
+            checkWord()
+        }, animationDuration)
     }
 
     fun addLetter(letter: Letter) {
