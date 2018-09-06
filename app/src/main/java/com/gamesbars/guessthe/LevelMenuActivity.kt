@@ -9,6 +9,10 @@ import android.widget.LinearLayout
 
 class LevelMenuActivity : AppCompatActivity() {
 
+    companion object {
+        const val PACK_LEVELS_COUNT = 3
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_levelmenu)

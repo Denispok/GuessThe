@@ -8,7 +8,6 @@ import io.github.inflationx.calligraphy3.CalligraphyInterceptor
 import io.github.inflationx.viewpump.ViewPump
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
 
-
 class PlayActivity : AppCompatActivity() {
 
     override fun attachBaseContext(newBase: Context) {

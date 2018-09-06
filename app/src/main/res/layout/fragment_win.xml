@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="Win!"
+        android:textColor="@android:color/white"
+        android:textSize="32sp" />
+
+    <ImageView
+        android:id="@+id/win_image"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        android:transitionName="ImageTransition" />
+
+    <TextView
+        android:id="@+id/win_word"
+        fontPath="fonts/Exo_2/Exo2-Bold.ttf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="word"
+        android:textAllCaps="true"
+        android:textColor="@android:color/white"
+        android:textSize="28sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableRight="@drawable/coin_icon"
+        android:text="100"
+        android:textColor="@android:color/white"
+        android:textSize="24sp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="get xtra coins" />
+
+    <Button
+        android:id="@+id/win_continue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="continue" />
+
+</LinearLayout>

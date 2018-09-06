@@ -1,19 +1,18 @@
 package com.gamesbars.guessthe
 
-import android.content.Context
 import android.graphics.Color
 import android.os.Handler
 import android.util.Log
 import android.widget.LinearLayout
 
-class WordLetters(context: Context, private val word: String) {
+class WordLetters(val fragment: LevelFragment, private val word: String) {
     private lateinit var wordLayout: LinearLayout
     private val wordLetters = arrayListOf<WordLetter>()
     private val animationDuration = 500L
 
     init {
         for (char in word) {
-            wordLetters.add(WordLetter(context, char == ' '))
+            wordLetters.add(WordLetter(fragment.context!!, char == ' '))
         }
         for (wordLetter in wordLetters) {
             wordLetter.setOnClickListener {
@@ -38,10 +37,8 @@ class WordLetters(context: Context, private val word: String) {
             if (wordLetter.letter == null) return
             userWord += wordLetter.text
         }
-        if (userWord == word) {
-            // win
-            Log.d("MYLOG", "WIN!!!")
-        } else {
+        if (userWord == word) fragment.win()
+        else {
             // play isFull animation
             Log.d("MYLOG", "IS FULL!!!")
         }
