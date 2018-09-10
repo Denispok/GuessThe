@@ -8,8 +8,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp"
         android:layout_marginTop="6dp"
-        android:text="Win!"
+        android:text="Правильно!"
         android:textColor="@android:color/white"
         android:textSize="32sp" />
 
@@ -17,8 +18,10 @@
         android:id="@+id/win_image"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_margin="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
         android:layout_weight="1"
+        android:background="@android:color/transparent"
         android:transitionName="ImageTransition" />
 
     <TextView
@@ -26,6 +29,9 @@
         fontPath="fonts/Exo_2/Exo2-Bold.ttf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp"
+        android:layout_marginTop="6dp"
+        android:background="@android:color/transparent"
         android:text="word"
         android:textAllCaps="true"
         android:textColor="@android:color/white"
@@ -34,20 +40,74 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/button_selector_green"
         android:drawableRight="@drawable/coin_icon"
+        android:padding="6dp"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp"
         android:text="100"
         android:textColor="@android:color/white"
         android:textSize="24sp" />
 
-    <Button
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="get xtra coins" />
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/button_selector_green"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <TextView
+            fontPath="fonts/Exo_2/Exo2-Bold.ttf"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="4dp"
+            android:background="@drawable/red_circle"
+            android:gravity="center"
+            android:text="x2"
+            android:textColor="@android:color/white"
+            android:textSize="32sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:text="МОНЕТ"
+                android:textColor="@android:color/white"
+                android:textSize="24sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:text="за просмотр видео"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/win_continue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="continue" />
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/button_selector_blue"
+        android:padding="4dp"
+        android:paddingEnd="12dp"
+        android:paddingStart="12dp"
+        android:text="Продолжить"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textSize="24sp" />
 
 </LinearLayout>
