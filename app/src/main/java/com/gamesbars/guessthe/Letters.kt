@@ -1,7 +1,6 @@
 package com.gamesbars.guessthe
 
 import android.content.Context
-import android.os.Handler
 import android.view.View
 import android.widget.LinearLayout
 import java.util.*
@@ -12,6 +11,7 @@ class Letters(context: Context, word: String, pack: String) {
     private val letters: Array<Letter>
     private lateinit var lettersLayout1: LinearLayout
     private lateinit var lettersLayout2: LinearLayout
+    var removeTipUsed = false
 
     init {
         val saves = context.getSharedPreferences("saves", Context.MODE_PRIVATE)
@@ -24,6 +24,10 @@ class Letters(context: Context, word: String, pack: String) {
 
             for (id in 0 until letterString.length) {
                 val char = letterString[id]
+                if (char == '!') {
+                    removeTipUsed = true
+                    break
+                }
                 if (char.isDigit()) continue
                 val wordLetterId = if (id + 1 < letterString.length && letterString[id + 1].isDigit())
                     if (id + 2 < letterString.length && letterString[id + 2].isDigit()) letterString.substring(id + 1..id + 2).toInt()
@@ -65,12 +69,28 @@ class Letters(context: Context, word: String, pack: String) {
         letters = newLetters.requireNoNulls()
     }
 
-    fun showChosenLetters(wordLetters: WordLetters) {
-        Handler().postDelayed({
-            for (letter in letters) {
-                if (letter.isChosen) wordLetters.letterGuessed(letter)
+    fun tipShowLetter(wordLetters: WordLetters): Letter {
+        var letter: Letter
+        do {
+            letter = letters[(0 until letterCount).random()]
+        } while (letter.wordLetterId == null || letter.isTipGuessed)
+        wordLetters.tipLetterGuessed(letter)
+        return letter
+    }
+
+    fun tipRemoveLetters(wordLetters: WordLetters) {
+        for (letter in letters) {
+            if (letter.wordLetterId == null) {
+                if (letter.currentWordLetter != null) wordLetters.removeLetter(letter.currentWordLetter!!)
+                letter.gone(wordLetters.animationDuration)
             }
-        }, 500)
+        }
+    }
+
+    fun showChosenLetters(wordLetters: WordLetters) {
+        for (letter in letters) {
+            if (letter.isTipGuessed) wordLetters.tipLetterGuessed(letter)
+        }
     }
 
     fun addLettersToLayout(linearLayout1: LinearLayout, linearLayout2: LinearLayout) {

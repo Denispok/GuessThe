@@ -5,10 +5,10 @@ import android.os.Handler
 import android.util.Log
 import android.widget.LinearLayout
 
-class WordLetters(val fragment: LevelFragment, private val word: String) {
+class WordLetters(private val fragment: LevelFragment, private val word: String) {
     private lateinit var wordLayout: LinearLayout
     private val wordLetters = arrayListOf<WordLetter>()
-    private val animationDuration = 500L
+    val animationDuration = 500L
 
     init {
         for (char in word) {
@@ -17,12 +17,7 @@ class WordLetters(val fragment: LevelFragment, private val word: String) {
         for (wordLetter in wordLetters) {
             wordLetter.setOnClickListener {
                 it as WordLetter
-                if (it.letter != null) {
-                    it.text = ""
-                    it.isClickable = false
-                    it.letter?.chooseOut(animationDuration)
-                    it.letter = null
-                }
+                if (it.letter != null) removeOutLetter(it)
             }
         }
     }
@@ -69,11 +64,19 @@ class WordLetters(val fragment: LevelFragment, private val word: String) {
         }
     }
 
-    fun letterGuessed(letter: Letter) {
+    fun tipLetterGuessed(letter: Letter) {
         val wordLetter = wordLetters[letter.wordLetterId!!]
+        if (wordLetter.letter != null && wordLetter.letter != letter) removeOutLetter(wordLetter)
+        if (letter.currentWordLetter != null && letter.currentWordLetter != wordLetter) {
+            val currentWordLetter = letter.currentWordLetter!!
+            currentWordLetter.text = ""
+            currentWordLetter.isClickable = false
+            currentWordLetter.letter = null
+        }
         letter.chooseIn(wordLetter, animationDuration)
         wordLetter.isClickable = false
         wordLetter.letter = letter
+        wordLetter.letter!!.isTipGuessed = true
         Handler().postDelayed({
             wordLetter.text = letter.text
             wordLetter.isEnabled = false
@@ -96,5 +99,16 @@ class WordLetters(val fragment: LevelFragment, private val word: String) {
                 checkWord()
             }, animationDuration)
         }
+    }
+
+    private fun removeOutLetter(wordLetter: WordLetter) {
+        wordLetter.letter?.chooseOut(animationDuration)
+        removeLetter(wordLetter)
+    }
+
+    fun removeLetter(wordLetter: WordLetter) {
+        wordLetter.text = ""
+        wordLetter.isClickable = false
+        wordLetter.letter = null
     }
 }

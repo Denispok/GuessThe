@@ -73,6 +73,8 @@
         android:padding="6dp">
 
         <Button
+            android:id="@+id/level_tips"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginEnd="6dp"
@@ -84,6 +86,7 @@
             android:textSize="20sp" />
 
         <Button
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

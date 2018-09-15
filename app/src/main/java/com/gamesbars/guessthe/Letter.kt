@@ -8,17 +8,20 @@ import android.os.Handler
 import android.support.v4.content.res.ResourcesCompat
 import android.util.TypedValue
 import android.view.Gravity
+import android.view.View
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import android.widget.LinearLayout
 import android.widget.TextView
 import io.github.inflationx.calligraphy3.TypefaceUtils
 
-class Letter(context: Context, val letterId: Int, val letter: Char, val wordLetterId: Int? = null, var isChosen: Boolean = false) : TextView(context) {
+class Letter(context: Context, val letterId: Int, val letter: Char, val wordLetterId: Int? = null, var isTipGuessed: Boolean = false) : TextView(context) {
+
+    var currentWordLetter: WordLetter? = null
 
     init {
         text = letter.toString()
-        typeface = TypefaceUtils.load(resources.assets,"fonts/Exo_2/Exo2-Bold.ttf")
+        typeface = TypefaceUtils.load(resources.assets, "fonts/Exo_2/Exo2-Bold.ttf")
         setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.letter_text_size))
         setTextColor(Color.BLACK)
 
@@ -34,12 +37,13 @@ class Letter(context: Context, val letterId: Int, val letter: Char, val wordLett
         pivotX = 0f
         pivotY = 0f
 
-        background = ResourcesCompat.getDrawable(resources, R.drawable.letter_selector, null)
+        background = ResourcesCompat.getDrawable(resources, R.drawable.button_selector_white, null)
     }
 
     fun chooseIn(wordLetter: WordLetter, animationDuration: Long) {
-        isChosen = true
+        currentWordLetter = wordLetter
         this.isClickable = false
+
         // animation starting
         val wordLetterPosition = intArrayOf(0, 0)
         val letterPosition = intArrayOf(0, 0)
@@ -61,8 +65,11 @@ class Letter(context: Context, val letterId: Int, val letter: Char, val wordLett
     }
 
     fun chooseOut(animationDuration: Long) {
-        isChosen = false
-        Handler().postDelayed({ this.isClickable = true }, animationDuration)
+        Handler().postDelayed({
+            currentWordLetter = null
+            this.isClickable = true
+        }, animationDuration)
+
         // animation starting
         val animationX = ObjectAnimator.ofFloat(this, "translationX", 0f)
         val animationY = ObjectAnimator.ofFloat(this, "translationY", 0f)
@@ -73,6 +80,21 @@ class Letter(context: Context, val letterId: Int, val letter: Char, val wordLett
 
         val set = AnimatorSet()
         set.play(animationX).with(animationY).with(animationScaleX).with(animationScaleY).with(animationAlpha)
+        set.duration = animationDuration
+        set.start()
+    }
+
+    fun gone(animationDuration: Long) {
+        Handler().postDelayed({
+            this.visibility = View.INVISIBLE
+            this.isClickable = false
+        }, animationDuration)
+
+        val animationY = ObjectAnimator.ofFloat(this, "translationY", this.translationY + 20)
+        val animationAlpha = ObjectAnimator.ofFloat(this, "alpha", 0f)
+
+        val set = AnimatorSet()
+        set.play(animationY).with(animationAlpha)
         set.duration = animationDuration
         set.start()
     }

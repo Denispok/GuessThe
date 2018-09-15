@@ -1,9 +1,11 @@
 package com.gamesbars.guessthe
 
+import android.app.AlertDialog
 import android.content.Context
 import android.database.SQLException
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
 import android.transition.TransitionInflater
@@ -11,6 +13,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.RelativeLayout
+import android.widget.TextView
 
 class LevelFragment : Fragment() {
 
@@ -19,6 +23,7 @@ class LevelFragment : Fragment() {
     private lateinit var pack: String
     private lateinit var letters: Letters
     private lateinit var wordLetters: WordLetters
+    private var isFirstStart = true
 
     companion object {
         fun newInstance(pack: String): LevelFragment {
@@ -45,7 +50,6 @@ class LevelFragment : Fragment() {
         letters.setLettersOnClickListener {
             wordLetters.addLetter(it as Letter)
         }
-        letters.showChosenLetters(wordLetters)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -54,11 +58,22 @@ class LevelFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        activity!!.findViewById<ImageView>(R.id.level_image).setImageResource(
-                resources.getIdentifier(image, "drawable", context!!.packageName))
-        wordLetters.addLettersToLayout(activity!!.findViewById(R.id.level_word))
-        letters.addLettersToLayout(activity!!.findViewById(R.id.level_letters_1),
-                activity!!.findViewById(R.id.level_letters_2))
+        if (isFirstStart) {
+            activity!!.findViewById<ImageView>(R.id.level_image).setImageResource(
+                    resources.getIdentifier(image, "drawable", context!!.packageName))
+            wordLetters.addLettersToLayout(activity!!.findViewById(R.id.level_word))
+            letters.addLettersToLayout(activity!!.findViewById(R.id.level_letters_1),
+                    activity!!.findViewById(R.id.level_letters_2))
+
+            activity!!.findViewById<TextView>(R.id.level_tips).setOnClickListener { tips() }
+
+            Handler().postDelayed({
+                letters.showChosenLetters(wordLetters)
+                if (letters.removeTipUsed) letters.tipRemoveLetters(wordLetters)
+            }, 100L)
+
+            isFirstStart = false
+        }
     }
 
     private fun loadLevel(pack: String) {
@@ -93,11 +108,55 @@ class LevelFragment : Fragment() {
         cursor.close()
     }
 
+    private fun tips() {
+        val builder = AlertDialog.Builder(context)
+        builder.setView(layoutInflater.inflate(R.layout.dialog_tips, null))
+        // COINS CHECK
+        val tips = builder.create()
+        tips.show()
+
+        val saves = context!!.getSharedPreferences("saves", Context.MODE_PRIVATE)
+        val levelName = pack + saves.getInt(pack, 0)
+        var levelString = saves.getString(levelName, "")
+
+        tips.findViewById<RelativeLayout>(R.id.tips_letter).setOnClickListener {
+            val letter = letters.tipShowLetter(wordLetters)
+
+            val replacedString = letter.letter + letter.wordLetterId!!.toString()
+            levelString = levelString.replace(replacedString, replacedString.toUpperCase())
+
+            val editor = saves.edit()
+            editor.putString(levelName, levelString)
+
+            // COINS
+            editor.apply()
+
+            tips.cancel()
+        }
+        tips.findViewById<RelativeLayout>(R.id.tips_remove).setOnClickListener {
+            letters.tipRemoveLetters(wordLetters)
+
+            val editor = saves.edit()
+            editor.putString(levelName, "$levelString!")
+
+            // COINS
+            editor.apply()
+
+            tips.cancel()
+        }
+        tips.findViewById<RelativeLayout>(R.id.tips_skip).setOnClickListener {
+            tips.cancel()
+            win()
+        }
+    }
+
     fun win() {
         val saves = activity!!.getSharedPreferences("saves", Context.MODE_PRIVATE)
         val currentLevel = saves.getInt(pack, 1)
+        val levelName = pack + currentLevel
 
         val editor = saves.edit()
+        editor.putString(levelName, saves.getString(levelName, "").replace("!", "").toLowerCase())
         if (currentLevel > saves.getInt(pack + "completed", 0)) editor.putInt(pack + "completed", currentLevel)
         if (currentLevel + 1 > LevelMenuActivity.PACK_LEVELS_COUNT) editor.putInt(pack, 1)
         else editor.putInt(pack, currentLevel + 1)
