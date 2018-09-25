@@ -93,16 +93,16 @@ class LevelFragment : Fragment() {
             throw sqle
         }
 
+        val currentLevel = saves.getInt(pack, 1).toString()
         val keyWord = "word"
-        val keyImage = "image"
 
-        val cursor = dBHelper.db.query(pack, arrayOf(keyWord, keyImage),
-                "rowid = " + saves.getInt(pack, 1).toString(), null,
+        val cursor = dBHelper.db.query(pack, arrayOf(keyWord),
+                "rowid = $currentLevel", null,
                 null, null, null)
 
         cursor.moveToNext()
 
-        image = cursor.getString(cursor.getColumnIndex(keyImage))
+        image = pack + currentLevel
         word = cursor.getString(cursor.getColumnIndex(keyWord))
 
         cursor.close()

@@ -1,11 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="letter_size">42dp</dimen>
-    <dimen name="letter_text_size">28sp</dimen>
-    <dimen name="letter_margins">4dp</dimen>
+    <!-- small screens -->
+    <!-- fragment_level -->
+    <dimen name="top_pane_height">40dp</dimen>
+    <dimen name="top_pane_text_size">16sp</dimen>
+    <dimen name="top_pane_side_padding">0dp</dimen>
+
+    <dimen name="buttons_height">48dp</dimen>
+    <dimen name="buttons_text_size">16sp</dimen>
+    <dimen name="buttons_margin">6dp</dimen>
+
+    <dimen name="letter_size">38dp</dimen>
+    <dimen name="letter_text_size">24sp</dimen>
+    <dimen name="letter_margins">3dp</dimen>
     <dimen name="letter_padding">3dp</dimen>
+
     <dimen name="word_letter_size">36dp</dimen>
-    <dimen name="word_letter_text_size">28sp</dimen>
+    <dimen name="word_letter_text_size">24sp</dimen>
     <dimen name="word_letter_margins">2dp</dimen>
-    <dimen name="word_padding">2dp</dimen>
+    <dimen name="word_letter_padding">2dp</dimen>
+
+    <!-- fragment_win -->
+    <dimen name="win_text_size">24sp</dimen>
+    <dimen name="win_margin">6dp</dimen>
+
+    <dimen name="win_success_text_size">32sp</dimen>
+
+    <dimen name="win_word_text_size">28sp</dimen>
+
+    <dimen name="x2_dimen">50dp</dimen>
+    <dimen name="x2_text_size">32sp</dimen>
+    <dimen name="x2_small_text_size">16sp</dimen>
 </resources>

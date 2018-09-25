@@ -60,7 +60,7 @@ class WordLetters(private val fragment: LevelFragment, private val word: String)
                         wordLetter.layoutParams = params
                     }
                 }
-            }, 1)
+            }, 10)
         }
     }
 

@@ -25,7 +25,7 @@ class WordLetter(context: Context, val isSpace: Boolean = false) : TextView(cont
         params.setMargins(margins, margins, margins, margins)
         layoutParams = params
         gravity = Gravity.CENTER
-        val padding = resources.getDimension(R.dimen.word_padding).toInt()
+        val padding = resources.getDimension(R.dimen.word_letter_padding).toInt()
         setPadding(0, 0, padding, padding)
         isClickable = false
 

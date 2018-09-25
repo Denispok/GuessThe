@@ -8,7 +8,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/top_pane_height"
         android:paddingLeft="4dp"
         android:paddingRight="4dp">
 
@@ -17,7 +17,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:paddingStart="6dp"
+            android:layout_marginStart="@dimen/top_pane_side_padding"
+            android:padding="6dp"
             android:src="@drawable/baseline_arrow_back_ios_white_24" />
 
         <Button
@@ -26,26 +27,27 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:background="@drawable/button_selector_blue_up"
-            android:paddingEnd="6dp"
-            android:paddingStart="6dp"
+            android:paddingEnd="8dp"
+            android:paddingStart="8dp"
             android:text="уровень 21"
-            android:textColor="@android:color/white"
-            android:textSize="18sp" />
+            android:textColor="@color/colorText"
+            android:textSize="@dimen/top_pane_text_size" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
+            android:layout_marginEnd="@dimen/top_pane_side_padding"
             android:background="@drawable/button_selector_green_up"
             android:drawableEnd="@drawable/coin_icon"
             android:drawablePadding="0dp"
             android:gravity="center_vertical"
-            android:paddingEnd="2dp"
+            android:paddingEnd="4dp"
             android:paddingStart="6dp"
             android:text="500"
-            android:textColor="@android:color/white"
-            android:textSize="18sp" />
+            android:textColor="@color/colorText"
+            android:textSize="@dimen/top_pane_text_size" />
     </RelativeLayout>
 
     <ImageView
@@ -68,33 +70,34 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="@dimen/buttons_height"
         android:orientation="horizontal"
-        android:padding="6dp">
+        android:padding="@dimen/buttons_margin">
 
         <Button
             android:id="@+id/level_tips"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginEnd="6dp"
+            android:layout_marginEnd="@dimen/buttons_margin"
             android:layout_weight="1"
             android:background="@drawable/button_selector_blue"
-            android:text="Подсказки"
+            android:text="@string/tips"
             android:textAllCaps="false"
-            android:textColor="@android:color/white"
-            android:textSize="20sp" />
+            android:textColor="@color/colorText"
+            android:textSize="@dimen/buttons_text_size" />
 
         <Button
+            android:id="@+id/level_coins"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/button_selector_green"
-            android:text="Получить монеты"
+            android:text="@string/get_coins"
             android:textAllCaps="false"
-            android:textColor="@android:color/white"
-            android:textSize="20sp" />
+            android:textColor="@color/colorText"
+            android:textSize="@dimen/buttons_text_size" />
 
     </LinearLayout>
 
@@ -109,6 +112,7 @@
         android:id="@+id/level_letters_2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
         android:gravity="center"
         android:orientation="horizontal" />
 

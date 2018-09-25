@@ -8,11 +8,11 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="6dp"
-        android:layout_marginTop="6dp"
-        android:text="Правильно!"
-        android:textColor="@android:color/white"
-        android:textSize="32sp" />
+        android:layout_marginBottom="@dimen/win_margin"
+        android:layout_marginTop="@dimen/win_margin"
+        android:text="@string/success"
+        android:textColor="@color/colorText"
+        android:textSize="@dimen/win_success_text_size" />
 
     <ImageView
         android:id="@+id/win_image"
@@ -29,46 +29,46 @@
         fontPath="fonts/Exo_2/Exo2-Bold.ttf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="6dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginBottom="@dimen/win_margin"
+        android:layout_marginTop="@dimen/win_margin"
         android:background="@android:color/transparent"
         android:text="word"
         android:textAllCaps="true"
-        android:textColor="@android:color/white"
-        android:textSize="28sp" />
+        android:textColor="@color/colorText"
+        android:textSize="@dimen/win_word_text_size" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="@dimen/win_margin"
         android:background="@drawable/button_selector_green"
         android:drawableRight="@drawable/coin_icon"
         android:padding="6dp"
         android:paddingEnd="10dp"
         android:paddingStart="10dp"
         android:text="100"
-        android:textColor="@android:color/white"
-        android:textSize="24sp" />
+        android:textColor="@color/colorText"
+        android:textSize="@dimen/win_text_size" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="@dimen/win_margin"
         android:background="@drawable/button_selector_green"
         android:gravity="center"
         android:orientation="horizontal"
-        android:padding="8dp">
+        android:padding="10dp">
 
         <TextView
             fontPath="fonts/Exo_2/Exo2-Bold.ttf"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/x2_dimen"
+            android:layout_height="@dimen/x2_dimen"
             android:layout_marginEnd="4dp"
             android:background="@drawable/red_circle"
             android:gravity="center"
             android:text="x2"
             android:textColor="@android:color/white"
-            android:textSize="32sp" />
+            android:textSize="@dimen/x2_text_size" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -80,17 +80,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
-                android:text="МОНЕТ"
-                android:textColor="@android:color/white"
-                android:textSize="24sp" />
+                android:text="@string/coins"
+                android:textColor="@color/colorText"
+                android:textSize="@dimen/win_text_size" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
-                android:text="за просмотр видео"
-                android:textColor="@android:color/white"
-                android:textSize="16sp" />
+                android:text="@string/video"
+                android:textColor="@color/colorText"
+                android:textSize="@dimen/x2_small_text_size" />
 
         </LinearLayout>
 
@@ -100,14 +100,14 @@
         android:id="@+id/win_continue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="@dimen/win_margin"
         android:background="@drawable/button_selector_blue"
-        android:padding="4dp"
+        android:padding="6dp"
         android:paddingEnd="12dp"
         android:paddingStart="12dp"
-        android:text="Продолжить"
+        android:text="@string/next"
         android:textAllCaps="false"
-        android:textColor="@android:color/white"
-        android:textSize="24sp" />
+        android:textColor="@color/colorText"
+        android:textSize="@dimen/win_text_size" />
 
 </LinearLayout>

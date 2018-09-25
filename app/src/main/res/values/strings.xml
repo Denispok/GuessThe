@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">GuessThe</string>
+    <string name="tips">Подсказки</string>
+    <string name="get_coins">Получить монеты</string>
+    <string name="success">Правильно!</string>
+    <string name="coins">МОНЕТ</string>
+    <string name="video">за просмотр видео</string>
+    <string name="next">Продолжить</string>
 </resources>
