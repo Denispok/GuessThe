@@ -1,6 +1,5 @@
 package com.gamesbars.guessthe
 
-import android.app.AlertDialog
 import android.content.Context
 import android.database.SQLException
 import android.os.Build
@@ -13,16 +12,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.RelativeLayout
 import android.widget.TextView
 
 class LevelFragment : Fragment() {
 
     private lateinit var image: String
     private lateinit var word: String
-    private lateinit var pack: String
-    private lateinit var letters: Letters
-    private lateinit var wordLetters: WordLetters
+    lateinit var pack: String
+    lateinit var letters: Letters
+    lateinit var wordLetters: WordLetters
     private var isFirstStart = true
 
     companion object {
@@ -109,45 +107,10 @@ class LevelFragment : Fragment() {
     }
 
     private fun tips() {
-        val builder = AlertDialog.Builder(context)
-        builder.setView(layoutInflater.inflate(R.layout.dialog_tips, null))
+        val dialog = TipsDialogFragment()
+
         // COINS CHECK
-        val tips = builder.create()
-        tips.show()
-
-        val saves = context!!.getSharedPreferences("saves", Context.MODE_PRIVATE)
-        val levelName = pack + saves.getInt(pack, 0)
-        var levelString = saves.getString(levelName, "")
-
-        tips.findViewById<RelativeLayout>(R.id.tips_letter).setOnClickListener {
-            val letter = letters.tipShowLetter(wordLetters)
-
-            val replacedString = letter.letter + letter.wordLetterId!!.toString()
-            levelString = levelString.replace(replacedString, replacedString.toUpperCase())
-
-            val editor = saves.edit()
-            editor.putString(levelName, levelString)
-
-            // COINS
-            editor.apply()
-
-            tips.cancel()
-        }
-        tips.findViewById<RelativeLayout>(R.id.tips_remove).setOnClickListener {
-            letters.tipRemoveLetters(wordLetters)
-
-            val editor = saves.edit()
-            editor.putString(levelName, "$levelString!")
-
-            // COINS
-            editor.apply()
-
-            tips.cancel()
-        }
-        tips.findViewById<RelativeLayout>(R.id.tips_skip).setOnClickListener {
-            tips.cancel()
-            win()
-        }
+        dialog.show(fragmentManager, resources.getString(R.string.tips_dialog_fragment_tag))
     }
 
     fun win() {
@@ -164,7 +127,7 @@ class LevelFragment : Fragment() {
 
         val fragment = WinFragment.newInstance(word, image, arguments!!.getString("pack"))
         fragmentManager!!.beginTransaction()
-                .replace(R.id.activity_play, fragment)
+                .replace(R.id.activity_play, fragment, resources.getString(R.string.win_fragment_tag))
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .addSharedElement(activity!!.findViewById<ImageView>(R.id.level_image), "ImageTransition")
                 .commit()

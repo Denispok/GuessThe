@@ -11,4 +11,18 @@
     <dimen name="letter_margins">4dp</dimen>
 
     <dimen name="word_letter_text_size">28sp</dimen>
+
+    <!-- fragment_win -->
+    <dimen name="win_text_size">24sp</dimen>
+
+    <dimen name="win_success_text_size">32sp</dimen>
+
+    <dimen name="win_word_text_size">28sp</dimen>
+
+    <dimen name="x2_dimen">50dp</dimen>
+    <dimen name="x2_text_size">32sp</dimen>
+
+    <!-- dialog_fragment_tips -->
+    <dimen name="tips_button_width">280dp</dimen>
+    <dimen name="tips_button_text_size">18sp</dimen>
 </resources>

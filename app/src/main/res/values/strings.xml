@@ -6,4 +6,8 @@
     <string name="coins">МОНЕТ</string>
     <string name="video">за просмотр видео</string>
     <string name="next">Продолжить</string>
+
+    <string name="level_fragment_tag">level</string>
+    <string name="win_fragment_tag">win</string>
+    <string name="tips_dialog_fragment_tag">win</string>
 </resources>

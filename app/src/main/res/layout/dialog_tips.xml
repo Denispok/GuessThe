@@ -4,13 +4,13 @@
     android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="vertical"
-    android:paddingBottom="16dp"
-    android:paddingTop="16dp">
+    android:paddingBottom="@dimen/tips_padding"
+    android:paddingTop="@dimen/tips_padding">
 
     <RelativeLayout
         android:id="@+id/tips_letter"
         style="@style/TipsButtonStyle"
-        android:layout_marginBottom="8dp">
+        android:layout_marginBottom="@dimen/tips_button_margin">
 
         <TextView
             android:layout_width="wrap_content"
@@ -22,7 +22,7 @@
             android:gravity="center"
             android:text="Показать букву"
             android:textColor="@android:color/black"
-            android:textSize="20sp" />
+            android:textSize="@dimen/tips_button_text_size" />
 
         <View
             android:layout_width="1dp"
@@ -45,14 +45,14 @@
             android:gravity="center_vertical"
             android:text="20"
             android:textColor="@android:color/black"
-            android:textSize="20sp" />
+            android:textSize="@dimen/tips_button_text_size" />
 
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/tips_remove"
         style="@style/TipsButtonStyle"
-        android:layout_marginBottom="8dp">
+        android:layout_marginBottom="@dimen/tips_button_margin">
 
         <TextView
             android:layout_width="wrap_content"
@@ -64,7 +64,7 @@
             android:gravity="center"
             android:text="Убрать лишнее"
             android:textColor="@android:color/black"
-            android:textSize="20sp" />
+            android:textSize="@dimen/tips_button_text_size" />
 
         <View
             android:layout_width="1dp"
@@ -87,7 +87,7 @@
             android:gravity="center_vertical"
             android:text="20"
             android:textColor="@android:color/black"
-            android:textSize="20sp" />
+            android:textSize="@dimen/tips_button_text_size" />
 
     </RelativeLayout>
 
@@ -105,7 +105,7 @@
             android:gravity="center"
             android:text="Пропустить уровень"
             android:textColor="@android:color/black"
-            android:textSize="20sp" />
+            android:textSize="@dimen/tips_button_text_size" />
 
         <View
             android:layout_width="1dp"
@@ -128,7 +128,7 @@
             android:gravity="center_vertical"
             android:text="20"
             android:textColor="@android:color/black"
-            android:textSize="20sp" />
+            android:textSize="@dimen/tips_button_text_size" />
 
     </RelativeLayout>
 

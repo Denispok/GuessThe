@@ -21,14 +21,22 @@
     <dimen name="word_letter_padding">2dp</dimen>
 
     <!-- fragment_win -->
-    <dimen name="win_text_size">24sp</dimen>
+    <dimen name="win_text_size">20sp</dimen>
     <dimen name="win_margin">6dp</dimen>
 
-    <dimen name="win_success_text_size">32sp</dimen>
+    <dimen name="win_success_text_size">28sp</dimen>
 
-    <dimen name="win_word_text_size">28sp</dimen>
+    <dimen name="win_word_text_size">26sp</dimen>
 
-    <dimen name="x2_dimen">50dp</dimen>
-    <dimen name="x2_text_size">32sp</dimen>
+    <dimen name="x2_dimen">44dp</dimen>
+    <dimen name="x2_text_size">26sp</dimen>
     <dimen name="x2_small_text_size">16sp</dimen>
+
+    <!-- dialog_fragment_tips -->
+    <dimen name="tips_padding">16dp</dimen>
+
+    <dimen name="tips_button_width">260dp</dimen>
+    <dimen name="tips_button_height">42dp</dimen>
+    <dimen name="tips_button_text_size">16sp</dimen>
+    <dimen name="tips_button_margin">8dp</dimen>
 </resources>

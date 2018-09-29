@@ -29,7 +29,7 @@ class PlayActivity : AppCompatActivity() {
 
         supportFragmentManager.beginTransaction()
                 .replace(R.id.activity_play,
-                        LevelFragment.newInstance(intent.extras.getString("pack")))
+                        LevelFragment.newInstance(intent.extras.getString("pack")), resources.getString(R.string.level_fragment_tag))
                 .commit()
     }
 }
