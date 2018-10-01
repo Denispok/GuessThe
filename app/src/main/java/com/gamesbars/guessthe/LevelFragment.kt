@@ -1,7 +1,6 @@
 package com.gamesbars.guessthe
 
 import android.content.Context
-import android.database.SQLException
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -83,27 +82,10 @@ class LevelFragment : Fragment() {
             editor.apply()
         }
 
-        val dBHelper = DataBaseHelper(context)
-
-        try {
-            dBHelper.openDataBase()
-        } catch (sqle: SQLException) {
-            throw sqle
-        }
-
-        val currentLevel = saves.getInt(pack, 1).toString()
-        val keyWord = "word"
-
-        val cursor = dBHelper.db.query(pack, arrayOf(keyWord),
-                "rowid = $currentLevel", null,
-                null, null, null)
-
-        cursor.moveToNext()
+        val currentLevel = saves.getInt(pack, 1)
 
         image = pack + currentLevel
-        word = cursor.getString(cursor.getColumnIndex(keyWord))
-
-        cursor.close()
+        word = resources.getStringArray(resources.getIdentifier(pack, "array", context!!.packageName))[currentLevel - 1]
     }
 
     private fun tips() {

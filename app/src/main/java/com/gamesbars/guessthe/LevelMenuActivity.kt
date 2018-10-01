@@ -20,32 +20,15 @@ class LevelMenuActivity : AppCompatActivity() {
     }
 
     private fun loadPacks() {
-        val dBHelper = DataBaseHelper(this)
-
-        try {
-            dBHelper.openDataBase()
-        } catch (sqle: SQLException) {
-            throw sqle
-        }
-
-        val cursor = dBHelper.db.rawQuery("SELECT name FROM sqlite_master WHERE type='table'", null)
-        val packsNames = arrayListOf<String>()
-
-        while (cursor.moveToNext()) {
-            val tableName = cursor.getString(0)
-            if (!tableName.equals("android_metadata")) packsNames.add(tableName)
-        }
-
-        cursor.close()
-        dBHelper.close()
-
+        val packsNames = resources.getStringArray(R.array.packs_names)
+        val packs = resources.getStringArray(R.array.packs)
         val packsList = findViewById<LinearLayout>(R.id.levels_list)
-        for (pack in packsNames) {
+        for (id in 0 until packsNames.size) {
             val button = Button(this)
-            button.text = pack
+            button.text = packsNames[id]
             button.setOnClickListener {
                 val intent = Intent(this, PlayActivity().javaClass)
-                intent.putExtra("pack", pack)
+                intent.putExtra("pack", packs[id])
                 startActivity(intent)
             }
             packsList.addView(button)

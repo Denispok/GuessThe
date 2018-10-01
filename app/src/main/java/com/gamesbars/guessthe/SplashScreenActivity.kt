@@ -13,14 +13,6 @@ class SplashScreenActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splashscreen)
 
-        val dBHelper = DataBaseHelper(this)
-
-        try {
-            dBHelper.createDataBase()
-        } catch (ioe: IOException) {
-            throw Error("Unable to create database")
-        }
-
         Handler().postDelayed({
             startActivity(Intent(applicationContext, MenuActivity().javaClass))
             finish()

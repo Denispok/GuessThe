@@ -10,4 +10,42 @@
     <string name="level_fragment_tag">level</string>
     <string name="win_fragment_tag">win</string>
     <string name="tips_dialog_fragment_tag">win</string>
+
+    <!--  Levels  -->
+
+    <string-array name="packs_names">
+        <item>Russian Cars</item>
+        <item>Test</item>
+    </string-array>
+
+    <array name="packs">
+        <item>russian_cars</item>
+        <item>test</item>
+    </array>
+
+    <string-array name="russian_cars">
+        <item>приора</item>
+        <item>восьмёрка</item>
+        <item>патриот</item>
+        <item>гранта</item>
+        <item>москвич</item>
+        <item>нива</item>
+        <item>ока</item>
+        <item>семёрка</item>
+        <item>копейка</item>
+        <item>шестёрка</item>
+    </string-array>
+
+    <string-array name="test">
+        <item>большоесловоцц</item>
+        <item>что</item>
+        <item>тут про бе лы</item>
+        <item>буквы и пробел</item>
+        <item>раз</item>
+        <item>два</item>
+        <item>три</item>
+        <item>проверка</item>
+        <item>тут всё</item>
+        <item>конец</item>
+    </string-array>
 </resources>
