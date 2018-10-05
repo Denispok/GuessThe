@@ -1,7 +1,6 @@
 package com.gamesbars.guessthe
 
 import android.content.Intent
-import android.database.SQLException
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Button
@@ -13,10 +12,17 @@ class LevelMenuActivity : AppCompatActivity() {
         const val PACK_LEVELS_COUNT = 10
     }
 
+    var isClickable: Boolean = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_levelmenu)
         loadPacks()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        isClickable = true
     }
 
     private fun loadPacks() {
@@ -27,9 +33,12 @@ class LevelMenuActivity : AppCompatActivity() {
             val button = Button(this)
             button.text = packsNames[id]
             button.setOnClickListener {
-                val intent = Intent(this, PlayActivity().javaClass)
-                intent.putExtra("pack", packs[id])
-                startActivity(intent)
+                if (isClickable) {
+                    isClickable = false
+                    val intent = Intent(this, PlayActivity().javaClass)
+                    intent.putExtra("pack", packs[id])
+                    startActivity(intent)
+                }
             }
             packsList.addView(button)
         }

@@ -21,6 +21,8 @@ class LevelFragment : Fragment() {
     lateinit var letters: Letters
     lateinit var wordLetters: WordLetters
     private var isFirstStart = true
+    var isClickable = true
+    private val tipsDialog = TipsDialogFragment()
 
     companion object {
         fun newInstance(pack: String): LevelFragment {
@@ -45,7 +47,7 @@ class LevelFragment : Fragment() {
         wordLetters = WordLetters(this, word)
         letters = Letters(context!!, word, pack)
         letters.setLettersOnClickListener {
-            wordLetters.addLetter(it as Letter)
+            if (isClickable) wordLetters.addLetter(it as Letter)
         }
     }
 
@@ -89,10 +91,10 @@ class LevelFragment : Fragment() {
     }
 
     private fun tips() {
-        val dialog = TipsDialogFragment()
-
-        // COINS CHECK
-        dialog.show(fragmentManager, resources.getString(R.string.tips_dialog_fragment_tag))
+        if (isClickable) {
+            isClickable = false
+            tipsDialog.show(fragmentManager, resources.getString(R.string.tips_dialog_fragment_tag))
+        }
     }
 
     fun win() {
