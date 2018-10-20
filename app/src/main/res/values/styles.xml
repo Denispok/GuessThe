@@ -17,4 +17,12 @@
         <item name="android:paddingEnd">6dp</item>
     </style>
 
+    <style name="Divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1px</item>
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:background">#b7b7b7</item>
+    </style>
+
 </resources>

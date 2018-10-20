@@ -1,4 +1,4 @@
-package com.gamesbars.guessthe
+package com.gamesbars.guessthe.level
 
 import android.content.Context
 import android.graphics.Color
@@ -7,6 +7,7 @@ import android.util.TypedValue
 import android.view.Gravity
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.gamesbars.guessthe.R
 import io.github.inflationx.calligraphy3.TypefaceUtils
 
 class WordLetter(context: Context, val isSpace: Boolean = false) : TextView(context) {

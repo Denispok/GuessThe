@@ -34,6 +34,7 @@
             android:textSize="@dimen/top_pane_text_size" />
 
         <TextView
+            android:id="@+id/level_coins"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
@@ -88,7 +89,7 @@
             android:textSize="@dimen/buttons_text_size" />
 
         <Button
-            android:id="@+id/level_coins"
+            android:id="@+id/level_coins_button"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="0dp"
             android:layout_height="match_parent"

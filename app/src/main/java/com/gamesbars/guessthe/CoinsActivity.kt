@@ -3,13 +3,13 @@ package com.gamesbars.guessthe
 import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import com.gamesbars.guessthe.fragment.LevelFragment
+import android.widget.TextView
 import io.github.inflationx.calligraphy3.CalligraphyConfig
 import io.github.inflationx.calligraphy3.CalligraphyInterceptor
 import io.github.inflationx.viewpump.ViewPump
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
 
-class PlayActivity : AppCompatActivity() {
+class CoinsActivity : AppCompatActivity() {
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase))
@@ -26,11 +26,12 @@ class PlayActivity : AppCompatActivity() {
                                 .build()))
                 .build())
 
-        setContentView(R.layout.activity_play)
+        setContentView(R.layout.activity_coins)
+        updateCoins()
+    }
 
-        supportFragmentManager.beginTransaction()
-                .replace(R.id.activity_play,
-                        LevelFragment.newInstance(intent.extras.getString("pack")), resources.getString(R.string.level_fragment_tag))
-                .commit()
+    private fun updateCoins() {
+        val saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
+        findViewById<TextView>(R.id.coins_coins).text = saves.getInt("coins", 0).toString()
     }
 }

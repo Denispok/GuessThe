@@ -31,11 +31,11 @@
             android:layout_gravity="center"
             android:layout_marginEnd="10dp"
             android:layout_marginStart="10dp"
-            android:layout_toLeftOf="@id/tips_coins"
+            android:layout_toLeftOf="@id/tips_letter_cost"
             android:background="@android:color/black" />
 
         <TextView
-            android:id="@+id/tips_coins"
+            android:id="@+id/tips_letter_cost"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -73,11 +73,11 @@
             android:layout_gravity="center"
             android:layout_marginEnd="10dp"
             android:layout_marginStart="10dp"
-            android:layout_toLeftOf="@id/tips_coins"
+            android:layout_toLeftOf="@id/tips_remove_cost"
             android:background="@android:color/black" />
 
         <TextView
-            android:id="@+id/tips_coins"
+            android:id="@+id/tips_remove_cost"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -114,11 +114,11 @@
             android:layout_gravity="center"
             android:layout_marginEnd="10dp"
             android:layout_marginStart="10dp"
-            android:layout_toLeftOf="@id/tips_coins"
+            android:layout_toLeftOf="@id/tips_skip_cost"
             android:background="@android:color/black" />
 
         <TextView
-            android:id="@+id/tips_coins"
+            android:id="@+id/tips_skip_cost"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"

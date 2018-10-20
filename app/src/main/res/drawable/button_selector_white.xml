@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item>
+    <item android:state_enabled="true">
         <layer-list>
             <item android:left="2dp">
                 <shape>
@@ -13,6 +13,24 @@
             <item android:bottom="2dp" android:right="2dp">
                 <shape>
                     <solid android:color="#ffffff" />
+                    <corners android:radius="10dip"/>
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+
+    <item android:state_enabled="false">
+        <layer-list>
+            <item android:left="2dp">
+                <shape>
+                    <solid android:color="#9e9e9e" />
+                    <corners android:radius="10dip"/>
+                </shape>
+            </item>
+
+            <item android:bottom="2dp" android:right="2dp">
+                <shape>
+                    <solid android:color="#c2c2c2" />
                     <corners android:radius="10dip"/>
                 </shape>
             </item>

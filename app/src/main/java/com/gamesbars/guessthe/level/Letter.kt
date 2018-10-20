@@ -1,4 +1,4 @@
-package com.gamesbars.guessthe
+package com.gamesbars.guessthe.level
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
@@ -13,6 +13,7 @@ import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.gamesbars.guessthe.R
 import io.github.inflationx.calligraphy3.TypefaceUtils
 
 class Letter(context: Context, val letterId: Int, val letter: Char, val wordLetterId: Int? = null, var isTipGuessed: Boolean = false) : TextView(context) {

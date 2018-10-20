@@ -1,6 +1,7 @@
-package com.gamesbars.guessthe
+package com.gamesbars.guessthe.fragment
 
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -12,6 +13,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.gamesbars.guessthe.CoinsActivity
+import com.gamesbars.guessthe.LevelMenuActivity
+import com.gamesbars.guessthe.R
+import com.gamesbars.guessthe.level.Letter
+import com.gamesbars.guessthe.level.Letters
+import com.gamesbars.guessthe.level.WordLetters
 
 class LevelFragment : Fragment() {
 
@@ -65,6 +72,7 @@ class LevelFragment : Fragment() {
                     activity!!.findViewById(R.id.level_letters_2))
 
             activity!!.findViewById<TextView>(R.id.level_tips).setOnClickListener { tips() }
+            activity!!.findViewById<TextView>(R.id.level_coins_button).setOnClickListener { coins() }
 
             Handler().postDelayed({
                 letters.showChosenLetters(wordLetters)
@@ -73,6 +81,8 @@ class LevelFragment : Fragment() {
 
             isFirstStart = false
         }
+        isClickable = true
+        updateCoins()
     }
 
     private fun loadLevel(pack: String) {
@@ -97,19 +107,36 @@ class LevelFragment : Fragment() {
         }
     }
 
+    private fun coins() {
+        if (isClickable) {
+            isClickable = false
+            startActivity(Intent(context, CoinsActivity().javaClass))
+        }
+    }
+
+    fun updateCoins() {
+        val saves = activity!!.getSharedPreferences("saves", Context.MODE_PRIVATE)
+        activity!!.findViewById<TextView>(R.id.level_coins).text = saves.getInt("coins", 0).toString()
+    }
+
     fun win() {
         val saves = activity!!.getSharedPreferences("saves", Context.MODE_PRIVATE)
         val currentLevel = saves.getInt(pack, 1)
         val levelName = pack + currentLevel
+        var isLevelReward = false
 
         val editor = saves.edit()
         editor.putString(levelName, saves.getString(levelName, "").replace("!", "").toLowerCase())
-        if (currentLevel > saves.getInt(pack + "completed", 0)) editor.putInt(pack + "completed", currentLevel)
+        if (currentLevel > saves.getInt(pack + "completed", 0)) {
+            editor.putInt(pack + "completed", currentLevel)
+            editor.putInt("coins", saves.getInt("coins", 0) + resources.getInteger(R.integer.level_reward))
+            isLevelReward = true
+        }
         if (currentLevel + 1 > LevelMenuActivity.PACK_LEVELS_COUNT) editor.putInt(pack, 1)
         else editor.putInt(pack, currentLevel + 1)
         editor.apply()
 
-        val fragment = WinFragment.newInstance(word, image, arguments!!.getString("pack"))
+        val fragment = WinFragment.newInstance(word, image, arguments!!.getString("pack"), isLevelReward)
         fragmentManager!!.beginTransaction()
                 .replace(R.id.activity_play, fragment, resources.getString(R.string.win_fragment_tag))
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)

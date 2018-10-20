@@ -39,4 +39,12 @@
     <dimen name="tips_button_height">42dp</dimen>
     <dimen name="tips_button_text_size">16sp</dimen>
     <dimen name="tips_button_margin">8dp</dimen>
+
+    <!-- activity_coins -->
+    <dimen name="coins_title_text_size">28sp</dimen>
+
+    <dimen name="coins_item_height">54dp</dimen>
+    <dimen name="coins_item_padding">16dp</dimen>
+    <dimen name="coins_item_text_size">24sp</dimen>
+
 </resources>

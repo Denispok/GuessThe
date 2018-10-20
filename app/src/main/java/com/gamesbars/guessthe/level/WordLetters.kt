@@ -1,9 +1,10 @@
-package com.gamesbars.guessthe
+package com.gamesbars.guessthe.level
 
 import android.graphics.Color
 import android.os.Handler
 import android.util.Log
 import android.widget.LinearLayout
+import com.gamesbars.guessthe.fragment.LevelFragment
 
 class WordLetters(private val fragment: LevelFragment, private val word: String) {
     private lateinit var wordLayout: LinearLayout
