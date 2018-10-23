@@ -28,9 +28,11 @@
 
     <dimen name="win_word_text_size">26sp</dimen>
 
-    <dimen name="x2_dimen">44dp</dimen>
-    <dimen name="x2_text_size">26sp</dimen>
-    <dimen name="x2_small_text_size">16sp</dimen>
+    <dimen name="x3_padding">10dp</dimen>
+    <dimen name="x3_margin_end">4dp</dimen>
+    <dimen name="x3_dimen">44dp</dimen>
+    <dimen name="x3_text_size">26sp</dimen>
+    <dimen name="x3_small_text_size">16sp</dimen>
 
     <!-- dialog_fragment_tips -->
     <dimen name="tips_padding">16dp</dimen>
@@ -46,5 +48,7 @@
     <dimen name="coins_item_height">54dp</dimen>
     <dimen name="coins_item_padding">16dp</dimen>
     <dimen name="coins_item_text_size">24sp</dimen>
+
+    <dimen name="coins_remove_ads_text_size">14sp</dimen>
 
 </resources>

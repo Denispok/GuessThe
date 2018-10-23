@@ -19,10 +19,14 @@
 
     <dimen name="win_word_text_size">28sp</dimen>
 
-    <dimen name="x2_dimen">50dp</dimen>
-    <dimen name="x2_text_size">32sp</dimen>
+    <dimen name="x3_dimen">50dp</dimen>
+    <dimen name="x3_text_size">30sp</dimen>
 
     <!-- dialog_fragment_tips -->
     <dimen name="tips_button_width">280dp</dimen>
     <dimen name="tips_button_text_size">18sp</dimen>
+
+    <!-- activity_coins -->
+    <dimen name="coins_remove_ads_text_size">16sp</dimen>
+
 </resources>

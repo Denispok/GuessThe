@@ -13,6 +13,7 @@
         android:paddingRight="4dp">
 
         <ImageView
+            android:id="@+id/coins_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -24,7 +25,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
             android:text="Монеты"
             android:textColor="@color/colorText"
             android:textSize="@dimen/coins_title_text_size" />
@@ -48,6 +50,7 @@
     </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/coins_purchase_1"
         android:layout_width="match_parent"
         android:layout_height="@dimen/coins_item_height"
         android:layout_gravity="center_horizontal"
@@ -56,6 +59,7 @@
         android:paddingEnd="@dimen/coins_item_padding">
 
         <TextView
+            android:id="@+id/coins_purchase_1_coins"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -70,6 +74,7 @@
             android:layout_weight="1" />
 
         <TextView
+            android:id="@+id/coins_purchase_1_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -82,4 +87,152 @@
 
     <View style="@style/Divider" />
 
+    <LinearLayout
+        android:id="@+id/coins_purchase_2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/coins_item_height"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/coins_item_padding"
+        android:paddingEnd="@dimen/coins_item_padding">
+
+        <TextView
+            android:id="@+id/coins_purchase_2_coins"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:drawableRight="@drawable/coin_icon"
+            android:text="500"
+            android:textColor="@color/colorText"
+            android:textSize="@dimen/coins_item_text_size" />
+
+        <TextView
+            android:id="@+id/coins_purchase_2_ads"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="4dp"
+            android:text="@string/remove_ads"
+            android:textColor="#bdbdbd"
+            android:textSize="@dimen/coins_remove_ads_text_size" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/coins_purchase_2_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="49,00 Р"
+            android:textColor="@color/colorText"
+            android:textSize="@dimen/coins_item_text_size" />
+
+
+    </LinearLayout>
+
+    <View style="@style/Divider" />
+
+    <LinearLayout
+        android:id="@+id/coins_purchase_3"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/coins_item_height"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/coins_item_padding"
+        android:paddingEnd="@dimen/coins_item_padding">
+
+        <TextView
+            android:id="@+id/coins_purchase_3_coins"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:drawableRight="@drawable/coin_icon"
+            android:text="500"
+            android:textColor="@color/colorText"
+            android:textSize="@dimen/coins_item_text_size" />
+
+        <TextView
+            android:id="@+id/coins_purchase_3_ads"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="4dp"
+            android:text="@string/remove_ads"
+            android:textColor="#bdbdbd"
+            android:textSize="@dimen/coins_remove_ads_text_size" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/coins_purchase_3_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="49,00 Р"
+            android:textColor="@color/colorText"
+            android:textSize="@dimen/coins_item_text_size" />
+
+
+    </LinearLayout>
+
+    <View style="@style/Divider" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/button_selector_green"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/x3_padding">
+
+        <TextView
+            android:id="@+id/coins_video"
+            fontPath="fonts/Exo_2/Exo2-Bold.ttf"
+            android:layout_width="@dimen/x3_dimen"
+            android:layout_height="@dimen/x3_dimen"
+            android:layout_marginEnd="@dimen/x3_margin_end"
+            android:background="@drawable/red_circle"
+            android:gravity="center"
+            android:text="20"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/x3_text_size" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:text="@string/coins"
+                android:textColor="@color/colorText"
+                android:textSize="@dimen/win_text_size" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:text="@string/video"
+                android:textColor="@color/colorText"
+                android:textSize="@dimen/x3_small_text_size" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 </LinearLayout>

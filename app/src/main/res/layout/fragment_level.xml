@@ -13,6 +13,7 @@
         android:paddingRight="4dp">
 
         <ImageView
+            android:id="@+id/level_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"

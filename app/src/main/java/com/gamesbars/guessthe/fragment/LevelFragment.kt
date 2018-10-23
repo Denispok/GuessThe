@@ -71,6 +71,7 @@ class LevelFragment : Fragment() {
             letters.addLettersToLayout(activity!!.findViewById(R.id.level_letters_1),
                     activity!!.findViewById(R.id.level_letters_2))
 
+            activity!!.findViewById<ImageView>(R.id.level_back).setOnClickListener { activity!!.onBackPressed() }
             activity!!.findViewById<TextView>(R.id.level_tips).setOnClickListener { tips() }
             activity!!.findViewById<TextView>(R.id.level_coins_button).setOnClickListener { coins() }
 

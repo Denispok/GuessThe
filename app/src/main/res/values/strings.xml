@@ -11,6 +11,9 @@
     <string name="win_fragment_tag">win</string>
     <string name="tips_dialog_fragment_tag">win</string>
 
+    <string name="purchases_unavailable">Внутриигровые покупки недоступны на вашем устройстве!</string>
+    <string name="remove_ads">+ УБРАТЬ РЕКЛАМУ</string>
+
     <!--  Levels  -->
 
     <string-array name="packs_names">
@@ -48,4 +51,5 @@
         <item>тут всё</item>
         <item>конец</item>
     </string-array>
+
 </resources>

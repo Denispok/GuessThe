@@ -8,8 +8,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/win_margin"
         android:layout_marginTop="@dimen/win_margin"
+        android:layout_marginBottom="@dimen/win_margin"
         android:text="@string/success"
         android:textColor="@color/colorText"
         android:textSize="@dimen/win_success_text_size" />
@@ -18,8 +18,8 @@
         android:id="@+id/win_image"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginEnd="10dp"
         android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:layout_weight="1"
         android:background="@android:color/transparent"
         android:transitionName="ImageTransition" />
@@ -29,8 +29,8 @@
         fontPath="fonts/Exo_2/Exo2-Bold.ttf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/win_margin"
         android:layout_marginTop="@dimen/win_margin"
+        android:layout_marginBottom="@dimen/win_margin"
         android:background="@android:color/transparent"
         android:text="word"
         android:textAllCaps="true"
@@ -45,9 +45,9 @@
         android:background="@drawable/button_selector_green"
         android:drawableRight="@drawable/coin_icon"
         android:padding="6dp"
-        android:paddingEnd="10dp"
         android:paddingStart="10dp"
-        android:text="100"
+        android:paddingEnd="10dp"
+        android:text="10"
         android:textColor="@color/colorText"
         android:textSize="@dimen/win_text_size" />
 
@@ -58,19 +58,19 @@
         android:background="@drawable/button_selector_green"
         android:gravity="center"
         android:orientation="horizontal"
-        android:padding="10dp">
+        android:padding="@dimen/x3_padding">
 
         <TextView
-            android:id="@+id/win_x2"
+            android:id="@+id/win_x3"
             fontPath="fonts/Exo_2/Exo2-Bold.ttf"
-            android:layout_width="@dimen/x2_dimen"
-            android:layout_height="@dimen/x2_dimen"
-            android:layout_marginEnd="4dp"
+            android:layout_width="@dimen/x3_dimen"
+            android:layout_height="@dimen/x3_dimen"
+            android:layout_marginEnd="@dimen/x3_margin_end"
             android:background="@drawable/red_circle"
             android:gravity="center"
-            android:text="x2"
+            android:text="x3"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/x2_text_size" />
+            android:textSize="@dimen/x3_text_size" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -92,7 +92,7 @@
                 android:background="@android:color/transparent"
                 android:text="@string/video"
                 android:textColor="@color/colorText"
-                android:textSize="@dimen/x2_small_text_size" />
+                android:textSize="@dimen/x3_small_text_size" />
 
         </LinearLayout>
 
@@ -105,8 +105,8 @@
         android:layout_marginBottom="@dimen/win_margin"
         android:background="@drawable/button_selector_blue"
         android:padding="6dp"
-        android:paddingEnd="12dp"
         android:paddingStart="12dp"
+        android:paddingEnd="12dp"
         android:text="@string/next"
         android:textAllCaps="false"
         android:textColor="@color/colorText"

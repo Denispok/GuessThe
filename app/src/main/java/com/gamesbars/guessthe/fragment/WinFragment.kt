@@ -60,7 +60,7 @@ class WinFragment : Fragment() {
             activity!!.findViewById<TextView>(R.id.win_reward_coins).text = activity!!.resources.getInteger(R.integer.level_reward).toString()
         } else {
             activity!!.findViewById<TextView>(R.id.win_reward_coins).visibility = View.GONE
-            activity!!.findViewById<TextView>(R.id.win_x2).text = activity!!.resources.getInteger(R.integer.level_reward).toString()
+            activity!!.findViewById<TextView>(R.id.win_x3).text = (2 * activity!!.resources.getInteger(R.integer.level_reward)).toString()
         }
     }
 
