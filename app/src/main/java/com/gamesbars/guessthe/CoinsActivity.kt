@@ -83,6 +83,7 @@ class CoinsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler {
         editor.putInt("coins", saves.getInt("coins", 0) + coins)
         editor.apply()
         if (productId != null) billingProcessor.consumePurchase(productId)
+        updateCoins()
     }
 
     override fun onBillingInitialized() {

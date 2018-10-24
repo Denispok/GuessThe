@@ -1,9 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/levels_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/top_pane_height"
+        android:layout_marginBottom="12dp"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp">
+
+        <ImageView
+            android:id="@+id/levelmenu_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/top_pane_side_padding"
+            android:padding="6dp"
+            android:src="@drawable/baseline_arrow_back_ios_white_24" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:text="Уровни"
+            android:textColor="@color/colorText"
+            android:textSize="@dimen/top_pane_title_text_size" />
+
+        <TextView
+            android:id="@+id/levelmenu_coins"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/top_pane_side_padding"
+            android:background="@drawable/button_selector_green_up"
+            android:drawableEnd="@drawable/coin_icon"
+            android:drawablePadding="0dp"
+            android:gravity="center_vertical"
+            android:paddingStart="6dp"
+            android:paddingEnd="4dp"
+            android:text="500"
+            android:textColor="@color/colorText"
+            android:textSize="@dimen/top_pane_text_size" />
+
+    </RelativeLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/levels_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+    </LinearLayout>
 
 </LinearLayout>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/levelmenu_button_width"
+    android:layout_height="@dimen/levelmenu_button_height"
+    android:layout_marginBottom="@dimen/levelmenu_button_margin_bottom"
+    android:background="@drawable/button_selector_white"
+    android:orientation="horizontal"
+    android:paddingStart="@dimen/levelmenu_button_padding"
+    android:paddingEnd="@dimen/levelmenu_button_padding">
+
+    <TextView
+        android:id="@+id/levelmenu_button_pack_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:background="@android:color/transparent"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/levelmenu_button_text_size" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@android:color/transparent" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent">
+
+        <ProgressBar
+            android:id="@+id/levelmenu_button_progress_bar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="@dimen/levelmenu_progress_bar_dimen"
+            android:layout_height="@dimen/levelmenu_progress_bar_dimen"
+            android:layout_centerInParent="true"
+            android:background="@drawable/circle_shape"
+            android:indeterminate="false"
+            android:max="100"
+            android:progress="50"
+            android:progressDrawable="@drawable/circular_progress_bar" />
+
+        <TextView
+            android:id="@+id/levelmenu_button_progress_bar_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@android:color/transparent"
+            android:text="20%"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/levelmenu_progress_bar_text_size" />
+
+    </RelativeLayout>
+
+</LinearLayout>

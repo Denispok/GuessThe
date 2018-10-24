@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- normal screens -->
+
     <!-- fragment_level -->
     <dimen name="top_pane_text_size">18sp</dimen>
 

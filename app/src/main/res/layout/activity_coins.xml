@@ -29,7 +29,7 @@
             android:layout_centerHorizontal="true"
             android:text="Монеты"
             android:textColor="@color/colorText"
-            android:textSize="@dimen/coins_title_text_size" />
+            android:textSize="@dimen/top_pane_title_text_size" />
 
         <TextView
             android:id="@+id/coins_coins"

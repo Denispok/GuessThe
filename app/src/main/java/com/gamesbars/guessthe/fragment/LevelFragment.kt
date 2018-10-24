@@ -11,6 +11,7 @@ import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.gamesbars.guessthe.CoinsActivity
@@ -71,6 +72,8 @@ class LevelFragment : Fragment() {
             letters.addLettersToLayout(activity!!.findViewById(R.id.level_letters_1),
                     activity!!.findViewById(R.id.level_letters_2))
 
+            val saves = activity!!.getSharedPreferences("saves", Context.MODE_PRIVATE)
+            activity!!.findViewById<Button>(R.id.level_level).text = getString(R.string.level, saves.getInt(pack, 1))
             activity!!.findViewById<ImageView>(R.id.level_back).setOnClickListener { activity!!.onBackPressed() }
             activity!!.findViewById<TextView>(R.id.level_tips).setOnClickListener { tips() }
             activity!!.findViewById<TextView>(R.id.level_coins_button).setOnClickListener { coins() }

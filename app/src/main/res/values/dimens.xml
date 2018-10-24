@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- small screens -->
-    <!-- fragment_level -->
+
+    <!-- top_pane -->
     <dimen name="top_pane_height">40dp</dimen>
     <dimen name="top_pane_text_size">16sp</dimen>
     <dimen name="top_pane_side_padding">0dp</dimen>
+    <dimen name="top_pane_title_text_size">28sp</dimen>
 
+    <!-- activity_levelmenu -->
+    <dimen name="levelmenu_button_width">260dp</dimen>
+    <dimen name="levelmenu_button_height">54dp</dimen>
+    <dimen name="levelmenu_button_margin_bottom">10dp</dimen>
+    <dimen name="levelmenu_button_padding">12dp</dimen>
+    <dimen name="levelmenu_button_text_size">20sp</dimen>
+
+    <dimen name="levelmenu_progress_bar_dimen">48dp</dimen>
+    <dimen name="levelmenu_progress_bar_text_size">12sp</dimen>
+
+    <!-- fragment_level -->
     <dimen name="buttons_height">48dp</dimen>
     <dimen name="buttons_text_size">16sp</dimen>
     <dimen name="buttons_margin">6dp</dimen>
@@ -43,8 +56,6 @@
     <dimen name="tips_button_margin">8dp</dimen>
 
     <!-- activity_coins -->
-    <dimen name="coins_title_text_size">28sp</dimen>
-
     <dimen name="coins_item_height">54dp</dimen>
     <dimen name="coins_item_padding">16dp</dimen>
     <dimen name="coins_item_text_size">24sp</dimen>
