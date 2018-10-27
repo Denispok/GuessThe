@@ -9,7 +9,8 @@
     <string name="purchases_unavailable">Внутриигровые покупки недоступны на вашем устройстве!</string>
     <string name="remove_ads">+ УБРАТЬ РЕКЛАМУ</string>
     <string name="level">уровень %d</string>
-    <string name="percent">%d%%</string>
+    <string name="percent">Уровень %d/%d</string>
+    <string name="completed">Пройдено!</string>
 
     <string name="level_fragment_tag">level</string>
     <string name="win_fragment_tag">win</string>

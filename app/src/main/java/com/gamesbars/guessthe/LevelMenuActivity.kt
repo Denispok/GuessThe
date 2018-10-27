@@ -80,7 +80,9 @@ class LevelMenuActivity : AppCompatActivity() {
             val currentButton = packsList.getChildAt(id)
             val completedPercent = (saves.getInt(packs[id] + "completed", 0).toFloat() / PACK_LEVELS_COUNT * 100).toInt()
             currentButton.findViewById<ProgressBar>(R.id.levelmenu_button_progress_bar).progress = completedPercent
-            currentButton.findViewById<TextView>(R.id.levelmenu_button_progress_bar_text).text = getString(R.string.percent, completedPercent)
+            currentButton.findViewById<TextView>(R.id.levelmenu_button_progress_bar_text).text =
+                    if (completedPercent.equals(100)) getString(R.string.completed)
+                    else getString(R.string.percent, saves.getInt(packs[id] + "completed", 0), PACK_LEVELS_COUNT)
         }
     }
 }

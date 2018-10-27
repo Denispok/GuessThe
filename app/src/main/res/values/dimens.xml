@@ -10,7 +10,7 @@
 
     <!-- activity_levelmenu -->
     <dimen name="levelmenu_button_width">260dp</dimen>
-    <dimen name="levelmenu_button_height">54dp</dimen>
+    <dimen name="levelmenu_button_height">58dp</dimen>
     <dimen name="levelmenu_button_margin_bottom">10dp</dimen>
     <dimen name="levelmenu_button_padding">12dp</dimen>
     <dimen name="levelmenu_button_text_size">20sp</dimen>
