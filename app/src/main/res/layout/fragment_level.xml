@@ -3,6 +3,7 @@
     android:id="@+id/fragment_level"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackground"
     android:clipChildren="false"
     android:orientation="vertical">
 
@@ -29,8 +30,8 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:background="@drawable/button_selector_blue_up"
-            android:paddingEnd="8dp"
             android:paddingStart="8dp"
+            android:paddingEnd="8dp"
             android:text="уровень 21"
             android:textColor="@color/colorText"
             android:textSize="@dimen/top_pane_text_size" />
@@ -39,15 +40,15 @@
             android:id="@+id/level_coins"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
             android:layout_marginEnd="@dimen/top_pane_side_padding"
             android:background="@drawable/button_selector_green_up"
             android:drawableEnd="@drawable/coin_icon"
             android:drawablePadding="0dp"
             android:gravity="center_vertical"
-            android:paddingEnd="4dp"
             android:paddingStart="6dp"
+            android:paddingEnd="4dp"
             android:text="500"
             android:textColor="@color/colorText"
             android:textSize="@dimen/top_pane_text_size" />

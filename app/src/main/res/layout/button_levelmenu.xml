@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/levelmenu_button_width"
-    android:layout_height="92dp"
+    android:layout_height="@dimen/levelmenu_button_height"
     android:layout_marginBottom="@dimen/levelmenu_button_margin_bottom"
     android:background="@drawable/button_selector_blue"
     android:orientation="vertical"
@@ -25,7 +25,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="36dp"
+        android:layout_height="@dimen/levelmenu_progress_bar_height"
         android:background="@android:color/transparent">
 
         <ProgressBar
@@ -37,7 +37,7 @@
             android:background="@drawable/progress_bar_horizontal_background"
             android:indeterminate="false"
             android:max="100"
-            android:progress="50"
+            android:progress="0"
             android:progressDrawable="@drawable/progress_bar_horizontal" />
 
         <TextView
@@ -46,7 +46,6 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:background="@android:color/transparent"
-            android:text="Уровень 1/20"
             android:textColor="#a0000000"
             android:textSize="@dimen/levelmenu_progress_bar_text_size" />
 

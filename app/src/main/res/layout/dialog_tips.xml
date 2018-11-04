@@ -2,10 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:background="@color/colorBackground"
     android:gravity="center"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/tips_padding"
-    android:paddingTop="@dimen/tips_padding">
+    android:paddingTop="@dimen/tips_padding"
+    android:paddingBottom="@dimen/tips_padding">
 
     <RelativeLayout
         android:id="@+id/tips_letter"
@@ -17,8 +18,8 @@
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
             android:background="@android:color/transparent"
-            android:drawablePadding="6dp"
             android:drawableStart="@drawable/baseline_font_download_black_24"
+            android:drawablePadding="6dp"
             android:gravity="center"
             android:text="Показать букву"
             android:textColor="@android:color/black"
@@ -29,8 +30,8 @@
             android:layout_height="24dp"
             android:layout_centerVertical="true"
             android:layout_gravity="center"
-            android:layout_marginEnd="10dp"
             android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_toLeftOf="@id/tips_letter_cost"
             android:background="@android:color/black" />
 
@@ -59,8 +60,8 @@
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
             android:background="@android:color/transparent"
-            android:drawablePadding="6dp"
             android:drawableStart="@drawable/baseline_clear_black_24"
+            android:drawablePadding="6dp"
             android:gravity="center"
             android:text="Убрать лишнее"
             android:textColor="@android:color/black"
@@ -71,8 +72,8 @@
             android:layout_height="24dp"
             android:layout_centerVertical="true"
             android:layout_gravity="center"
-            android:layout_marginEnd="10dp"
             android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_toLeftOf="@id/tips_remove_cost"
             android:background="@android:color/black" />
 
@@ -100,8 +101,8 @@
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
             android:background="@android:color/transparent"
-            android:drawablePadding="6dp"
             android:drawableStart="@drawable/baseline_exit_to_app_black_24"
+            android:drawablePadding="6dp"
             android:gravity="center"
             android:text="Пропустить уровень"
             android:textColor="@android:color/black"
@@ -112,8 +113,8 @@
             android:layout_height="24dp"
             android:layout_centerVertical="true"
             android:layout_gravity="center"
-            android:layout_marginEnd="10dp"
             android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_toLeftOf="@id/tips_skip_cost"
             android:background="@android:color/black" />
 

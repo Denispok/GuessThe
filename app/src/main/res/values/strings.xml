@@ -11,10 +11,16 @@
     <string name="level">уровень %d</string>
     <string name="percent">Уровень %d/%d</string>
     <string name="completed">Пройдено!</string>
+    <string name="buy_levels">Открыть за %d</string>
+    <string name="ok">ОК</string>
+    <string name="cancel">Отмена</string>
+    <string name="dont_enough_coins">Недостаточно монет</string>
+    <string name="confirm_dialog_message">Открыть новые уровни за %d монет?</string>
 
     <string name="level_fragment_tag">level</string>
     <string name="win_fragment_tag">win</string>
     <string name="tips_dialog_fragment_tag">win</string>
+    <string name="confirm_dialog_fragment_tag">confirm</string>
 
     <!--  Levels  -->
 

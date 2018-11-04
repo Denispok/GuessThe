@@ -74,7 +74,7 @@ class LevelFragment : Fragment() {
 
             val saves = activity!!.getSharedPreferences("saves", Context.MODE_PRIVATE)
             activity!!.findViewById<Button>(R.id.level_level).text = getString(R.string.level, saves.getInt(pack, 1))
-            activity!!.findViewById<ImageView>(R.id.level_back).setOnClickListener { activity!!.onBackPressed() }
+            activity!!.findViewById<ImageView>(R.id.level_back).setOnClickListener { if (isClickable) activity!!.onBackPressed() }
             activity!!.findViewById<TextView>(R.id.level_tips).setOnClickListener { tips() }
             activity!!.findViewById<TextView>(R.id.level_coins_button).setOnClickListener { coins() }
 
