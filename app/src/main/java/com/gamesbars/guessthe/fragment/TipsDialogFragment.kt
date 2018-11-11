@@ -27,8 +27,8 @@ class TipsDialogFragment : DialogFragment() {
             val tipRemove = view.findViewById<RelativeLayout>(R.id.tips_remove)
             val tipSkip = view.findViewById<RelativeLayout>(R.id.tips_skip)
             view.findViewById<TextView>(R.id.tips_cancel).setOnClickListener {
-                updateFragment(fragment)
                 dismiss()
+                updateFragment(fragment)
             }
 
             val tipLetterCost = resources.getInteger(R.integer.tip_letter_cost)
@@ -56,6 +56,7 @@ class TipsDialogFragment : DialogFragment() {
                     editor.putInt("coins", coins - tipLetterCost)
                     editor.apply()
 
+                    dismiss()
                     updateFragment(fragment)
                 }
             } else tipLetter.isEnabled = false
@@ -68,6 +69,7 @@ class TipsDialogFragment : DialogFragment() {
                     editor.putInt("coins", coins - tipRemoveCost)
                     editor.apply()
 
+                    dismiss()
                     updateFragment(fragment)
                 }
             } else tipRemove.isEnabled = false
@@ -76,6 +78,7 @@ class TipsDialogFragment : DialogFragment() {
                     val editor = saves.edit()
                     editor.putInt("coins", coins - tipSkipCost)
                     editor.apply()
+                    dismiss()
                     updateFragment(fragment)
                     fragment.win()
                 }

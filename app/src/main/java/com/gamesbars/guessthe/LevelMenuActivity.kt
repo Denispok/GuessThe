@@ -89,7 +89,7 @@ class LevelMenuActivity : AppCompatActivity() {
                 }
             } else {
                 progressBarText.text = getString(R.string.buy_levels, resources.getInteger(R.integer.pack_price))
-                progressBarText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.coin_icon_small, 0)
+                progressBarText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.coin_icon_16, 0)
                 currentButton.setOnClickListener {
                     if (isClickable) {
                         isClickable = false
