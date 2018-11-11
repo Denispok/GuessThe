@@ -34,8 +34,13 @@
     <dimen name="x3_text_size">30sp</dimen>
 
     <!-- dialog_fragment_tips -->
+    <dimen name="tips_padding">16dp</dimen>
+
     <dimen name="tips_button_width">280dp</dimen>
     <dimen name="tips_button_text_size">18sp</dimen>
+
+    <dimen name="tips_cancel_padding">48dp</dimen>
+    <dimen name="tips_cancel_margin_top">12dp</dimen>
 
     <!-- activity_coins -->
     <dimen name="coins_remove_ads_text_size">16sp</dimen>

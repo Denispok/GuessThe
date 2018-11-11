@@ -52,6 +52,7 @@ class CoinsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler {
             Toast.makeText(this, getString(R.string.purchases_unavailable), Toast.LENGTH_LONG).show()
         }
 
+        hideSystemUI()
         setContentView(R.layout.activity_coins)
         checkPurchases()
         updateCoins()
@@ -137,5 +138,10 @@ class CoinsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler {
     public override fun onDestroy() {
         billingProcessor.release()
         super.onDestroy()
+    }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (hasFocus) hideSystemUI()
     }
 }

@@ -133,4 +133,17 @@
 
     </RelativeLayout>
 
+    <TextView
+        android:id="@+id/tips_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/tips_button_height"
+        android:layout_marginTop="@dimen/tips_cancel_margin_top"
+        android:background="@drawable/button_selector_white"
+        android:gravity="center"
+        android:paddingStart="@dimen/tips_cancel_padding"
+        android:paddingEnd="@dimen/tips_cancel_padding"
+        android:text="Отмена"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/tips_button_text_size" />
+
 </LinearLayout>

@@ -10,11 +10,17 @@ class SplashScreenActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        hideSystemUI()
         setContentView(R.layout.activity_splashscreen)
 
         Handler().postDelayed({
             startActivity(Intent(applicationContext, MenuActivity().javaClass))
             finish()
         }, 500)
+    }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (hasFocus) hideSystemUI()
     }
 }

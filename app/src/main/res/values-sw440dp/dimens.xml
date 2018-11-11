@@ -53,6 +53,9 @@
     <dimen name="tips_button_text_size">24sp</dimen>
     <dimen name="tips_button_margin">12dp</dimen>
 
+    <dimen name="tips_cancel_padding">54dp</dimen>
+    <dimen name="tips_cancel_margin_top">24dp</dimen>
+
     <!-- activity_coins -->
     <dimen name="coins_item_height">64dp</dimen>
     <dimen name="coins_item_padding">20dp</dimen>

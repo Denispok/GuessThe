@@ -37,6 +37,7 @@ class LevelMenuActivity : AppCompatActivity() {
                                 .build()))
                 .build())
 
+        hideSystemUI()
         setContentView(R.layout.activity_levelmenu)
         loadPacks()
         findViewById<ImageView>(R.id.levelmenu_back).setOnClickListener { if (isClickable) this.onBackPressed() }
@@ -98,5 +99,10 @@ class LevelMenuActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (hasFocus) hideSystemUI()
     }
 }

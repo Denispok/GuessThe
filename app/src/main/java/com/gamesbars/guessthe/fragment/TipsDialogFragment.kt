@@ -3,7 +3,6 @@ package com.gamesbars.guessthe.fragment
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
-import android.content.DialogInterface
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.view.WindowManager
@@ -12,24 +11,25 @@ import android.widget.TextView
 import com.gamesbars.guessthe.R
 import kotlinx.coroutines.experimental.CoroutineScope
 import kotlinx.coroutines.experimental.Dispatchers
-import kotlinx.coroutines.experimental.Job
 import kotlinx.coroutines.experimental.android.Main
 import kotlinx.coroutines.experimental.launch
 
 class TipsDialogFragment : DialogFragment() {
 
-    private lateinit var viewInit: Job
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(context)
         val view = activity!!.layoutInflater.inflate(R.layout.dialog_tips, null)
 
-        viewInit = CoroutineScope(Dispatchers.Main).launch {
+        CoroutineScope(Dispatchers.Main).launch {
             val fragment = fragmentManager!!.findFragmentByTag(resources.getString(R.string.level_fragment_tag)) as LevelFragment
 
             val tipLetter = view.findViewById<RelativeLayout>(R.id.tips_letter)
             val tipRemove = view.findViewById<RelativeLayout>(R.id.tips_remove)
             val tipSkip = view.findViewById<RelativeLayout>(R.id.tips_skip)
+            view.findViewById<TextView>(R.id.tips_cancel).setOnClickListener {
+                updateFragment(fragment)
+                dismiss()
+            }
 
             val tipLetterCost = resources.getInteger(R.integer.tip_letter_cost)
             val tipRemoveCost = resources.getInteger(R.integer.tip_remove_cost)
@@ -56,7 +56,7 @@ class TipsDialogFragment : DialogFragment() {
                     editor.putInt("coins", coins - tipLetterCost)
                     editor.apply()
 
-                    dialog.dismiss()
+                    updateFragment(fragment)
                 }
             } else tipLetter.isEnabled = false
             if (coins >= tipRemoveCost) {
@@ -68,7 +68,7 @@ class TipsDialogFragment : DialogFragment() {
                     editor.putInt("coins", coins - tipRemoveCost)
                     editor.apply()
 
-                    dialog.dismiss()
+                    updateFragment(fragment)
                 }
             } else tipRemove.isEnabled = false
             if (coins >= tipSkipCost) {
@@ -76,22 +76,19 @@ class TipsDialogFragment : DialogFragment() {
                     val editor = saves.edit()
                     editor.putInt("coins", coins - tipSkipCost)
                     editor.apply()
-                    dialog.dismiss()
+                    updateFragment(fragment)
                     fragment.win()
                 }
             } else tipSkip.isEnabled = false
         }
-
         builder.setView(view)
         val dialog = builder.create()
         dialog.window.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+        dialog.window.setFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE, WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE)
         return dialog
     }
 
-    override fun onDismiss(dialog: DialogInterface?) {
-        super.onDismiss(dialog)
-        viewInit.cancel()
-        val fragment = fragmentManager!!.findFragmentByTag(resources.getString(R.string.level_fragment_tag)) as LevelFragment
+    private fun updateFragment(fragment: LevelFragment) {
         fragment.updateCoins()
         fragment.isClickable = true
     }

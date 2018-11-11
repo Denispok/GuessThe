@@ -8,6 +8,12 @@
     <dimen name="top_pane_side_padding">0dp</dimen>
     <dimen name="top_pane_title_text_size">28sp</dimen>
 
+    <!-- activity_menu -->
+    <dimen name="menu_button_width">200dp</dimen>
+    <dimen name="menu_button_height">54dp</dimen>
+    <dimen name="menu_button_text_size">24sp</dimen>
+    <dimen name="menu_button_margin">10dp</dimen>
+
     <!-- activity_levelmenu -->
     <dimen name="levelmenu_button_width">260dp</dimen>
     <dimen name="levelmenu_button_height">92dp</dimen>
@@ -48,12 +54,15 @@
     <dimen name="x3_small_text_size">16sp</dimen>
 
     <!-- dialog_fragment_tips -->
-    <dimen name="tips_padding">16dp</dimen>
+    <dimen name="tips_padding">12dp</dimen>
 
     <dimen name="tips_button_width">260dp</dimen>
     <dimen name="tips_button_height">42dp</dimen>
     <dimen name="tips_button_text_size">16sp</dimen>
     <dimen name="tips_button_margin">8dp</dimen>
+
+    <dimen name="tips_cancel_padding">36dp</dimen>
+    <dimen name="tips_cancel_margin_top">10dp</dimen>
 
     <!-- activity_coins -->
     <dimen name="coins_item_height">54dp</dimen>

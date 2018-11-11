@@ -26,11 +26,17 @@ class PlayActivity : AppCompatActivity() {
                                 .build()))
                 .build())
 
+        hideSystemUI()
         setContentView(R.layout.activity_play)
 
         supportFragmentManager.beginTransaction()
                 .replace(R.id.activity_play,
                         LevelFragment.newInstance(intent.extras.getString("pack")), resources.getString(R.string.level_fragment_tag))
                 .commit()
+    }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (hasFocus) hideSystemUI()
     }
 }
