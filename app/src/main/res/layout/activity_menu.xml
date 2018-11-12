@@ -9,11 +9,11 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Угадай Русское Авто!"
+        android:layout_marginTop="@dimen/menu_title_margin_top"
+        android:text="@string/menu_title"
         android:textAlignment="center"
         android:textColor="@color/colorText"
-        android:textSize="40sp" />
+        android:textSize="@dimen/menu_title_text_size" />
 
     <View
         android:layout_width="match_parent"
@@ -21,6 +21,7 @@
         android:layout_weight="1" />
 
     <Button
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="@dimen/menu_button_width"
         android:layout_height="@dimen/menu_button_height"
         android:layout_gravity="center"
@@ -33,11 +34,13 @@
         android:textSize="@dimen/menu_button_text_size" />
 
     <Button
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="@dimen/menu_button_width"
         android:layout_height="@dimen/menu_button_height"
         android:layout_gravity="center"
         android:layout_marginBottom="@dimen/menu_button_margin"
         android:background="@drawable/button_selector_blue"
+        android:onClick="shop"
         android:text="Магазин"
         android:textAllCaps="false"
         android:textColor="@color/colorText"
@@ -56,6 +59,7 @@
             android:layout_centerInParent="true"
             android:background="@drawable/button_selector_blue"
             android:gravity="center"
+            android:onClick="rate"
             android:text="Оценить"
             android:textAllCaps="false"
             android:textColor="@color/colorText"
@@ -69,11 +73,13 @@
             android:layout_marginStart="-36dp"
             android:layout_toEndOf="@id/menu_rate"
             android:background="@drawable/button_selector_green"
+            android:contentDescription="@string/description_coins"
             android:drawableEnd="@drawable/coin_icon_16"
-            android:padding="5dp"
-            android:text="+20"
+            android:drawablePadding="2dp"
+            android:padding="@dimen/menu_button_coins_padding"
+            android:text="+40"
             android:textColor="@color/colorText"
-            android:textSize="18sp" />
+            android:textSize="@dimen/menu_button_coins_text_size" />
     </RelativeLayout>
 
     <LinearLayout
@@ -83,17 +89,19 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/menu_icon_dimen"
+            android:layout_height="@dimen/menu_icon_dimen"
             android:layout_marginEnd="@dimen/menu_button_margin"
             android:background="@drawable/button_selector_blue"
+            android:contentDescription="@string/description_sound"
             android:padding="6dp"
             android:src="@drawable/baseline_volume_up_white_48" />
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/menu_icon_dimen"
+            android:layout_height="@dimen/menu_icon_dimen"
             android:background="@drawable/button_selector_blue"
+            android:contentDescription="@string/description_share"
             android:padding="6dp"
             android:src="@drawable/baseline_share_white_48" />
 

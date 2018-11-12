@@ -1,0 +1,7 @@
+<resources>
+    <string name="description_sound">Mute/Unmute sound</string>
+    <string name="description_share">Share</string>
+    <string name="description_back">Back</string>
+    <string name="description_coins">Coins</string>
+    <string name="description_image">Image to guess</string>
+</resources>

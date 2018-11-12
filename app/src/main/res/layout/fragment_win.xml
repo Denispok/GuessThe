@@ -23,6 +23,7 @@
         android:layout_marginEnd="10dp"
         android:layout_weight="1"
         android:background="@android:color/transparent"
+        android:contentDescription="@string/description_image"
         android:transitionName="ImageTransition" />
 
     <TextView
@@ -44,6 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/win_margin"
         android:background="@drawable/button_selector_green"
+        android:contentDescription="@string/description_coins"
         android:drawableEnd="@drawable/coin_icon_16"
         android:drawablePadding="2dp"
         android:padding="6dp"
@@ -102,6 +104,7 @@
 
     <Button
         android:id="@+id/win_continue"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/win_margin"

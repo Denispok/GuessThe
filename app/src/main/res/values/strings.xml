@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">GuessThe</string>
+    <string name="menu_title">Угадай \nРусское Авто!</string>
     <string name="tips">Подсказки</string>
     <string name="get_coins">Получить монеты</string>
     <string name="success">Правильно!</string>

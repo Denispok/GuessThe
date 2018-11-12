@@ -2,6 +2,19 @@
 <resources>
     <!-- normal screens -->
 
+    <!-- activity_menu -->
+    <dimen name="menu_title_text_size">48sp</dimen>
+    <dimen name="menu_title_margin_top">32dp</dimen>
+
+    <dimen name="menu_button_width">250dp</dimen>
+    <dimen name="menu_button_height">64dp</dimen>
+    <dimen name="menu_button_text_size">32sp</dimen>
+    <dimen name="menu_button_margin">14dp</dimen>
+    <dimen name="menu_button_coins_text_size">20sp</dimen>
+    <dimen name="menu_button_coins_padding">6dp</dimen>
+
+    <dimen name="menu_icon_dimen">64dp</dimen>
+
     <!-- activity_levelmenu -->
     <dimen name="levelmenu_button_width">280dp</dimen>
     <dimen name="levelmenu_button_height">104dp</dimen>
