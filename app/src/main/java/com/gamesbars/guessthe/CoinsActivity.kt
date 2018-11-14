@@ -25,8 +25,9 @@ class CoinsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler {
         const val PRODUCT_3_ID = "android.test.purchased"
         const val PRODUCT_2_ID_WITH_ADS = "android.test.purchased"
         const val PRODUCT_3_ID_WITH_ADS = "android.test.purchased"
-
     }
+
+    var isClickable: Boolean = true
 
     private lateinit var billingProcessor: BillingProcessor
 
@@ -45,15 +46,22 @@ class CoinsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler {
                                 .build()))
                 .build())
 
+        setContentView(R.layout.activity_coins)
+
         billingProcessor = BillingProcessor(this, "LICENSE KEY HERE", this)
         if (BillingProcessor.isIabServiceAvailable(this)) {
             billingProcessor.initialize()
         } else {
             Toast.makeText(this, getString(R.string.purchases_unavailable), Toast.LENGTH_LONG).show()
+            findViewById<LinearLayout>(R.id.coins_purchase_1).visibility = View.GONE
+            findViewById<LinearLayout>(R.id.coins_purchase_2).visibility = View.GONE
+            findViewById<LinearLayout>(R.id.coins_purchase_3).visibility = View.GONE
+            findViewById<View>(R.id.coins_divider_1).visibility = View.GONE
+            findViewById<View>(R.id.coins_divider_2).visibility = View.GONE
+            findViewById<View>(R.id.coins_divider_3).visibility = View.GONE
         }
 
         hideSystemUI()
-        setContentView(R.layout.activity_coins)
         checkPurchases()
         updateCoins()
 
@@ -62,6 +70,11 @@ class CoinsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler {
         findViewById<TextView>(R.id.coins_purchase_2_coins).text = resources.getInteger(R.integer.coins_purchase_2).toString()
         findViewById<TextView>(R.id.coins_purchase_3_coins).text = resources.getInteger(R.integer.coins_purchase_3).toString()
         findViewById<TextView>(R.id.coins_video).text = (2 * resources.getInteger(R.integer.level_reward)).toString()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        isClickable = true
     }
 
     private fun updateCoins() {
@@ -93,7 +106,12 @@ class CoinsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler {
 
         val purchase1 = billingProcessor.getPurchaseListingDetails(PRODUCT_1_ID)
         findViewById<TextView>(R.id.coins_purchase_1_price).text = purchase1.priceText
-        findViewById<LinearLayout>(R.id.coins_purchase_1).setOnClickListener { billingProcessor.purchase(this, PRODUCT_1_ID) }
+        findViewById<LinearLayout>(R.id.coins_purchase_1).setOnClickListener {
+            if (isClickable) {
+                isClickable = false
+                billingProcessor.purchase(this, PRODUCT_1_ID)
+            }
+        }
 
         val purchase2Id = if (ads) PRODUCT_2_ID_WITH_ADS else PRODUCT_2_ID
         val purchase3Id = if (ads) PRODUCT_3_ID_WITH_ADS else PRODUCT_3_ID
@@ -102,10 +120,20 @@ class CoinsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler {
         val purchase3 = billingProcessor.getPurchaseListingDetails(purchase3Id)
 
         findViewById<TextView>(R.id.coins_purchase_2_price).text = purchase2.priceText
-        findViewById<LinearLayout>(R.id.coins_purchase_2).setOnClickListener { billingProcessor.purchase(this, purchase2Id) }
+        findViewById<LinearLayout>(R.id.coins_purchase_2).setOnClickListener {
+            if (isClickable) {
+                isClickable = false
+                billingProcessor.purchase(this, purchase2Id)
+            }
+        }
 
         findViewById<TextView>(R.id.coins_purchase_3_price).text = purchase3.priceText
-        findViewById<LinearLayout>(R.id.coins_purchase_3).setOnClickListener { billingProcessor.purchase(this, purchase3Id) }
+        findViewById<LinearLayout>(R.id.coins_purchase_3).setOnClickListener {
+            if (isClickable) {
+                isClickable = false
+                billingProcessor.purchase(this, purchase3Id)
+            }
+        }
     }
 
     override fun onProductPurchased(productId: String, details: TransactionDetails?) {

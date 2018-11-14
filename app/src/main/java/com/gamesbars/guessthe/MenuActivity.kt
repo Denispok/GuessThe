@@ -16,6 +16,8 @@ import io.github.inflationx.viewpump.ViewPumpContextWrapper
 
 class MenuActivity : AppCompatActivity() {
 
+    var isClickable: Boolean = true
+
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase))
     }
@@ -41,24 +43,49 @@ class MenuActivity : AppCompatActivity() {
         val saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
         if (saves.getBoolean("rated", false))
             findViewById<TextView>(R.id.menu_rate_coins).visibility = View.GONE
+        isClickable = true
     }
 
-    fun play(view: View) = startActivity(Intent(applicationContext, LevelMenuActivity().javaClass))
+    fun play(view: View) {
+        if (isClickable) {
+            isClickable = false
+            startActivity(Intent(applicationContext, LevelMenuActivity().javaClass))
+        }
+    }
 
-    fun shop(view: View) = startActivity(Intent(applicationContext, CoinsActivity().javaClass))
+    fun shop(view: View) {
+        if (isClickable) {
+            isClickable = false
+            startActivity(Intent(applicationContext, CoinsActivity().javaClass))
+        }
+    }
 
     fun rate(view: View) {
-        try {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.gamesbars.whatyouchoose")))
-        } catch (anfe: ActivityNotFoundException) {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.gamesbars.whatyouchoose")))
+        if (isClickable) {
+            isClickable = false
+            try {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.gamesbars.whatyouchoose")))
+            } catch (anfe: ActivityNotFoundException) {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.google_play_link))))
+            }
+            val saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
+            if (!saves.getBoolean("rated", false)) {
+                val editor = saves.edit()
+                editor.putBoolean("rated", true)
+                editor.putInt("coins", saves.getInt("coins", 0) + resources.getInteger(R.integer.rate_reward))
+                editor.apply()
+            }
         }
-        val saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
-        if (!saves.getBoolean("rated", false)) {
-            val editor = saves.edit()
-            editor.putBoolean("rated", true)
-            editor.putInt("coins", saves.getInt("coins", 0) + resources.getInteger(R.integer.rate_reward))
-            editor.apply()
+    }
+
+    fun share(view: View) {
+        if (isClickable) {
+            isClickable = false
+            val sharingIntent = Intent(Intent.ACTION_SEND)
+            sharingIntent.type = "text/plain"
+            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, getString(R.string.share_text) + getString(R.string.google_play_link))
+            sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getString(R.string.share_subject))
+            startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_chooser_title)))
         }
     }
 

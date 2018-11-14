@@ -84,11 +84,11 @@
             android:text="49,00 Р"
             android:textColor="@color/colorText"
             android:textSize="@dimen/coins_item_text_size" />
-
-
     </LinearLayout>
 
-    <View style="@style/Divider" />
+    <View
+        android:id="@+id/coins_divider_1"
+        style="@style/Divider" />
 
     <LinearLayout
         android:id="@+id/coins_purchase_2"
@@ -134,11 +134,11 @@
             android:text="49,00 Р"
             android:textColor="@color/colorText"
             android:textSize="@dimen/coins_item_text_size" />
-
-
     </LinearLayout>
 
-    <View style="@style/Divider" />
+    <View
+        android:id="@+id/coins_divider_2"
+        style="@style/Divider" />
 
     <LinearLayout
         android:id="@+id/coins_purchase_3"
@@ -184,11 +184,11 @@
             android:text="49,00 Р"
             android:textColor="@color/colorText"
             android:textSize="@dimen/coins_item_text_size" />
-
-
     </LinearLayout>
 
-    <View style="@style/Divider" />
+    <View
+        android:id="@+id/coins_divider_3"
+        style="@style/Divider" />
 
     <View
         android:layout_width="match_parent"
@@ -240,6 +240,5 @@
                 android:textSize="@dimen/x3_small_text_size" />
 
         </LinearLayout>
-
     </LinearLayout>
 </LinearLayout>

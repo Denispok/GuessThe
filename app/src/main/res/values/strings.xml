@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">GuessThe</string>
     <string name="menu_title">Угадай \nРусское Авто!</string>
+    <string name="google_play_link">https://play.google.com/store/apps/details?id=com.gamesbars.whatyouchoose</string>
+    <string name="share_subject">Крутая игра!</string>
+    <string name="share_text">"Играй вместе со мной! "</string>
+    <string name="share_chooser_title">Отправить с помощью&#8230;</string>
+
     <string name="tips">Подсказки</string>
     <string name="get_coins">Получить монеты</string>
     <string name="success">Правильно!</string>

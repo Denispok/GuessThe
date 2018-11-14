@@ -60,7 +60,7 @@ class TipsDialogFragment : DialogFragment() {
                     updateFragment(fragment)
                 }
             } else tipLetter.isEnabled = false
-            if (coins >= tipRemoveCost) {
+            if (coins >= tipRemoveCost && levelString.last() != '!') {
                 tipRemove.setOnClickListener {
                     fragment.letters.tipRemoveLetters(fragment.wordLetters)
 

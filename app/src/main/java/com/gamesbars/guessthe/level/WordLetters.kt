@@ -1,8 +1,10 @@
 package com.gamesbars.guessthe.level
 
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.graphics.Color
 import android.os.Handler
-import android.util.Log
+import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.LinearLayout
 import com.gamesbars.guessthe.fragment.LevelFragment
 
@@ -23,6 +25,15 @@ class WordLetters(private val fragment: LevelFragment, private val word: String)
         }
     }
 
+    private fun playIsFullAnimation() {
+        val animator = ObjectAnimator.ofFloat(wordLayout, "translationX", -14f, 14f)
+        animator.interpolator = AccelerateDecelerateInterpolator()
+        animator.repeatMode = ValueAnimator.REVERSE
+        animator.repeatCount = 5
+        animator.duration = 100
+        animator.start()
+    }
+
     private fun checkWord() {
         var userWord = ""
         for (wordLetter in wordLetters) {
@@ -35,8 +46,7 @@ class WordLetters(private val fragment: LevelFragment, private val word: String)
         }
         if (userWord == word) fragment.win()
         else {
-            // play isFull animation
-            Log.d("MYLOG", "IS FULL!!!")
+            playIsFullAnimation()
         }
     }
 
@@ -89,8 +99,7 @@ class WordLetters(private val fragment: LevelFragment, private val word: String)
     fun addLetter(letter: Letter) {
         val freeWordLetter = freeWordLetter()
         if (freeWordLetter == null) {
-            // play isFull animation
-            Log.d("MYLOG", "IS FULL!!!")
+            playIsFullAnimation()
         } else {
             letter.chooseIn(freeWordLetter, animationDuration)
             freeWordLetter.letter = letter

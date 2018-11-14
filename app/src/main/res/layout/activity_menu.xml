@@ -102,6 +102,7 @@
             android:layout_height="@dimen/menu_icon_dimen"
             android:background="@drawable/button_selector_blue"
             android:contentDescription="@string/description_share"
+            android:onClick="share"
             android:padding="6dp"
             android:src="@drawable/baseline_share_white_48" />
 
