@@ -89,11 +89,13 @@
         android:orientation="horizontal">
 
         <ImageView
+            android:id="@+id/menu_sound"
             android:layout_width="@dimen/menu_icon_dimen"
             android:layout_height="@dimen/menu_icon_dimen"
             android:layout_marginEnd="@dimen/menu_button_margin"
             android:background="@drawable/button_selector_blue"
             android:contentDescription="@string/description_sound"
+            android:onClick="sound"
             android:padding="6dp"
             android:src="@drawable/baseline_volume_up_white_48" />
 

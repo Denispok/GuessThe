@@ -9,6 +9,7 @@ import android.view.WindowManager
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.gamesbars.guessthe.R
+import com.gamesbars.guessthe.playSound
 import kotlinx.coroutines.experimental.CoroutineScope
 import kotlinx.coroutines.experimental.Dispatchers
 import kotlinx.coroutines.experimental.android.Main
@@ -27,6 +28,7 @@ class TipsDialogFragment : DialogFragment() {
             val tipRemove = view.findViewById<RelativeLayout>(R.id.tips_remove)
             val tipSkip = view.findViewById<RelativeLayout>(R.id.tips_skip)
             view.findViewById<TextView>(R.id.tips_cancel).setOnClickListener {
+                playSound(context!!, R.raw.button)
                 dismiss()
                 updateFragment(fragment)
             }
@@ -56,6 +58,7 @@ class TipsDialogFragment : DialogFragment() {
                     editor.putInt("coins", coins - tipLetterCost)
                     editor.apply()
 
+                    playSound(context!!, R.raw.tips)
                     dismiss()
                     updateFragment(fragment)
                 }
@@ -69,6 +72,7 @@ class TipsDialogFragment : DialogFragment() {
                     editor.putInt("coins", coins - tipRemoveCost)
                     editor.apply()
 
+                    playSound(context!!, R.raw.tips)
                     dismiss()
                     updateFragment(fragment)
                 }
@@ -78,6 +82,8 @@ class TipsDialogFragment : DialogFragment() {
                     val editor = saves.edit()
                     editor.putInt("coins", coins - tipSkipCost)
                     editor.apply()
+
+                    playSound(context!!, R.raw.tips)
                     dismiss()
                     updateFragment(fragment)
                     fragment.win()

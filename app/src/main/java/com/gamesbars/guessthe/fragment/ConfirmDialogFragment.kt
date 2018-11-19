@@ -8,6 +8,7 @@ import android.support.v4.app.DialogFragment
 import android.view.WindowManager
 import com.gamesbars.guessthe.LevelMenuActivity
 import com.gamesbars.guessthe.R
+import com.gamesbars.guessthe.playSound
 
 class ConfirmDialogFragment : DialogFragment() {
 
@@ -39,14 +40,17 @@ class ConfirmDialogFragment : DialogFragment() {
                 editor.putBoolean(pack + "purchased", true)
                 editor.putInt("coins", saves.getInt("coins", 0) - packPrice)
                 editor.apply()
+                playSound(context!!, R.raw.button)
                 updateActivity()
             }
             builder.setNegativeButton(R.string.cancel) { _, _ ->
+                playSound(context!!, R.raw.button)
                 updateActivity()
             }
         } else {
             builder.setMessage(getString(R.string.dont_enough_coins))
             builder.setPositiveButton(getString(R.string.ok)) { _, _ ->
+                playSound(context!!, R.raw.button)
                 updateActivity()
             }
         }

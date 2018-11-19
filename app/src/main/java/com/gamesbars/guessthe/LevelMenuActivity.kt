@@ -40,7 +40,12 @@ class LevelMenuActivity : AppCompatActivity() {
         hideSystemUI()
         setContentView(R.layout.activity_levelmenu)
         loadPacks()
-        findViewById<ImageView>(R.id.levelmenu_back).setOnClickListener { if (isClickable) this.onBackPressed() }
+        findViewById<ImageView>(R.id.levelmenu_back).setOnClickListener {
+            if (isClickable) {
+                playSound(this, R.raw.button)
+                this.onBackPressed()
+            }
+        }
     }
 
     override fun onResume() {
@@ -93,6 +98,7 @@ class LevelMenuActivity : AppCompatActivity() {
                 currentButton.setOnClickListener {
                     if (isClickable) {
                         isClickable = false
+                        playSound(this, R.raw.button)
                         ConfirmDialogFragment.newInstance(packs[id])
                                 .show(supportFragmentManager, getString(R.string.confirm_dialog_fragment_tag))
                     }

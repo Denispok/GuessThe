@@ -12,6 +12,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.gamesbars.guessthe.R
+import com.gamesbars.guessthe.playSound
 
 class WinFragment : Fragment() {
 
@@ -52,6 +53,7 @@ class WinFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        playSound(context!!, R.raw.win)
         activity!!.findViewById<ImageView>(R.id.win_image).setImageResource(
                 resources.getIdentifier(image, "drawable", context!!.packageName))
         activity!!.findViewById<TextView>(R.id.win_word).text = word

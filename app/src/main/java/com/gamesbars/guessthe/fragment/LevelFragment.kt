@@ -20,6 +20,7 @@ import com.gamesbars.guessthe.R
 import com.gamesbars.guessthe.level.Letter
 import com.gamesbars.guessthe.level.Letters
 import com.gamesbars.guessthe.level.WordLetters
+import com.gamesbars.guessthe.playSound
 
 class LevelFragment : Fragment() {
 
@@ -74,11 +75,17 @@ class LevelFragment : Fragment() {
 
             val saves = activity!!.getSharedPreferences("saves", Context.MODE_PRIVATE)
             activity!!.findViewById<Button>(R.id.level_level).text = getString(R.string.level, saves.getInt(pack, 1))
-            activity!!.findViewById<ImageView>(R.id.level_back).setOnClickListener { if (isClickable) activity!!.onBackPressed() }
+            activity!!.findViewById<ImageView>(R.id.level_back).setOnClickListener {
+                if (isClickable) {
+                    playSound(context!!, R.raw.button)
+                    activity!!.onBackPressed()
+                }
+            }
             activity!!.findViewById<TextView>(R.id.level_tips).setOnClickListener { tips() }
             activity!!.findViewById<TextView>(R.id.level_coins_button).setOnClickListener { coins() }
 
             Handler().postDelayed({
+                playSound(context!!, R.raw.start)
                 letters.showChosenLetters(wordLetters)
                 if (letters.removeTipUsed) letters.tipRemoveLetters(wordLetters)
             }, 100L)
@@ -107,6 +114,7 @@ class LevelFragment : Fragment() {
     private fun tips() {
         if (isClickable) {
             isClickable = false
+            playSound(context!!, R.raw.button)
             tipsDialog.show(fragmentManager, resources.getString(R.string.tips_dialog_fragment_tag))
         }
     }
@@ -114,6 +122,7 @@ class LevelFragment : Fragment() {
     private fun coins() {
         if (isClickable) {
             isClickable = false
+            playSound(context!!, R.raw.button)
             startActivity(Intent(context, CoinsActivity().javaClass))
         }
     }

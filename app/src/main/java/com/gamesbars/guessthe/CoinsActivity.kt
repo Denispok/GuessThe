@@ -65,7 +65,12 @@ class CoinsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler {
         checkPurchases()
         updateCoins()
 
-        findViewById<ImageView>(R.id.coins_back).setOnClickListener { this.onBackPressed() }
+        findViewById<ImageView>(R.id.coins_back).setOnClickListener {
+            if (isClickable) {
+                playSound(this, R.raw.button)
+                this.onBackPressed()
+            }
+        }
         findViewById<TextView>(R.id.coins_purchase_1_coins).text = resources.getInteger(R.integer.coins_purchase_1).toString()
         findViewById<TextView>(R.id.coins_purchase_2_coins).text = resources.getInteger(R.integer.coins_purchase_2).toString()
         findViewById<TextView>(R.id.coins_purchase_3_coins).text = resources.getInteger(R.integer.coins_purchase_3).toString()
@@ -109,6 +114,7 @@ class CoinsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler {
         findViewById<LinearLayout>(R.id.coins_purchase_1).setOnClickListener {
             if (isClickable) {
                 isClickable = false
+                playSound(this, R.raw.button)
                 billingProcessor.purchase(this, PRODUCT_1_ID)
             }
         }
@@ -123,6 +129,7 @@ class CoinsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler {
         findViewById<LinearLayout>(R.id.coins_purchase_2).setOnClickListener {
             if (isClickable) {
                 isClickable = false
+                playSound(this, R.raw.button)
                 billingProcessor.purchase(this, purchase2Id)
             }
         }
@@ -131,6 +138,7 @@ class CoinsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler {
         findViewById<LinearLayout>(R.id.coins_purchase_3).setOnClickListener {
             if (isClickable) {
                 isClickable = false
+                playSound(this, R.raw.button)
                 billingProcessor.purchase(this, purchase3Id)
             }
         }

@@ -7,12 +7,12 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import io.github.inflationx.calligraphy3.CalligraphyConfig
 import io.github.inflationx.calligraphy3.CalligraphyInterceptor
 import io.github.inflationx.viewpump.ViewPump
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
-
 
 class MenuActivity : AppCompatActivity() {
 
@@ -49,6 +49,7 @@ class MenuActivity : AppCompatActivity() {
     fun play(view: View) {
         if (isClickable) {
             isClickable = false
+            playSound(this, R.raw.button)
             startActivity(Intent(applicationContext, LevelMenuActivity().javaClass))
         }
     }
@@ -56,6 +57,7 @@ class MenuActivity : AppCompatActivity() {
     fun shop(view: View) {
         if (isClickable) {
             isClickable = false
+            playSound(this, R.raw.button)
             startActivity(Intent(applicationContext, CoinsActivity().javaClass))
         }
     }
@@ -63,6 +65,7 @@ class MenuActivity : AppCompatActivity() {
     fun rate(view: View) {
         if (isClickable) {
             isClickable = false
+            playSound(this, R.raw.button)
             try {
                 startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.gamesbars.whatyouchoose")))
             } catch (anfe: ActivityNotFoundException) {
@@ -78,9 +81,24 @@ class MenuActivity : AppCompatActivity() {
         }
     }
 
+    fun sound(view: View) {
+        if (isClickable) {
+            val saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
+            val sound = saves.getBoolean("sound", true)
+            saves.edit().apply {
+                putBoolean("sound", !sound)
+                apply()
+            }
+            findViewById<ImageView>(R.id.menu_sound).setImageResource(
+                    if (sound) R.drawable.baseline_volume_off_white_48
+                    else R.drawable.baseline_volume_up_white_48)
+        }
+    }
+
     fun share(view: View) {
         if (isClickable) {
             isClickable = false
+            playSound(this, R.raw.button)
             val sharingIntent = Intent(Intent.ACTION_SEND)
             sharingIntent.type = "text/plain"
             sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, getString(R.string.share_text) + getString(R.string.google_play_link))
@@ -93,9 +111,4 @@ class MenuActivity : AppCompatActivity() {
         super.onWindowFocusChanged(hasFocus)
         if (hasFocus) hideSystemUI()
     }
-}
-
-fun AppCompatActivity.hideSystemUI() {
-    window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-            or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION)
 }

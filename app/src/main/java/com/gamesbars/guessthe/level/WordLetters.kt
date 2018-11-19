@@ -1,12 +1,13 @@
 package com.gamesbars.guessthe.level
 
 import android.animation.ObjectAnimator
-import android.animation.ValueAnimator
 import android.graphics.Color
 import android.os.Handler
-import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.LinearInterpolator
 import android.widget.LinearLayout
+import com.gamesbars.guessthe.R
 import com.gamesbars.guessthe.fragment.LevelFragment
+import com.gamesbars.guessthe.playSound
 
 class WordLetters(private val fragment: LevelFragment, private val word: String) {
     private lateinit var wordLayout: LinearLayout
@@ -26,11 +27,10 @@ class WordLetters(private val fragment: LevelFragment, private val word: String)
     }
 
     private fun playIsFullAnimation() {
-        val animator = ObjectAnimator.ofFloat(wordLayout, "translationX", -14f, 14f)
-        animator.interpolator = AccelerateDecelerateInterpolator()
-        animator.repeatMode = ValueAnimator.REVERSE
-        animator.repeatCount = 5
-        animator.duration = 100
+        playSound(fragment.context!!, R.raw.isfull)
+        val animator = ObjectAnimator.ofFloat(wordLayout, "translationX", 0f, -14f, 14f, -14f, 14f, -14f, 14f, -14f, 14f, 0f)
+        animator.interpolator = LinearInterpolator()
+        animator.duration = 700
         animator.start()
     }
 
@@ -101,6 +101,7 @@ class WordLetters(private val fragment: LevelFragment, private val word: String)
         if (freeWordLetter == null) {
             playIsFullAnimation()
         } else {
+            playSound(fragment.context!!, R.raw.choosein)
             letter.chooseIn(freeWordLetter, animationDuration)
             freeWordLetter.letter = letter
             Handler().postDelayed({
@@ -112,6 +113,7 @@ class WordLetters(private val fragment: LevelFragment, private val word: String)
     }
 
     private fun removeOutLetter(wordLetter: WordLetter) {
+        playSound(fragment.context!!, R.raw.chooseout)
         wordLetter.letter?.chooseOut(animationDuration)
         removeLetter(wordLetter)
     }
