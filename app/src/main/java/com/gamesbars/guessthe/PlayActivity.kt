@@ -3,9 +3,12 @@ package com.gamesbars.guessthe
 import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.View
 import com.gamesbars.guessthe.fragment.LevelFragment
 import com.gamesbars.guessthe.fragment.TipsDialogFragment
+import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.InterstitialAd
 import io.github.inflationx.calligraphy3.CalligraphyConfig
 import io.github.inflationx.calligraphy3.CalligraphyInterceptor
 import io.github.inflationx.viewpump.ViewPump
@@ -14,6 +17,7 @@ import kotlinx.android.synthetic.main.activity_play.*
 
 class PlayActivity : AppCompatActivity() {
 
+    private lateinit var mInterstitialAd: InterstitialAd
     var currentDialog: TipsDialogFragment? = null
 
     override fun attachBaseContext(newBase: Context) {
@@ -37,7 +41,17 @@ class PlayActivity : AppCompatActivity() {
         val saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
         if (saves.getBoolean("ads", true)) {
             val adRequest = AdRequest.Builder().build()
+            adView.visibility = View.VISIBLE
             adView.loadAd(adRequest)
+
+            mInterstitialAd = InterstitialAd(this)
+            mInterstitialAd.adUnitId = getString(R.string.interstitial_id)
+            mInterstitialAd.adListener = object : AdListener() {
+                override fun onAdClosed() {
+                    mInterstitialAd.loadAd(AdRequest.Builder().build())
+                }
+            }
+            mInterstitialAd.loadAd(AdRequest.Builder().build())
         }
 
         supportFragmentManager.beginTransaction()
@@ -56,5 +70,12 @@ class PlayActivity : AppCompatActivity() {
             updateFragment(supportFragmentManager.findFragmentByTag(resources.getString(R.string.level_fragment_tag)) as LevelFragment)
             dismiss()
         } ?: super.onBackPressed()
+    }
+
+    fun showInterstitialAd() {
+        val saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
+        if (saves.getBoolean("ads", true) && mInterstitialAd.isLoaded) {
+            mInterstitialAd.show()
+        }
     }
 }

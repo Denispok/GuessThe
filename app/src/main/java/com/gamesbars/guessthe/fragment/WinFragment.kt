@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import com.gamesbars.guessthe.PlayActivity
 import com.gamesbars.guessthe.R
 import com.gamesbars.guessthe.playSound
 
@@ -57,7 +58,10 @@ class WinFragment : Fragment() {
         activity!!.findViewById<ImageView>(R.id.win_image).setImageResource(
                 resources.getIdentifier(image, "drawable", context!!.packageName))
         activity!!.findViewById<TextView>(R.id.win_word).text = word
-        activity!!.findViewById<Button>(R.id.win_continue).setOnClickListener { nextLevel() }
+        activity!!.findViewById<Button>(R.id.win_continue).setOnClickListener {
+            nextLevel()
+            (activity!! as PlayActivity).showInterstitialAd()
+        }
         if (isLevelReward) {
             activity!!.findViewById<TextView>(R.id.win_reward_coins).text = activity!!.resources.getInteger(R.integer.level_reward).toString()
         } else {

@@ -6,7 +6,6 @@ import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import com.google.android.gms.ads.MobileAds
 
-
 class SplashScreenActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

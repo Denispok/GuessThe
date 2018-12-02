@@ -70,6 +70,7 @@ class CoinsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler {
         val saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
         if (saves.getBoolean("ads", true)) {
             val adRequest = AdRequest.Builder().build()
+            adView.visibility = View.VISIBLE
             adView.loadAd(adRequest)
         }
 
