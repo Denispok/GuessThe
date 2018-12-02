@@ -9,10 +9,12 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import com.gamesbars.guessthe.fragment.ConfirmDialogFragment
+import com.google.android.gms.ads.AdRequest
 import io.github.inflationx.calligraphy3.CalligraphyConfig
 import io.github.inflationx.calligraphy3.CalligraphyInterceptor
 import io.github.inflationx.viewpump.ViewPump
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
+import kotlinx.android.synthetic.main.activity_levelmenu.*
 
 class LevelMenuActivity : AppCompatActivity() {
 
@@ -21,6 +23,7 @@ class LevelMenuActivity : AppCompatActivity() {
     }
 
     var isClickable: Boolean = true
+    var currentDialog: ConfirmDialogFragment? = null
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase))
@@ -45,6 +48,12 @@ class LevelMenuActivity : AppCompatActivity() {
                 playSound(this, R.raw.button)
                 this.onBackPressed()
             }
+        }
+
+        val saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
+        if (saves.getBoolean("ads", true)) {
+            val adRequest = AdRequest.Builder().build()
+            adView.loadAd(adRequest)
         }
     }
 
@@ -99,8 +108,8 @@ class LevelMenuActivity : AppCompatActivity() {
                     if (isClickable) {
                         isClickable = false
                         playSound(this, R.raw.button)
-                        ConfirmDialogFragment.newInstance(packs[id])
-                                .show(supportFragmentManager, getString(R.string.confirm_dialog_fragment_tag))
+                        currentDialog = ConfirmDialogFragment.newInstance(packs[id])
+                        currentDialog!!.show(supportFragmentManager, getString(R.string.confirm_dialog_fragment_tag))
                     }
                 }
             }
@@ -110,5 +119,12 @@ class LevelMenuActivity : AppCompatActivity() {
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
         if (hasFocus) hideSystemUI()
+    }
+
+    override fun onBackPressed() {
+        currentDialog?.apply {
+            updateActivity()
+            dismiss()
+        } ?: super.onBackPressed()
     }
 }

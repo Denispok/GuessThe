@@ -8,6 +8,7 @@ import android.support.v4.app.DialogFragment
 import android.view.WindowManager
 import android.widget.RelativeLayout
 import android.widget.TextView
+import com.gamesbars.guessthe.PlayActivity
 import com.gamesbars.guessthe.R
 import com.gamesbars.guessthe.playSound
 import kotlinx.coroutines.experimental.CoroutineScope
@@ -97,7 +98,8 @@ class TipsDialogFragment : DialogFragment() {
         return dialog
     }
 
-    private fun updateFragment(fragment: LevelFragment) {
+    fun updateFragment(fragment: LevelFragment) {
+        (fragment.activity!! as PlayActivity).currentDialog = null
         fragment.updateCoins()
         fragment.isClickable = true
     }

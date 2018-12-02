@@ -9,10 +9,12 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import com.google.android.gms.ads.AdRequest
 import io.github.inflationx.calligraphy3.CalligraphyConfig
 import io.github.inflationx.calligraphy3.CalligraphyInterceptor
 import io.github.inflationx.viewpump.ViewPump
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
+import kotlinx.android.synthetic.main.activity_menu.*
 
 class MenuActivity : AppCompatActivity() {
 
@@ -36,6 +38,12 @@ class MenuActivity : AppCompatActivity() {
         hideSystemUI()
         setContentView(R.layout.activity_menu)
         findViewById<TextView>(R.id.menu_rate_coins).text = "+".plus(resources.getInteger(R.integer.rate_reward))
+
+        val saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
+        if (saves.getBoolean("ads", true)) {
+            val adRequest = AdRequest.Builder().build()
+            adView.loadAd(adRequest)
+        }
     }
 
     override fun onResume() {

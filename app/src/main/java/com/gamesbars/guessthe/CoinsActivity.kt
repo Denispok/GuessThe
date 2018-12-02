@@ -11,10 +11,12 @@ import android.widget.TextView
 import android.widget.Toast
 import com.anjlab.android.iab.v3.BillingProcessor
 import com.anjlab.android.iab.v3.TransactionDetails
+import com.google.android.gms.ads.AdRequest
 import io.github.inflationx.calligraphy3.CalligraphyConfig
 import io.github.inflationx.calligraphy3.CalligraphyInterceptor
 import io.github.inflationx.viewpump.ViewPump
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
+import kotlinx.android.synthetic.main.activity_coins.*
 
 
 class CoinsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler {
@@ -64,6 +66,12 @@ class CoinsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler {
         hideSystemUI()
         checkPurchases()
         updateCoins()
+
+        val saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
+        if (saves.getBoolean("ads", true)) {
+            val adRequest = AdRequest.Builder().build()
+            adView.loadAd(adRequest)
+        }
 
         findViewById<ImageView>(R.id.coins_back).setOnClickListener {
             if (isClickable) {

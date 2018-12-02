@@ -13,7 +13,7 @@ import com.gamesbars.guessthe.playSound
 class ConfirmDialogFragment : DialogFragment() {
 
     companion object {
-        fun newInstance(pack: String): DialogFragment {
+        fun newInstance(pack: String): ConfirmDialogFragment {
             val args = Bundle()
             args.putString("pack", pack)
             val fragment = ConfirmDialogFragment()
@@ -59,10 +59,11 @@ class ConfirmDialogFragment : DialogFragment() {
         return dialog
     }
 
-    private fun updateActivity() {
+    fun updateActivity() {
         val levelMenuActivity = (activity as LevelMenuActivity)
         levelMenuActivity.updateCoins()
         levelMenuActivity.updateProgressBars()
         levelMenuActivity.isClickable = true
+        levelMenuActivity.currentDialog = null
     }
 }

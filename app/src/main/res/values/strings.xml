@@ -28,6 +28,10 @@
     <string name="tips_dialog_fragment_tag">win</string>
     <string name="confirm_dialog_fragment_tag">confirm</string>
 
+    <!--  Ads  -->
+
+    <string name="banner_id">ca-app-pub-3940256099942544/6300978111</string>
+
     <!--  Levels  -->
 
     <string-array name="packs_names">

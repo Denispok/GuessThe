@@ -14,13 +14,10 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import com.gamesbars.guessthe.CoinsActivity
-import com.gamesbars.guessthe.LevelMenuActivity
-import com.gamesbars.guessthe.R
+import com.gamesbars.guessthe.*
 import com.gamesbars.guessthe.level.Letter
 import com.gamesbars.guessthe.level.Letters
 import com.gamesbars.guessthe.level.WordLetters
-import com.gamesbars.guessthe.playSound
 
 class LevelFragment : Fragment() {
 
@@ -115,6 +112,7 @@ class LevelFragment : Fragment() {
         if (isClickable) {
             isClickable = false
             playSound(context!!, R.raw.button)
+            (activity!! as PlayActivity).currentDialog = tipsDialog
             tipsDialog.show(fragmentManager, resources.getString(R.string.tips_dialog_fragment_tag))
         }
     }
@@ -151,7 +149,7 @@ class LevelFragment : Fragment() {
 
         val fragment = WinFragment.newInstance(word, image, arguments!!.getString("pack"), isLevelReward)
         fragmentManager!!.beginTransaction()
-                .replace(R.id.activity_play, fragment, resources.getString(R.string.win_fragment_tag))
+                .replace(R.id.activity_play_fragment, fragment, resources.getString(R.string.win_fragment_tag))
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .addSharedElement(activity!!.findViewById<ImageView>(R.id.level_image), "ImageTransition")
                 .commit()

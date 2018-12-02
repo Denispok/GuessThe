@@ -72,7 +72,7 @@ class WinFragment : Fragment() {
         } else {
             val fragment = LevelFragment.newInstance(pack)
             fragmentManager!!.beginTransaction()
-                    .replace(R.id.activity_play, fragment, resources.getString(R.string.level_fragment_tag))
+                    .replace(R.id.activity_play_fragment, fragment, resources.getString(R.string.level_fragment_tag))
                     .addSharedElement(activity!!.findViewById<ImageView>(R.id.win_image), "ImageTransition")
                     .commit()
         }
