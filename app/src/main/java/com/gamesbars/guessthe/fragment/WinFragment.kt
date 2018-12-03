@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.gamesbars.guessthe.PlayActivity
 import com.gamesbars.guessthe.R
@@ -58,15 +59,19 @@ class WinFragment : Fragment() {
         activity!!.findViewById<ImageView>(R.id.win_image).setImageResource(
                 resources.getIdentifier(image, "drawable", context!!.packageName))
         activity!!.findViewById<TextView>(R.id.win_word).text = word
-        activity!!.findViewById<Button>(R.id.win_continue).setOnClickListener {
-            nextLevel()
-            (activity!! as PlayActivity).showInterstitialAd()
-        }
         if (isLevelReward) {
             activity!!.findViewById<TextView>(R.id.win_reward_coins).text = activity!!.resources.getInteger(R.integer.level_reward).toString()
         } else {
             activity!!.findViewById<TextView>(R.id.win_reward_coins).visibility = View.GONE
             activity!!.findViewById<TextView>(R.id.win_x3).text = (2 * activity!!.resources.getInteger(R.integer.level_reward)).toString()
+        }
+        activity!!.findViewById<LinearLayout>(R.id.win_rewarded_video).setOnClickListener {
+            (activity!! as PlayActivity).showRewardedVideoAd()
+        }
+        activity!!.findViewById<Button>(R.id.win_continue).setOnClickListener {
+            nextLevel()
+            if (activity!!.getSharedPreferences("saves", Context.MODE_PRIVATE).getInt(pack, 1) % 2 == 1)
+                (activity!! as PlayActivity).showInterstitialAd()
         }
     }
 

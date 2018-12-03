@@ -12,6 +12,10 @@ import android.widget.Toast
 import com.anjlab.android.iab.v3.BillingProcessor
 import com.anjlab.android.iab.v3.TransactionDetails
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.reward.RewardItem
+import com.google.android.gms.ads.reward.RewardedVideoAd
+import com.google.android.gms.ads.reward.RewardedVideoAdListener
 import io.github.inflationx.calligraphy3.CalligraphyConfig
 import io.github.inflationx.calligraphy3.CalligraphyInterceptor
 import io.github.inflationx.viewpump.ViewPump
@@ -19,7 +23,7 @@ import io.github.inflationx.viewpump.ViewPumpContextWrapper
 import kotlinx.android.synthetic.main.activity_coins.*
 
 
-class CoinsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler {
+class CoinsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler, RewardedVideoAdListener {
 
     companion object {
         const val PRODUCT_1_ID = "android.test.purchased"
@@ -32,6 +36,7 @@ class CoinsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler {
     var isClickable: Boolean = true
 
     private lateinit var billingProcessor: BillingProcessor
+    private lateinit var mRewardedVideoAd: RewardedVideoAd
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase))
@@ -67,6 +72,9 @@ class CoinsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler {
         checkPurchases()
         updateCoins()
 
+        mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this)
+        mRewardedVideoAd.rewardedVideoAdListener = this
+
         val saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
         if (saves.getBoolean("ads", true)) {
             val adRequest = AdRequest.Builder().build()
@@ -84,6 +92,12 @@ class CoinsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler {
         findViewById<TextView>(R.id.coins_purchase_2_coins).text = resources.getInteger(R.integer.coins_purchase_2).toString()
         findViewById<TextView>(R.id.coins_purchase_3_coins).text = resources.getInteger(R.integer.coins_purchase_3).toString()
         findViewById<TextView>(R.id.coins_video).text = (2 * resources.getInteger(R.integer.level_reward)).toString()
+        findViewById<LinearLayout>(R.id.coins_rewarded_video).setOnClickListener {
+            if (isClickable) {
+                isClickable = false
+                showRewardedVideoAd()
+            }
+        }
     }
 
     override fun onResume() {
@@ -188,5 +202,41 @@ class CoinsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler {
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
         if (hasFocus) hideSystemUI()
+    }
+
+    private fun showRewardedVideoAd() {
+        mRewardedVideoAd.loadAd(getString(R.string.rewarded_video_id),
+                AdRequest.Builder().build())
+        Toast.makeText(this, getString(R.string.video_is_loading), Toast.LENGTH_LONG).show()
+    }
+
+    override fun onRewardedVideoAdClosed() {
+        isClickable = true
+    }
+
+    override fun onRewardedVideoAdLeftApplication() {}
+
+    override fun onRewardedVideoAdLoaded() {
+        mRewardedVideoAd.show()
+    }
+
+    override fun onRewardedVideoAdOpened() {}
+
+    override fun onRewardedVideoCompleted() {}
+
+    override fun onRewarded(p0: RewardItem?) {
+        val saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
+        saves.edit().apply {
+            putInt("coins", saves.getInt("coins", 0) + 2 * resources.getInteger(R.integer.level_reward))
+            apply()
+        }
+        updateCoins()
+    }
+
+    override fun onRewardedVideoStarted() {}
+
+    override fun onRewardedVideoAdFailedToLoad(p0: Int) {
+        Toast.makeText(this, getString(R.string.video_error), Toast.LENGTH_LONG).show()
+        isClickable = true
     }
 }

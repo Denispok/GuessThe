@@ -22,6 +22,8 @@
     <string name="cancel">Отмена</string>
     <string name="dont_enough_coins">Недостаточно монет</string>
     <string name="confirm_dialog_message">Открыть новые уровни за %d монет?</string>
+    <string name="video_is_loading">Видео загружается&#8230;</string>
+    <string name="video_error">Ошибка загрузки видео.</string>
 
     <string name="level_fragment_tag">level</string>
     <string name="win_fragment_tag">win</string>
@@ -32,6 +34,7 @@
 
     <string name="banner_id">ca-app-pub-3940256099942544/6300978111</string>
     <string name="interstitial_id">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="rewarded_video_id">ca-app-pub-3940256099942544/5224354917</string>
 
     <!--  Levels  -->
 

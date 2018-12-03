@@ -13,7 +13,7 @@ class SplashScreenActivity : AppCompatActivity() {
         hideSystemUI()
         setContentView(R.layout.activity_splashscreen)
 
-        MobileAds.initialize(this, "ADS APP ID HERE")
+        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713")
 
         Handler().postDelayed({
             startActivity(Intent(applicationContext, MenuActivity().javaClass))
