@@ -50,9 +50,7 @@ class PlayActivity : AppCompatActivity(), RewardedVideoAdListener {
 
         val saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
         if (saves.getBoolean("ads", true)) {
-            val adRequest = AdRequest.Builder().build()
-            adView.visibility = View.VISIBLE
-            adView.loadAd(adRequest)
+            if (hasConnection(this)) loadBannerAd()
 
             mInterstitialAd = InterstitialAd(this)
             mInterstitialAd.adUnitId = getString(R.string.interstitial_id)
@@ -83,6 +81,12 @@ class PlayActivity : AppCompatActivity(), RewardedVideoAdListener {
             updateFragment(supportFragmentManager.findFragmentByTag(resources.getString(R.string.level_fragment_tag)) as LevelFragment)
             dismiss()
         } ?: super.onBackPressed()
+    }
+
+    fun loadBannerAd() {
+        val adRequest = AdRequest.Builder().build()
+        adView.visibility = View.VISIBLE
+        adView.loadAd(adRequest)
     }
 
     fun showInterstitialAd() {

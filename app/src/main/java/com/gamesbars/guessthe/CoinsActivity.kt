@@ -22,7 +22,6 @@ import io.github.inflationx.viewpump.ViewPump
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
 import kotlinx.android.synthetic.main.activity_coins.*
 
-
 class CoinsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler, RewardedVideoAdListener {
 
     companion object {
@@ -77,9 +76,11 @@ class CoinsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler, Rew
 
         val saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
         if (saves.getBoolean("ads", true)) {
-            val adRequest = AdRequest.Builder().build()
-            adView.visibility = View.VISIBLE
-            adView.loadAd(adRequest)
+            if (hasConnection(this)) {
+                val adRequest = AdRequest.Builder().build()
+                adView.visibility = View.VISIBLE
+                adView.loadAd(adRequest)
+            }
         }
 
         findViewById<ImageView>(R.id.coins_back).setOnClickListener {

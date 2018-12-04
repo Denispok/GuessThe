@@ -41,9 +41,11 @@ class MenuActivity : AppCompatActivity() {
 
         val saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
         if (saves.getBoolean("ads", true)) {
-            val adRequest = AdRequest.Builder().build()
-            adView.visibility = View.VISIBLE
-            adView.loadAd(adRequest)
+            if (hasConnection(this)) {
+                val adRequest = AdRequest.Builder().build()
+                adView.visibility = View.VISIBLE
+                adView.loadAd(adRequest)
+            }
         }
     }
 

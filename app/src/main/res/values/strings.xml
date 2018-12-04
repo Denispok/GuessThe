@@ -24,9 +24,12 @@
     <string name="confirm_dialog_message">Открыть новые уровни за %d монет?</string>
     <string name="video_is_loading">Видео загружается&#8230;</string>
     <string name="video_error">Ошибка загрузки видео.</string>
+    <string name="lost_internet_connection_title">Ошибка подключения к сети</string>
+    <string name="lost_internet_connection_message">Для продолжения подключитесь к сети интернет.</string>
 
     <string name="level_fragment_tag">level</string>
     <string name="win_fragment_tag">win</string>
+    <string name="internet_connection_dialog_fragment_tag">internet_connection</string>
     <string name="tips_dialog_fragment_tag">win</string>
     <string name="confirm_dialog_fragment_tag">confirm</string>
 

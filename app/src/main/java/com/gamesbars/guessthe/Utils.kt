@@ -2,6 +2,7 @@ package com.gamesbars.guessthe
 
 import android.content.Context
 import android.media.MediaPlayer
+import android.net.ConnectivityManager
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 
@@ -18,4 +19,9 @@ fun playSound(context: Context, resID: Int) {
             setOnCompletionListener { release() }
         }
     }
+}
+
+fun hasConnection(context: Context): Boolean {
+    val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    return cm.activeNetworkInfo?.isConnected ?: false
 }

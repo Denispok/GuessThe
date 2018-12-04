@@ -10,6 +10,7 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import com.gamesbars.guessthe.fragment.ConfirmDialogFragment
+import com.gamesbars.guessthe.fragment.InternetConnectionDialog
 import com.google.android.gms.ads.AdRequest
 import io.github.inflationx.calligraphy3.CalligraphyConfig
 import io.github.inflationx.calligraphy3.CalligraphyInterceptor
@@ -53,9 +54,13 @@ class LevelMenuActivity : AppCompatActivity() {
 
         val saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
         if (saves.getBoolean("ads", true)) {
-            val adRequest = AdRequest.Builder().build()
-            adView.visibility = View.VISIBLE
-            adView.loadAd(adRequest)
+            if (hasConnection(this)) {
+                if (hasConnection(this)) {
+                    val adRequest = AdRequest.Builder().build()
+                    adView.visibility = View.VISIBLE
+                    adView.loadAd(adRequest)
+                }
+            }
         }
     }
 
@@ -98,9 +103,31 @@ class LevelMenuActivity : AppCompatActivity() {
                 currentButton.setOnClickListener {
                     if (isClickable) {
                         isClickable = false
-                        val intent = Intent(this, PlayActivity().javaClass)
-                        intent.putExtra("pack", packs[id])
-                        startActivity(intent)
+
+                        fun startLevel() {
+                            val intent = Intent(this, PlayActivity().javaClass)
+                            intent.putExtra("pack", packs[id])
+                            startActivity(intent)
+                        }
+
+                        if (hasConnection(this)) {
+                            if (saves.getInt("without_connection", 0) != 0)
+                                saves.edit().apply {
+                                    putInt("without_connection", 0)
+                                    apply()
+                                }
+                            startLevel()
+                        } else {
+                            saves.edit().apply {
+                                putInt("without_connection", saves.getInt("without_connection", 0) + 1)
+                                apply()
+                            }
+                            if (saves.getInt("without_connection", 0) >= 3) {
+                                InternetConnectionDialog().show(supportFragmentManager, getString(R.string.internet_connection_dialog_fragment_tag))
+                                isClickable = true
+                            } else
+                                startLevel()
+                        }
                     }
                 }
             } else {

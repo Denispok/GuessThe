@@ -14,6 +14,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.gamesbars.guessthe.PlayActivity
 import com.gamesbars.guessthe.R
+import com.gamesbars.guessthe.hasConnection
 import com.gamesbars.guessthe.playSound
 
 class WinFragment : Fragment() {
@@ -69,9 +70,26 @@ class WinFragment : Fragment() {
             (activity!! as PlayActivity).showRewardedVideoAd()
         }
         activity!!.findViewById<Button>(R.id.win_continue).setOnClickListener {
-            nextLevel()
-            if (activity!!.getSharedPreferences("saves", Context.MODE_PRIVATE).getInt(pack, 1) % 2 == 1)
-                (activity!! as PlayActivity).showInterstitialAd()
+            val saves = context!!.getSharedPreferences("saves", Context.MODE_PRIVATE)
+            if (hasConnection(context!!)) {
+                if (saves.getInt("without_connection", 0) != 0) {
+                    saves.edit().apply {
+                        putInt("without_connection", 0)
+                        apply()
+                    }
+                    (activity!! as PlayActivity).loadBannerAd()
+                }
+                nextLevel()
+            } else {
+                saves.edit().apply {
+                    putInt("without_connection", saves.getInt("without_connection", 0) + 1)
+                    apply()
+                }
+                if (saves.getInt("without_connection", 0) >= 3)
+                    InternetConnectionDialog().show(fragmentManager!!, getString(R.string.internet_connection_dialog_fragment_tag))
+                else
+                    nextLevel()
+            }
         }
     }
 
@@ -85,5 +103,7 @@ class WinFragment : Fragment() {
                     .addSharedElement(activity!!.findViewById<ImageView>(R.id.win_image), "ImageTransition")
                     .commit()
         }
+        if (activity!!.getSharedPreferences("saves", Context.MODE_PRIVATE).getInt(pack, 1) % 2 == 1)
+            (activity!! as PlayActivity).showInterstitialAd()
     }
 }
