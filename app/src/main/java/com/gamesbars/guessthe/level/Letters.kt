@@ -21,6 +21,7 @@ class Letters(context: Context, word: String, pack: String) {
         if (saves.contains(level)) {
             val letterString = saves.getString(level, "")
             var letterId = 0
+            var isLetterNow = false
 
             for (id in 0 until letterString.length) {
                 val char = letterString[id]
@@ -28,13 +29,23 @@ class Letters(context: Context, word: String, pack: String) {
                     removeTipUsed = true
                     break
                 }
-                if (char.isDigit()) continue
-                val wordLetterId = if (id + 1 < letterString.length && letterString[id + 1].isDigit())
-                    if (id + 2 < letterString.length && letterString[id + 2].isDigit()) letterString.substring(id + 1..id + 2).toInt()
-                    else letterString[id + 1].toString().toInt()
-                else null
-                newLetters[letterId] = Letter(context, letterId, char.toLowerCase(), wordLetterId, char.isUpperCase())
-                letterId++
+                if (char == '_') {
+                    isLetterNow = true
+                    continue
+                }
+                if (isLetterNow) {
+                    val wordLetterId = if (id + 1 < letterString.length && letterString[id + 1].isDigit())
+                        if (id + 2 < letterString.length && letterString[id + 2].isDigit()) letterString.substring(id + 1..id + 2).toInt()
+                        else letterString[id + 1].toString().toInt()
+                    else null
+                    val isGuessed = if (id + 1 < letterString.length && letterString[id + 1] == '*') true
+                        else if (id + 2 < letterString.length && letterString[id + 2] == '*') true
+                        else if (id + 3 < letterString.length && letterString[id + 3] == '*') true
+                        else false
+                    newLetters[letterId] = Letter(context, letterId, char.toLowerCase(), wordLetterId, isGuessed)
+                    letterId++
+                    isLetterNow = false
+                }
             }
         } else {
             for (id in 0 until word.length) {
@@ -57,6 +68,7 @@ class Letters(context: Context, word: String, pack: String) {
 
             val lettersString = StringBuilder()
             for (letter in newLetters.requireNoNulls()) {
+                lettersString.append("_")
                 lettersString.append(letter.letter)
                 if (letter.wordLetterId != null) lettersString.append(letter.wordLetterId)
             }

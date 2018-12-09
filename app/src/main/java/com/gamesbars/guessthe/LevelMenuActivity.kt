@@ -52,6 +52,13 @@ class LevelMenuActivity : AppCompatActivity() {
             }
         }
 
+        findViewById<TextView>(R.id.levelmenu_coins).setOnClickListener {
+            if (isClickable) {
+                isClickable = false
+                startActivity(Intent(applicationContext, CoinsActivity().javaClass))
+            }
+        }
+
         val saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
         if (saves.getBoolean("ads", true)) {
             if (hasConnection(this)) {

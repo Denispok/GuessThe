@@ -51,8 +51,9 @@ class TipsDialogFragment : DialogFragment() {
                 tipLetter.setOnClickListener {
                     val letter = fragment.letters.tipShowLetter(fragment.wordLetters)
 
-                    val replacedString = letter.letter + letter.wordLetterId!!.toString()
-                    levelString = levelString.replace(replacedString, replacedString.toUpperCase())
+                    val replacedString = "_" + letter.letter + letter.wordLetterId!!.toString()
+                    val newString = "_" + letter.letter + letter.wordLetterId.toString() + "*"
+                    levelString = levelString.replace(replacedString, newString)
 
                     val editor = saves.edit()
                     editor.putString(levelName, levelString)

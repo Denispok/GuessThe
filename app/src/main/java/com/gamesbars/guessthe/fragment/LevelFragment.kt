@@ -79,6 +79,7 @@ class LevelFragment : Fragment() {
                 }
             }
             activity!!.findViewById<TextView>(R.id.level_tips).setOnClickListener { tips() }
+            activity!!.findViewById<TextView>(R.id.level_coins).setOnClickListener { coins() }
             activity!!.findViewById<TextView>(R.id.level_coins_button).setOnClickListener { coins() }
 
             Handler().postDelayed({
@@ -137,7 +138,7 @@ class LevelFragment : Fragment() {
         var isLevelReward = false
 
         val editor = saves.edit()
-        editor.putString(levelName, saves.getString(levelName, "").replace("!", "").toLowerCase())
+        editor.putString(levelName, saves.getString(levelName, "").replace("!", "").replace("*", ""))
         if (currentLevel > saves.getInt(pack + "completed", 0)) {
             editor.putInt(pack + "completed", currentLevel)
             editor.putInt("coins", saves.getInt("coins", 0) + resources.getInteger(R.integer.level_reward))
