@@ -12,7 +12,7 @@ import com.gamesbars.guessthe.playSound
 class WordLetters(private val fragment: LevelFragment, private val word: String) {
     private lateinit var wordLayout: LinearLayout
     private val wordLetters = arrayListOf<WordLetter>()
-    val animationDuration = 500L
+    val animationDuration = 400L
 
     init {
         for (char in word) {

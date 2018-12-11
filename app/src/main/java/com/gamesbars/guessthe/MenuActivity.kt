@@ -6,6 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.text.method.LinkMovementMethod
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -38,6 +39,7 @@ class MenuActivity : AppCompatActivity() {
         hideSystemUI()
         setContentView(R.layout.activity_menu)
         findViewById<TextView>(R.id.menu_rate_coins).text = "+".plus(resources.getInteger(R.integer.rate_reward))
+        findViewById<TextView>(R.id.privacy_policy).movementMethod = LinkMovementMethod.getInstance()
 
         val saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
         if (saves.getBoolean("ads", true)) {
