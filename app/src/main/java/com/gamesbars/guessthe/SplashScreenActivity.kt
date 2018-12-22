@@ -1,5 +1,6 @@
 package com.gamesbars.guessthe
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -13,7 +14,14 @@ class SplashScreenActivity : AppCompatActivity() {
         hideSystemUI()
         setContentView(R.layout.activity_splashscreen)
 
-        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713")
+        MobileAds.initialize(this, getString(R.string.ads_id))
+
+        val saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
+        if (!saves.contains("russian_carspurchased"))
+            saves.edit().apply {
+                putBoolean("russian_carspurchased", true)
+                apply()
+            }
 
         Handler().postDelayed({
             startActivity(Intent(applicationContext, MenuActivity().javaClass))

@@ -77,7 +77,7 @@
             android:drawableEnd="@drawable/coin_icon_16"
             android:drawablePadding="2dp"
             android:padding="@dimen/menu_button_coins_padding"
-            android:text="+40"
+            android:text="+20"
             android:textColor="@color/colorText"
             android:textSize="@dimen/menu_button_coins_text_size" />
     </RelativeLayout>

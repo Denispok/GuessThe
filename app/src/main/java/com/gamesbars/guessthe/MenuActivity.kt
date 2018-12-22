@@ -80,7 +80,7 @@ class MenuActivity : AppCompatActivity() {
             isClickable = false
             playSound(this, R.raw.button)
             try {
-                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.gamesbars.whatyouchoose")))
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.google_play_market_link))))
             } catch (anfe: ActivityNotFoundException) {
                 startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.google_play_link))))
             }

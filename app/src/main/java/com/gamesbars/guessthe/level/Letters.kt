@@ -7,7 +7,7 @@ import java.util.*
 
 class Letters(context: Context, word: String, pack: String) {
     private val letterCount = 14
-    private var alphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя"
+    private var alphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя012345"
     private val letters: Array<Letter>
     private lateinit var lettersLayout1: LinearLayout
     private lateinit var lettersLayout2: LinearLayout

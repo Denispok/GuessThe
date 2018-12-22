@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">GuessThe</string>
     <string name="menu_title">Угадай \nРусское Авто!</string>
+    <string name="google_play_market_link">market://details?id=com.gamesbars.whatyouchoose</string>
     <string name="google_play_link">https://play.google.com/store/apps/details?id=com.gamesbars.whatyouchoose</string>
     <string name="privacy_policy"><a href="https://gamesbars.github.io/Privacy-Policy/">Политика конфиденциальности</a></string>
     <string name="share_subject">Крутая игра!</string>
@@ -14,6 +15,8 @@
     <string name="video">за просмотр видео</string>
     <string name="next">Продолжить</string>
     <string name="purchases_unavailable">Внутриигровые покупки недоступны на вашем устройстве!</string>
+    <string name="purchases_restored">Ваша покупка была восстановлена!</string>
+    <string name="purchases_error">Ошибка инициализации внутриигровых покупок!</string>
     <string name="remove_ads">+ УБРАТЬ РЕКЛАМУ</string>
     <string name="level">уровень %d</string>
     <string name="percent">Уровень %d/%d</string>
@@ -36,6 +39,7 @@
 
     <!--  Ads  -->
 
+    <string name="ads_id">ca-app-pub-3940256099942544~3347511713</string>
     <string name="banner_id">ca-app-pub-3940256099942544/6300978111</string>
     <string name="interstitial_id">ca-app-pub-3940256099942544/1033173712</string>
     <string name="rewarded_video_id">ca-app-pub-3940256099942544/5224354917</string>

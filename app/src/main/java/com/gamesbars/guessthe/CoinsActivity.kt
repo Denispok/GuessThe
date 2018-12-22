@@ -21,6 +21,7 @@ import io.github.inflationx.calligraphy3.CalligraphyInterceptor
 import io.github.inflationx.viewpump.ViewPump
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
 import kotlinx.android.synthetic.main.activity_coins.*
+import java.lang.Exception
 
 class CoinsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler, RewardedVideoAdListener {
 
@@ -54,17 +55,12 @@ class CoinsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler, Rew
 
         setContentView(R.layout.activity_coins)
 
-        billingProcessor = BillingProcessor(this, "LICENSE KEY HERE", this)
+        billingProcessor = BillingProcessor(this, "INSERT LICENSE KEY HERE", this)
         if (BillingProcessor.isIabServiceAvailable(this)) {
             billingProcessor.initialize()
         } else {
             Toast.makeText(this, getString(R.string.purchases_unavailable), Toast.LENGTH_LONG).show()
-            findViewById<LinearLayout>(R.id.coins_purchase_1).visibility = View.GONE
-            findViewById<LinearLayout>(R.id.coins_purchase_2).visibility = View.GONE
-            findViewById<LinearLayout>(R.id.coins_purchase_3).visibility = View.GONE
-            findViewById<View>(R.id.coins_divider_1).visibility = View.GONE
-            findViewById<View>(R.id.coins_divider_2).visibility = View.GONE
-            findViewById<View>(R.id.coins_divider_3).visibility = View.GONE
+            hidePurchases()
         }
 
         hideSystemUI()
@@ -129,42 +125,56 @@ class CoinsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler, Rew
         updateCoins()
     }
 
+    private fun hidePurchases() {
+        findViewById<LinearLayout>(R.id.coins_purchase_1).visibility = View.GONE
+        findViewById<LinearLayout>(R.id.coins_purchase_2).visibility = View.GONE
+        findViewById<LinearLayout>(R.id.coins_purchase_3).visibility = View.GONE
+        findViewById<View>(R.id.coins_divider_1).visibility = View.GONE
+        findViewById<View>(R.id.coins_divider_2).visibility = View.GONE
+        findViewById<View>(R.id.coins_divider_3).visibility = View.GONE
+    }
+
     override fun onBillingInitialized() {
-        val saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
-        val ads = saves.getBoolean("ads", true)
+        try {
+            val saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
+            val ads = saves.getBoolean("ads", true)
 
-        val purchase1 = billingProcessor.getPurchaseListingDetails(PRODUCT_1_ID)
-        findViewById<TextView>(R.id.coins_purchase_1_price).text = purchase1.priceText
-        findViewById<LinearLayout>(R.id.coins_purchase_1).setOnClickListener {
-            if (isClickable) {
-                isClickable = false
-                playSound(this, R.raw.button)
-                billingProcessor.purchase(this, PRODUCT_1_ID)
+            val purchase1 = billingProcessor.getPurchaseListingDetails(PRODUCT_1_ID)
+            findViewById<TextView>(R.id.coins_purchase_1_price).text = purchase1.priceText
+            findViewById<LinearLayout>(R.id.coins_purchase_1).setOnClickListener {
+                if (isClickable) {
+                    isClickable = false
+                    playSound(this, R.raw.button)
+                    billingProcessor.purchase(this, PRODUCT_1_ID)
+                }
             }
-        }
 
-        val purchase2Id = if (ads) PRODUCT_2_ID_WITH_ADS else PRODUCT_2_ID
-        val purchase3Id = if (ads) PRODUCT_3_ID_WITH_ADS else PRODUCT_3_ID
+            val purchase2Id = if (ads) PRODUCT_2_ID_WITH_ADS else PRODUCT_2_ID
+            val purchase3Id = if (ads) PRODUCT_3_ID_WITH_ADS else PRODUCT_3_ID
 
-        val purchase2 = billingProcessor.getPurchaseListingDetails(purchase2Id)
-        val purchase3 = billingProcessor.getPurchaseListingDetails(purchase3Id)
+            val purchase2 = billingProcessor.getPurchaseListingDetails(purchase2Id)
+            val purchase3 = billingProcessor.getPurchaseListingDetails(purchase3Id)
 
-        findViewById<TextView>(R.id.coins_purchase_2_price).text = purchase2.priceText
-        findViewById<LinearLayout>(R.id.coins_purchase_2).setOnClickListener {
-            if (isClickable) {
-                isClickable = false
-                playSound(this, R.raw.button)
-                billingProcessor.purchase(this, purchase2Id)
+            findViewById<TextView>(R.id.coins_purchase_2_price).text = purchase2.priceText
+            findViewById<LinearLayout>(R.id.coins_purchase_2).setOnClickListener {
+                if (isClickable) {
+                    isClickable = false
+                    playSound(this, R.raw.button)
+                    billingProcessor.purchase(this, purchase2Id)
+                }
             }
-        }
 
-        findViewById<TextView>(R.id.coins_purchase_3_price).text = purchase3.priceText
-        findViewById<LinearLayout>(R.id.coins_purchase_3).setOnClickListener {
-            if (isClickable) {
-                isClickable = false
-                playSound(this, R.raw.button)
-                billingProcessor.purchase(this, purchase3Id)
+            findViewById<TextView>(R.id.coins_purchase_3_price).text = purchase3.priceText
+            findViewById<LinearLayout>(R.id.coins_purchase_3).setOnClickListener {
+                if (isClickable) {
+                    isClickable = false
+                    playSound(this, R.raw.button)
+                    billingProcessor.purchase(this, purchase3Id)
+                }
             }
+        } catch (e: Exception) {
+            Toast.makeText(this, getString(R.string.purchases_error), Toast.LENGTH_LONG).show()
+            hidePurchases()
         }
     }
 
@@ -182,8 +192,14 @@ class CoinsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler, Rew
         val products = billingProcessor.listOwnedProducts()
         val saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
         if (saves.getBoolean("ads", true)) {
-            if (products.contains(PRODUCT_2_ID_WITH_ADS)) addCoins(resources.getInteger(R.integer.coins_purchase_2), removeAds = true)
-            if (products.contains(PRODUCT_3_ID_WITH_ADS)) addCoins(resources.getInteger(R.integer.coins_purchase_3), removeAds = true)
+            if (products.contains(PRODUCT_2_ID_WITH_ADS)) {
+                addCoins(resources.getInteger(R.integer.coins_purchase_2), removeAds = true)
+                Toast.makeText(this, getString(R.string.purchases_restored), Toast.LENGTH_LONG).show()
+            }
+            if (products.contains(PRODUCT_3_ID_WITH_ADS)) {
+                addCoins(resources.getInteger(R.integer.coins_purchase_3), removeAds = true)
+                Toast.makeText(this, getString(R.string.purchases_restored), Toast.LENGTH_LONG).show()
+            }
         }
     }
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <integer name="level_reward">10</integer>
-    <integer name="rate_reward">40</integer>
-    <integer name="pack_price">100</integer>
+    <integer name="rate_reward">20</integer>
+    <integer name="pack_price">150</integer>
 
     <integer name="tip_letter_cost">20</integer>
     <integer name="tip_remove_cost">40</integer>
