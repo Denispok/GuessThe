@@ -36,10 +36,11 @@ class ConfirmDialogFragment : DialogFragment() {
         if (saves.getInt("coins", 0) >= packPrice) {
             builder.setMessage(getString(R.string.confirm_dialog_message, packPrice))
             builder.setPositiveButton(R.string.ok) { _, _ ->
-                val editor = saves.edit()
-                editor.putBoolean(pack + "purchased", true)
-                editor.putInt("coins", saves.getInt("coins", 0) - packPrice)
-                editor.apply()
+                saves.edit().apply {
+                    putBoolean(pack + "purchased", true)
+                    putInt("coins", saves.getInt("coins", 0) - packPrice)
+                    apply()
+                }
                 playSound(context!!, R.raw.button)
                 updateActivity()
             }

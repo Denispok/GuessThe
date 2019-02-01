@@ -127,8 +127,8 @@ class LevelFragment : Fragment() {
     }
 
     fun updateCoins() {
-        val saves = activity!!.getSharedPreferences("saves", Context.MODE_PRIVATE)
-        activity!!.findViewById<TextView>(R.id.level_coins).text = saves.getInt("coins", 0).toString()
+        val coins = activity!!.getSharedPreferences("saves", Context.MODE_PRIVATE).getInt("coins", 0).toString()
+        activity!!.findViewById<TextView>(R.id.level_coins).text = coins
     }
 
     fun win() {

@@ -103,8 +103,8 @@ class CoinsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler, Rew
     }
 
     private fun updateCoins() {
-        val saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
-        findViewById<TextView>(R.id.coins_coins).text = saves.getInt("coins", 0).toString()
+        val coins = getSharedPreferences("saves", Context.MODE_PRIVATE).getInt("coins", 0).toString()
+        findViewById<TextView>(R.id.coins_coins).text = coins
     }
 
     private fun checkPurchases() {
@@ -247,6 +247,7 @@ class CoinsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler, Rew
             putInt("coins", saves.getInt("coins", 0) + 2 * resources.getInteger(R.integer.level_reward))
             apply()
         }
+        Toast.makeText(this, R.string.video_reward, Toast.LENGTH_LONG).show()
         updateCoins()
     }
 

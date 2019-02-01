@@ -43,7 +43,8 @@ class TipsDialogFragment : DialogFragment() {
             view.findViewById<TextView>(R.id.tips_skip_cost).text = tipSkipCost.toString()
 
             val saves = context!!.getSharedPreferences("saves", Context.MODE_PRIVATE)
-            val levelName = fragment.pack + saves.getInt(fragment.pack, 0)
+            val level = saves.getInt(fragment.pack, 0)
+            val levelName = fragment.pack + level
             var levelString = saves.getString(levelName, "")
 
             val coins = saves.getInt("coins", 0)

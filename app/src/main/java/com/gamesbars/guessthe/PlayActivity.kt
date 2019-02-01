@@ -120,9 +120,11 @@ class PlayActivity : AppCompatActivity(), RewardedVideoAdListener {
             putInt("coins", saves.getInt("coins", 0) + 2 * resources.getInteger(R.integer.level_reward))
             apply()
         }
-        findViewById<LinearLayout>(R.id.win_rewarded_video).isClickable = false
-        findViewById<LinearLayout>(R.id.win_x3_text).visibility = View.GONE
-        findViewById<TextView>(R.id.win_x3).apply {
+        Toast.makeText(this, R.string.video_reward, Toast.LENGTH_LONG).show()
+
+        findViewById<LinearLayout>(R.id.win_rewarded_video)?.isClickable = false
+        findViewById<LinearLayout>(R.id.win_x3_text)?.visibility = View.GONE
+        findViewById<TextView>(R.id.win_x3)?.apply {
             layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
             setBackgroundColor(Color.TRANSPARENT)
             setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.coin_icon_16, 0)

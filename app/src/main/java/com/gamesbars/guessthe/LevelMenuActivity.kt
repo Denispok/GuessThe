@@ -79,8 +79,8 @@ class LevelMenuActivity : AppCompatActivity() {
     }
 
     fun updateCoins() {
-        val saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
-        findViewById<TextView>(R.id.levelmenu_coins).text = saves.getInt("coins", 0).toString()
+        val coins = getSharedPreferences("saves", Context.MODE_PRIVATE).getInt("coins", 0).toString()
+        findViewById<TextView>(R.id.levelmenu_coins).text = coins
     }
 
     private fun loadPacks() {
