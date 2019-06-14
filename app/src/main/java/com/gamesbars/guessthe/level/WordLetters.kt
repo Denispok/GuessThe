@@ -41,7 +41,7 @@ class WordLetters(private val fragment: LevelFragment, private val word: String)
                 userWord += " "
                 continue
             }
-            if (wordLetter.letter == null) return
+            if (wordLetter.text.isEmpty()) return // Be careful - model depends on view
             userWord += wordLetter.text
         }
         if (userWord == word) fragment.win()

@@ -123,7 +123,6 @@ class Letters(context: Context, word: String, pack: String) {
     }
 }
 
-fun ClosedRange<Int>.random() =
-        Random().nextInt((endInclusive + 1) - start) + start
+fun ClosedRange<Int>.random() = Random().nextInt((endInclusive + 1) - start) + start
 
 fun String.remove(char: Char) = this.replace(char.toString(), "")
