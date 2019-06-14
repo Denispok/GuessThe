@@ -102,7 +102,7 @@ class LevelMenuActivity : AppCompatActivity() {
             val progressBarText = currentButton.findViewById<TextView>(R.id.levelmenu_button_progress_bar_text)
             if (saves.getBoolean(packs[id] + "purchased", false)) {
                 val completedLevels = saves.getInt(packs[id] + "completed", 0)
-                val completedPercent = (completedLevels.toFloat() / PACK_LEVELS_COUNT * 100).toInt()
+                val completedPercent = ((completedLevels + 1).toFloat() / PACK_LEVELS_COUNT * 100).toInt()
                 currentButton.findViewById<ProgressBar>(R.id.levelmenu_button_progress_bar).progress = completedPercent
                 progressBarText.text =
                         if (completedLevels == PACK_LEVELS_COUNT) getString(R.string.completed)
