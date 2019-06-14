@@ -28,6 +28,7 @@
     <string name="confirm_dialog_message">Открыть новые уровни за %d монет?</string>
     <string name="video_is_loading">Видео загружается&#8230;</string>
     <string name="video_error">Ошибка загрузки видео.</string>
+    <string name="video_reward">Награда получена!</string>
     <string name="lost_internet_connection_title">Ошибка подключения к сети</string>
     <string name="lost_internet_connection_message">Для продолжения подключитесь к сети интернет.</string>
 

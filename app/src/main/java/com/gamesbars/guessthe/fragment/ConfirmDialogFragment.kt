@@ -13,8 +13,9 @@ import com.gamesbars.guessthe.playSound
 class ConfirmDialogFragment : DialogFragment() {
 
     companion object {
-        fun newInstance(pack: String): ConfirmDialogFragment {
+        fun newInstance(packId: Int, pack: String): ConfirmDialogFragment {
             val args = Bundle()
+            args.putInt("packId", packId)
             args.putString("pack", pack)
             val fragment = ConfirmDialogFragment()
             fragment.arguments = args
@@ -22,16 +23,18 @@ class ConfirmDialogFragment : DialogFragment() {
         }
     }
 
-    lateinit var pack: String
+    private var packId: Int = -1
+    private lateinit var pack: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        packId = arguments!!.getInt("packId")
         pack = arguments!!.getString("pack")
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val saves = context!!.getSharedPreferences("saves", Context.MODE_PRIVATE)
-        val packPrice = resources.getInteger(R.integer.pack_price)
+        val packPrice = resources.getIntArray(R.array.packs_prices)[packId]
         val builder = AlertDialog.Builder(context)
         if (saves.getInt("coins", 0) >= packPrice) {
             builder.setMessage(getString(R.string.confirm_dialog_message, packPrice))
