@@ -25,3 +25,7 @@ fun hasConnection(context: Context): Boolean {
     val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     return cm.activeNetworkInfo?.isConnected ?: false
 }
+
+fun getDrawableResIdByName(context: Context, name: String): Int {
+    return context.resources.getIdentifier(name, "drawable", context.packageName)
+}

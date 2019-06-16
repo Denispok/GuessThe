@@ -85,7 +85,7 @@
         android:padding="@dimen/buttons_margin">
 
         <Button
-            android:id="@+id/level_tips"
+            android:id="@+id/level_tips_button"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="0dp"
             android:layout_height="match_parent"

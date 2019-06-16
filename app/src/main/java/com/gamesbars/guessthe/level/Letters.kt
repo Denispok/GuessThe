@@ -2,6 +2,7 @@ package com.gamesbars.guessthe.level
 
 import android.content.Context
 import android.view.View
+import android.view.ViewGroup
 import android.widget.LinearLayout
 import java.util.*
 
@@ -106,13 +107,14 @@ class Letters(context: Context, word: String, pack: String) {
     }
 
     fun addLettersToLayout(linearLayout1: LinearLayout, linearLayout2: LinearLayout) {
-        if (!(this::lettersLayout1.isInitialized && this::lettersLayout2.isInitialized)) {
-            lettersLayout1 = linearLayout1
-            lettersLayout2 = linearLayout2
-            for (i in 1..letterCount) {
-                if (i <= letterCount / 2) lettersLayout1.addView(letters[i - 1])
-                else lettersLayout2.addView(letters[i - 1])
-            }
+        lettersLayout1 = linearLayout1
+        lettersLayout2 = linearLayout2
+        letters.forEach { letter ->
+            letter.parent?.also { (it as ViewGroup).removeView(letter) }
+        }
+        for (i in 1..letterCount) {
+            if (i <= letterCount / 2) lettersLayout1.addView(letters[i - 1])
+            else lettersLayout2.addView(letters[i - 1])
         }
     }
 
