@@ -65,10 +65,12 @@ class PlayActivity : AppCompatActivity(), RewardedVideoAdListener {
         mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this)
         mRewardedVideoAd.rewardedVideoAdListener = this
 
+        if (savedInstanceState == null) {
         supportFragmentManager.beginTransaction()
                 .replace(R.id.activity_play_fragment,
                         LevelFragment.newInstance(intent.extras.getString("pack")), resources.getString(R.string.level_fragment_tag))
                 .commit()
+        }
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {

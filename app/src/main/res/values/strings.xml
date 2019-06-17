@@ -31,6 +31,7 @@
     <string name="video_reward">Награда получена!</string>
     <string name="lost_internet_connection_title">Ошибка подключения к сети</string>
     <string name="lost_internet_connection_message">Для продолжения подключитесь к сети интернет.</string>
+    <string name="levels">Уровни</string>
 
     <string name="level_fragment_tag">level</string>
     <string name="win_fragment_tag">win</string>

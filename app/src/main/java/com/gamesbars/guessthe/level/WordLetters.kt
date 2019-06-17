@@ -3,6 +3,7 @@ package com.gamesbars.guessthe.level
 import android.animation.ObjectAnimator
 import android.graphics.Color
 import android.os.Handler
+import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
 import android.widget.LinearLayout
 import com.gamesbars.guessthe.R
@@ -59,20 +60,19 @@ class WordLetters(private val fragment: LevelFragment, private val word: String)
     }
 
     fun addLettersToLayout(linearLayout: LinearLayout) {
-        if (!this::wordLayout.isInitialized) {
-            wordLayout = linearLayout
-            for (letter in wordLetters) {
-                wordLayout.addView(letter)
-            }
-            Handler().postDelayed({
-                if (wordLetters[0].x <= 2) {
-                    for (wordLetter in wordLetters) {
-                        val params = LinearLayout.LayoutParams(wordLetter.dimension, wordLetter.dimension, 1f)
-                        wordLetter.layoutParams = params
-                    }
-                }
-            }, 100)
+        wordLayout = linearLayout
+        for (letter in wordLetters) {
+            letter.parent?.also { (it as ViewGroup).removeView(letter) }
+            wordLayout.addView(letter)
         }
+        Handler().postDelayed({
+            if (wordLetters[0].x <= 2) {
+                for (wordLetter in wordLetters) {
+                    val params = LinearLayout.LayoutParams(wordLetter.dimension, wordLetter.dimension, 1f)
+                    wordLetter.layoutParams = params
+                }
+            }
+        }, 100)
     }
 
     fun tipLetterGuessed(letter: Letter) {

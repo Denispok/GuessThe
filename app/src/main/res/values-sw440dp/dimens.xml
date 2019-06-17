@@ -58,6 +58,11 @@
     <dimen name="x3_text_size">42sp</dimen>
     <dimen name="x3_small_text_size">24sp</dimen>
 
+    <!-- fragment_levelselection -->
+    <dimen name="item_levelselection_margin">8dp</dimen>
+    <dimen name="item_levelselection_radius">16dp</dimen>
+    <dimen name="item_levelselection_text_size">48sp</dimen>
+
     <!-- dialog_fragment_tips -->
     <dimen name="tips_padding">32dp</dimen>
 

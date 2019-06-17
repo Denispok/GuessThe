@@ -58,38 +58,40 @@ class LevelFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        return inflater.inflate(R.layout.fragment_level, container, false)
-    }
+        val view = inflater.inflate(R.layout.fragment_level, container, false)
 
-    override fun onStart() {
-        super.onStart()
-        if (isFirstStart) {
-            activity!!.findViewById<ImageView>(R.id.level_image).setImageResource(
-                    resources.getIdentifier(image, "drawable", context!!.packageName))
-            wordLetters.addLettersToLayout(activity!!.findViewById(R.id.level_word))
-            letters.addLettersToLayout(activity!!.findViewById(R.id.level_letters_1),
-                    activity!!.findViewById(R.id.level_letters_2))
+        view.findViewById<ImageView>(R.id.level_image).setImageResource(getDrawableResIdByName(context!!, image))
+        wordLetters.addLettersToLayout(view.findViewById(R.id.level_word))
+        letters.addLettersToLayout(view.findViewById(R.id.level_letters_1), view.findViewById(R.id.level_letters_2))
 
-            val saves = activity!!.getSharedPreferences("saves", Context.MODE_PRIVATE)
-            activity!!.findViewById<Button>(R.id.level_level).text = getString(R.string.level, saves.getInt(pack, 1))
-            activity!!.findViewById<ImageView>(R.id.level_back).setOnClickListener {
-                if (isClickable) {
-                    playSound(context!!, R.raw.button)
-                    activity!!.onBackPressed()
-                }
+        val saves = activity!!.getSharedPreferences("saves", Context.MODE_PRIVATE)
+        view.findViewById<Button>(R.id.level_level).text = getString(R.string.level, saves.getInt(pack, 1))
+        view.findViewById<ImageView>(R.id.level_back).setOnClickListener {
+            if (isClickable) {
+                playSound(context!!, R.raw.button)
+                activity!!.onBackPressed()
             }
-            activity!!.findViewById<TextView>(R.id.level_tips).setOnClickListener { tips() }
-            activity!!.findViewById<TextView>(R.id.level_coins).setOnClickListener { coins() }
-            activity!!.findViewById<TextView>(R.id.level_coins_button).setOnClickListener { coins() }
+        }
+        view.findViewById<TextView>(R.id.level_level).setOnClickListener { startLevelSelection() }
+        view.findViewById<TextView>(R.id.level_coins).setOnClickListener { coins() }
+        view.findViewById<TextView>(R.id.level_tips_button).setOnClickListener { tips() }
+        view.findViewById<TextView>(R.id.level_coins_button).setOnClickListener { coins() }
 
+        if (isFirstStart) {
             Handler().postDelayed({
-                playSound(context!!, R.raw.start)
+                playSound(view.context, R.raw.start)
                 letters.showChosenLetters(wordLetters)
                 if (letters.removeTipUsed) letters.tipRemoveLetters(wordLetters)
             }, 100L)
 
             isFirstStart = false
         }
+
+        return view
+    }
+
+    override fun onStart() {
+        super.onStart()
         isClickable = true
         updateCoins()
     }
@@ -107,6 +109,18 @@ class LevelFragment : Fragment() {
 
         image = pack + currentLevel
         word = resources.getStringArray(resources.getIdentifier(pack, "array", context!!.packageName))[currentLevel - 1]
+    }
+
+    private fun startLevelSelection() {
+        if (isClickable) {
+            isClickable = false
+            playSound(context!!, R.raw.button)
+            fragmentManager!!.beginTransaction()
+                .replace(R.id.activity_play_fragment, LevelSelectionFragment.newInstance(pack))
+                .addToBackStack(null)
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .commit()
+        }
     }
 
     private fun tips() {
@@ -150,9 +164,9 @@ class LevelFragment : Fragment() {
 
         val fragment = WinFragment.newInstance(word, image, arguments!!.getString("pack"), isLevelReward)
         fragmentManager!!.beginTransaction()
-                .replace(R.id.activity_play_fragment, fragment, resources.getString(R.string.win_fragment_tag))
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .addSharedElement(activity!!.findViewById<ImageView>(R.id.level_image), "ImageTransition")
-                .commit()
+            .replace(R.id.activity_play_fragment, fragment, resources.getString(R.string.win_fragment_tag))
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            .addSharedElement(activity!!.findViewById<ImageView>(R.id.level_image), "ImageTransition")
+            .commit()
     }
 }
