@@ -54,17 +54,20 @@ class LevelSelectionFragment : Fragment() {
 
         recycler = view.findViewById(R.id.levelselection_recycler)
         recycler.layoutManager = GridLayoutManager(view.context, 4)
-        val adapter = LevelSelectionAdapter(pack, saves.getInt(pack + "completed", 0))
+        val completedLevelCount = saves.getInt(pack + "completed", 0)
+        val adapter = LevelSelectionAdapter(pack, completedLevelCount)
         adapter.onItemClickListener = { level ->
-            saves.edit().apply {
-                putInt(pack, level)
-                apply()
+            if (level <= completedLevelCount + 1) {
+                saves.edit().apply {
+                    putInt(pack, level)
+                    apply()
+                }
+                fragmentManager?.popBackStack()
+                fragmentManager?.beginTransaction()!!
+                    .replace(R.id.activity_play_fragment, LevelFragment.newInstance(pack), resources.getString(R.string.level_fragment_tag))
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                    .commit()
             }
-            fragmentManager?.popBackStack()
-            fragmentManager?.beginTransaction()!!
-                .replace(R.id.activity_play_fragment, LevelFragment.newInstance(pack), resources.getString(R.string.level_fragment_tag))
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .commit()
         }
         CoroutineScope(Dispatchers.Default).launch {
             delay(200L)

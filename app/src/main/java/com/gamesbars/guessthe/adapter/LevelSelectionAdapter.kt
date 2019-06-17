@@ -31,8 +31,8 @@ class LevelSelectionAdapter(
         viewHolder.itemView.tag = number
 
         if (number <= completedLevelCount + 1) {
-            viewHolder.image.setImageResource(getDrawableResIdByName(viewHolder.itemView.context, pack + (number)))
-            viewHolder.image.setColorFilter(0x55000000.toInt(), PorterDuff.Mode.DARKEN)
+            viewHolder.image.setImageResource(getDrawableResIdByName(viewHolder.itemView.context, pack + number + "thum"))
+            viewHolder.image.setColorFilter(0x66000000.toInt(), PorterDuff.Mode.DARKEN)
         } else viewHolder.image.setImageDrawable(null)
 
         viewHolder.number.text = number.toString()
