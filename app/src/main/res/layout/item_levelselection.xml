@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#49B0C0"
-    app:cardCornerRadius="8dp">
+    app:cardCornerRadius="@dimen/item_levelselection_radius">
 
     <ImageView
         android:id="@+id/item_levelselection_image"
@@ -27,7 +27,7 @@
         android:shadowDy="2"
         android:shadowRadius="5"
         android:textColor="@color/colorText"
-        android:textSize="36sp"
+        android:textSize="@dimen/item_levelselection_text_size"
         tools:text="25" />
 
 </android.support.v7.widget.CardView>

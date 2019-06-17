@@ -51,6 +51,8 @@
 
     <!-- fragment_levelselection -->
     <dimen name="item_levelselection_margin">4dp</dimen>
+    <dimen name="item_levelselection_radius">8dp</dimen>
+    <dimen name="item_levelselection_text_size">36sp</dimen>
 
     <!-- fragment_win -->
     <dimen name="win_text_size">20sp</dimen>
