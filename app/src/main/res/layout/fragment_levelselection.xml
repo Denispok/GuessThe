@@ -37,7 +37,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:animateLayoutChanges="true"
         android:clipToPadding="false"
         android:paddingStart="@dimen/item_levelselection_margin"
         android:paddingTop="4dp"
