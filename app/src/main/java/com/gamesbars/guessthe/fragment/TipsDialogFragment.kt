@@ -11,9 +11,6 @@ import android.widget.TextView
 import com.gamesbars.guessthe.PlayActivity
 import com.gamesbars.guessthe.R
 import com.gamesbars.guessthe.playSound
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class TipsDialogFragment : DialogFragment() {
 
