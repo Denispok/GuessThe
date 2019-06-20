@@ -49,6 +49,11 @@ class MenuActivity : AppCompatActivity() {
                 adView.loadAd(adRequest)
             }
         }
+        val sound = saves.getBoolean("sound", true)
+        findViewById<ImageView>(R.id.menu_sound).setImageResource(
+            if (sound) R.drawable.baseline_volume_up_white_48
+            else R.drawable.baseline_volume_off_white_48
+        )
     }
 
     override fun onResume() {
