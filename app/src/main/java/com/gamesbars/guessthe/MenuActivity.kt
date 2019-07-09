@@ -119,8 +119,8 @@ class MenuActivity : AppCompatActivity() {
             playSound(this, R.raw.button)
             val sharingIntent = Intent(Intent.ACTION_SEND)
             sharingIntent.type = "text/plain"
-            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, getString(R.string.share_text) + getString(R.string.google_play_link))
-            sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getString(R.string.share_subject))
+            sharingIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_text) + getString(R.string.google_play_link))
+            sharingIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_subject))
             startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_chooser_title)))
         }
     }
