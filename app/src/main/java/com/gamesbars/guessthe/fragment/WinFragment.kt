@@ -12,10 +12,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.gamesbars.guessthe.PlayActivity
-import com.gamesbars.guessthe.R
-import com.gamesbars.guessthe.hasConnection
-import com.gamesbars.guessthe.playSound
+import com.gamesbars.guessthe.*
 
 class WinFragment : Fragment() {
 
@@ -103,7 +100,7 @@ class WinFragment : Fragment() {
                     .addSharedElement(activity!!.findViewById<ImageView>(R.id.win_image), "ImageTransition")
                     .commit()
         }
-        if (activity!!.getSharedPreferences("saves", Context.MODE_PRIVATE).getInt(pack, 1) % 2 == 1)
+        if (activity!!.getSharedPreferences("saves", Context.MODE_PRIVATE).getInt(pack, 1) % INTERSTITIAL_AD_FREQUENCY == 1)
             (activity!! as PlayActivity).showInterstitialAd()
     }
 }

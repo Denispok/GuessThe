@@ -24,6 +24,8 @@ import io.github.inflationx.viewpump.ViewPump
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
 import kotlinx.android.synthetic.main.activity_play.*
 
+const val INTERSTITIAL_AD_FREQUENCY = 3 // every N level show ad
+
 class PlayActivity : AppCompatActivity(), RewardedVideoAdListener {
 
     private lateinit var mInterstitialAd: InterstitialAd
