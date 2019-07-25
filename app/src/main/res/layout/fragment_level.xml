@@ -70,12 +70,11 @@
         android:contentDescription="@string/description_image"
         android:transitionName="ImageTransition" />
 
-    <LinearLayout
+    <com.gamesbars.guessthe.customview.LettersLayout
         android:id="@+id/level_word"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:padding="4dp" />
 
     <LinearLayout
