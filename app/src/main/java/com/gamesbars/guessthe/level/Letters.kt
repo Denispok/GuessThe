@@ -25,7 +25,7 @@ class Letters(private val activity: Activity, word: String, pack: String) {
         val newLetters = arrayOfNulls<Letter>(letterCount)
 
         if (saves.contains(level)) {
-            val letterString = saves.getString(level, "")
+            val letterString = saves.getString(level, "")!!
             var letterId = 0
             var isLetterNow = false
 
@@ -55,7 +55,11 @@ class Letters(private val activity: Activity, word: String, pack: String) {
                     isLetterNow = false
                 }
             }
-        } else {
+        }
+
+        if (newLetters[0] == null || !isLettersCorrect(word, newLetters.requireNoNulls())) {
+            for (i in 0 until newLetters.size) newLetters[i] = null
+
             var spaceCount = 0
             for (id in 0 until word.length) {
                 if (id + 1 - spaceCount > letterCount) break
@@ -92,6 +96,15 @@ class Letters(private val activity: Activity, word: String, pack: String) {
         }
 
         letters = newLetters.requireNoNulls()
+    }
+
+    private fun isLettersCorrect(word: String, letters: Array<Letter>): Boolean {
+        var wordShouldBeGuessed = word.remove(' ')
+        wordShouldBeGuessed = wordShouldBeGuessed.slice(0 until letterCount)
+        for (i in letters) {
+            wordShouldBeGuessed = wordShouldBeGuessed.replaceFirst(i.letter.toString(), "")
+        }
+        return wordShouldBeGuessed.isEmpty()
     }
 
     fun tipShowLetter(wordLetters: WordLetters): Letter {
