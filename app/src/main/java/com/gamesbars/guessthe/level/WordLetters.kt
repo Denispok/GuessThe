@@ -8,6 +8,7 @@ import android.view.animation.LinearInterpolator
 import com.gamesbars.guessthe.R
 import com.gamesbars.guessthe.customview.LettersLayout
 import com.gamesbars.guessthe.fragment.LevelFragment
+import com.gamesbars.guessthe.level.Letters.Companion.letterCount
 import com.gamesbars.guessthe.playSound
 
 class WordLetters(private val fragment: LevelFragment, private val word: String) {
@@ -16,8 +17,12 @@ class WordLetters(private val fragment: LevelFragment, private val word: String)
     val animationDuration = 400L
 
     init {
-        for (char in word) {
-            wordLetters.add(WordLetter(fragment.context!!, char == ' '))
+        var spaceCount = 0
+        for (i in 0 until word.length) {
+            val knownChar = if (i + 1 - spaceCount > letterCount) word[i] else null
+            val wordLetter = WordLetter(fragment.context!!, word[i] == ' ', knownChar)
+            if (wordLetter.isSpace) spaceCount++
+            wordLetters.add(wordLetter)
         }
         for (wordLetter in wordLetters) {
             wordLetter.setOnClickListener {

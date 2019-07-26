@@ -19,6 +19,8 @@ import io.github.inflationx.calligraphy3.TypefaceUtils
 class Letter(context: Context, val letterId: Int, val letter: Char, val wordLetterId: Int? = null, var isTipGuessed: Boolean = false) : TextView(context) {
 
     var currentWordLetter: WordLetter? = null
+    val dimension: Int
+    val margin: Int
 
     init {
         text = letter.toString()
@@ -26,11 +28,12 @@ class Letter(context: Context, val letterId: Int, val letter: Char, val wordLett
         setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.letter_text_size))
         setTextColor(Color.BLACK)
 
-        val dimension = resources.getDimension(R.dimen.letter_size).toInt()
+        dimension = resources.getDimension(R.dimen.letter_size).toInt()
+        margin = resources.getDimension(R.dimen.letter_margins).toInt()
         val params = LinearLayout.LayoutParams(dimension, dimension)
-        val margins = resources.getDimension(R.dimen.letter_margins).toInt()
-        params.setMargins(margins, margins, margins, margins)
+        params.setMargins(margin, margin, margin, margin)
         layoutParams = params
+
         gravity = Gravity.CENTER
         val padding = resources.getDimension(R.dimen.letter_padding).toInt()
         setPadding(0, 0, padding, padding)

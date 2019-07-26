@@ -20,6 +20,7 @@ class SplashScreenActivity : AppCompatActivity() {
         if (!saves.contains("russian_carspurchased"))
             saves.edit().apply {
                 putBoolean("russian_carspurchased", true)
+                putInt("coins", 10000)
                 apply()
             }
 

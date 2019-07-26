@@ -42,6 +42,7 @@
     <dimen name="letter_size">38dp</dimen>
     <dimen name="letter_text_size">24sp</dimen>
     <dimen name="letter_margins">3dp</dimen>
+    <dimen name="letter_margins_small">2dp</dimen>
     <dimen name="letter_padding">3dp</dimen>
 
     <dimen name="word_letter_size">36dp</dimen>

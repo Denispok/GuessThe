@@ -10,7 +10,7 @@ import android.widget.TextView
 import com.gamesbars.guessthe.R
 import io.github.inflationx.calligraphy3.TypefaceUtils
 
-class WordLetter(context: Context, val isSpace: Boolean = false) : TextView(context) {
+class WordLetter(context: Context, val isSpace: Boolean = false, val knownChar: Char? = null) : TextView(context) {
 
     var letter: Letter? = null
     val dimension: Int
@@ -30,7 +30,13 @@ class WordLetter(context: Context, val isSpace: Boolean = false) : TextView(cont
         setPadding(0, 0, padding, padding)
         isClickable = false
 
-        if (!isSpace) background = ResourcesCompat.getDrawable(resources, R.drawable.word_letter_selector, null)
+        if (!isSpace && knownChar == null) {
+            background = ResourcesCompat.getDrawable(resources, R.drawable.word_letter_selector, null)
+        }
+
+        if (knownChar != null) {
+            setText(knownChar.toString())
+        }
     }
 
 }
