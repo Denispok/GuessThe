@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="Монеты"
+            android:text="@string/coins"
             android:textColor="@color/colorText"
             android:textSize="@dimen/top_pane_title_text_size" />
 
@@ -228,7 +228,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
-                android:text="@string/coins"
+                android:text="@string/coins_button"
                 android:textColor="@color/colorText"
                 android:textSize="@dimen/win_text_size" />
 

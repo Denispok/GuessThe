@@ -1,57 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">GuessThe</string>
-    <string name="menu_title">Угадай \nРусское Авто!</string>
-    <string name="google_play_market_link">market://details?id=com.gamesbars.whatyouchoose</string>
-    <string name="google_play_link">https://play.google.com/store/apps/details?id=com.gamesbars.whatyouchoose</string>
-    <string name="privacy_policy"><a href="https://gamesbars.github.io/Privacy-Policy/">Политика конфиденциальности</a></string>
-    <string name="share_subject">Крутая игра!</string>
-    <string name="share_text">"Играй вместе со мной! "</string>
-    <string name="share_chooser_title">Отправить с помощью&#8230;</string>
+    <string name="menu_title">Guess \nRussian Auto!</string>
+    <string name="privacy_policy"><a href="https://gamesbars.github.io/Privacy-Policy/">Privacy Policy</a></string>
+    <string name="share_subject">Fun game!</string>
+    <string name="share_text">"Play with me! "</string>
+    <string name="share_chooser_title">Send with&#8230;</string>
 
-    <string name="tips">Подсказки</string>
-    <string name="get_coins">Получить монеты</string>
-    <string name="success">Правильно!</string>
-    <string name="coins">МОНЕТ</string>
-    <string name="video">за просмотр видео</string>
-    <string name="next">Продолжить</string>
-    <string name="purchases_unavailable">Внутриигровые покупки недоступны на вашем устройстве!</string>
-    <string name="purchases_restored">Ваша покупка была восстановлена!</string>
-    <string name="purchases_error">Ошибка инициализации внутриигровых покупок!</string>
-    <string name="remove_ads">+ УБРАТЬ РЕКЛАМУ</string>
-    <string name="level">уровень %d</string>
-    <string name="percent">Уровень %d/%d</string>
-    <string name="completed">Пройдено!</string>
-    <string name="buy_levels">Открыть за %d</string>
-    <string name="ok">ОК</string>
-    <string name="cancel">Отмена</string>
-    <string name="dont_enough_coins">Недостаточно монет</string>
-    <string name="confirm_dialog_message">Открыть новые уровни за %d монет?</string>
-    <string name="video_is_loading">Видео загружается&#8230;</string>
-    <string name="video_error">Ошибка загрузки видео.</string>
-    <string name="video_reward">Награда получена!</string>
-    <string name="lost_internet_connection_title">Ошибка подключения к сети</string>
-    <string name="lost_internet_connection_message">Для продолжения подключитесь к сети интернет.</string>
-    <string name="levels">Уровни</string>
-
-    <string name="level_fragment_tag">level</string>
-    <string name="win_fragment_tag">win</string>
-    <string name="internet_connection_dialog_fragment_tag">internet_connection</string>
-    <string name="tips_dialog_fragment_tag">win</string>
-    <string name="confirm_dialog_fragment_tag">confirm</string>
-
-    <!--  Ads  -->
-
-    <string name="ads_id">ca-app-pub-3940256099942544~3347511713</string>
-    <string name="banner_id">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="interstitial_id">ca-app-pub-3940256099942544/1033173712</string>
-    <string name="rewarded_video_id">ca-app-pub-3940256099942544/5224354917</string>
+    <string name="tips">Hints</string>
+    <string name="get_coins">Get coins</string>
+    <string name="success">Well!</string>
+    <string name="coins_button">COINS</string>
+    <string name="video">for watching video</string>
+    <string name="next">Next</string>
+    <string name="purchases_unavailable">In-game purchases are not available on your device!</string>
+    <string name="purchases_restored">Your purchase has been restored!</string>
+    <string name="purchases_error">Error while initializing in-game purchases!</string>
+    <string name="remove_ads">+ REMOVE ADS</string>
+    <string name="level">level %d</string>
+    <string name="percent">Level %d/%d</string>
+    <string name="completed">Completed!</string>
+    <string name="buy_levels">Unlock for %d</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="dont_enough_coins">Not enough coins</string>
+    <string name="confirm_dialog_message">Unlock new levels for %d coins?</string>
+    <string name="video_is_loading">Video is loading&#8230;</string>
+    <string name="video_error">Video loading error.</string>
+    <string name="video_reward">Reward has been received!</string>
+    <string name="lost_internet_connection_title">Connection error</string>
+    <string name="lost_internet_connection_message">Connect to the Internet to continue.</string>
+    <string name="levels">Levels</string>
+    <string name="play">Play</string>
+    <string name="shop">Shop</string>
+    <string name="rate">Rate</string>
+    <string name="coins">Coins</string>
+    <string name="tip_letter">Open letter</string>
+    <string name="tip_remove">Remove unused</string>
+    <string name="tip_skip">Skip level</string>
 
     <!--  Levels  -->
 
+    <string name="alphabet">abcdefghijklmnopqrstuvwxyz012345</string>
+
     <string-array name="packs_names">
-        <item>Русские Авто</item>
-        <item>Тест</item>
-        <item>Тест больших строк</item>
+        <item>Russian Auto</item>
+        <item>Test</item>
+        <item>Big string test</item>
     </string-array>
 
     <array name="packs">
@@ -63,16 +58,16 @@
     <!-- Upper case not supported -->
 
     <string-array name="russian_cars">
-        <item>приора</item>
-        <item>восьмёрка</item>
-        <item>патриот</item>
-        <item>гранта</item>
-        <item>москвич</item>
-        <item>нива</item>
-        <item>ока</item>
-        <item>семёрка</item>
-        <item>копейка</item>
-        <item>шестёрка</item>
+        <item>priora</item>
+        <item>eight</item>
+        <item>patriot</item>
+        <item>granta</item>
+        <item>moskvich</item>
+        <item>niva</item>
+        <item>oka</item>
+        <item>seven</item>
+        <item>kopeika</item>
+        <item>six</item>
     </string-array>
 
     <string-array name="test">

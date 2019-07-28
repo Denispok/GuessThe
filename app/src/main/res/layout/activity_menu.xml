@@ -28,7 +28,7 @@
         android:layout_marginBottom="@dimen/menu_button_margin"
         android:background="@drawable/button_selector_blue"
         android:onClick="play"
-        android:text="Играть"
+        android:text="@string/play"
         android:textAllCaps="false"
         android:textColor="@color/colorText"
         android:textSize="@dimen/menu_button_text_size" />
@@ -41,7 +41,7 @@
         android:layout_marginBottom="@dimen/menu_button_margin"
         android:background="@drawable/button_selector_blue"
         android:onClick="shop"
-        android:text="Магазин"
+        android:text="@string/shop"
         android:textAllCaps="false"
         android:textColor="@color/colorText"
         android:textSize="@dimen/menu_button_text_size" />
@@ -60,7 +60,7 @@
             android:background="@drawable/button_selector_blue"
             android:gravity="center"
             android:onClick="rate"
-            android:text="Оценить"
+            android:text="@string/rate"
             android:textAllCaps="false"
             android:textColor="@color/colorText"
             android:textSize="@dimen/menu_button_text_size" />

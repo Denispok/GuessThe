@@ -15,7 +15,7 @@ class Letters(private val activity: Activity, word: String, pack: String) {
         const val letterCount = 18
     }
 
-    private var alphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя012345"
+    private var alphabet = activity.resources.getString(R.string.alphabet)
     private val letters: Array<Letter>
     var removeTipUsed = false
 
@@ -100,7 +100,7 @@ class Letters(private val activity: Activity, word: String, pack: String) {
 
     private fun isLettersCorrect(word: String, letters: Array<Letter>): Boolean {
         var wordShouldBeGuessed = word.remove(' ')
-        wordShouldBeGuessed = wordShouldBeGuessed.slice(0 until letterCount)
+        wordShouldBeGuessed = wordShouldBeGuessed.slice(0 until minOf(letterCount, wordShouldBeGuessed.length))
         for (i in letters) {
             wordShouldBeGuessed = wordShouldBeGuessed.replaceFirst(i.letter.toString(), "")
         }
