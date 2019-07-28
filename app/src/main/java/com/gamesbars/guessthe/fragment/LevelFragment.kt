@@ -51,7 +51,7 @@ class LevelFragment : Fragment() {
         loadLevel(pack)
 
         wordLetters = WordLetters(this, word)
-        letters = Letters(context!!, word, pack)
+        letters = Letters(activity!!, word, pack)
         letters.setLettersOnClickListener {
             if (isClickable) wordLetters.addLetter(it as Letter)
         }

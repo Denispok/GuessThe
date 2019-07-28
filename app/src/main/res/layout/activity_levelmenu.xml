@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="Уровни"
+            android:text="@string/levels"
             android:textColor="@color/colorText"
             android:textSize="@dimen/top_pane_title_text_size" />
 
@@ -39,7 +39,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="@dimen/top_pane_side_padding"
             android:background="@drawable/button_selector_green_up"
-            android:contentDescription="@string/coins"
+            android:contentDescription="@string/coins_button"
             android:drawableEnd="@drawable/coin_icon_16"
             android:drawablePadding="@dimen/top_pane_coins_drawable_padding"
             android:gravity="center_vertical"

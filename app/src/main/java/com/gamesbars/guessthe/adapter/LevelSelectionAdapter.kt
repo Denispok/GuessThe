@@ -33,7 +33,11 @@ class LevelSelectionAdapter(
         if (number <= completedLevelCount + 1) {
             viewHolder.image.setImageResource(getDrawableResIdByName(viewHolder.itemView.context, pack + number + "thum"))
             viewHolder.image.setColorFilter(0x66000000.toInt(), PorterDuff.Mode.DARKEN)
-        } else viewHolder.image.setImageDrawable(null)
+            viewHolder.image.setBackgroundResource(R.color.colorLevelSelectionItemBack)
+        } else {
+            viewHolder.image.setImageDrawable(null)
+            viewHolder.image.setBackgroundResource(R.color.colorLevelSelectionItemBackDark)
+        }
 
         viewHolder.number.text = number.toString()
     }

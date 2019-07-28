@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="google_play_market_link">market://details?id=com.gamesbars.whatyouchoose</string>
+    <string name="google_play_link">https://play.google.com/store/apps/details?id=com.gamesbars.whatyouchoose</string>
+
+    <string name="level_fragment_tag">level</string>
+    <string name="win_fragment_tag">win</string>
+    <string name="internet_connection_dialog_fragment_tag">internet_connection</string>
+    <string name="tips_dialog_fragment_tag">tips</string>
+    <string name="confirm_dialog_fragment_tag">confirm</string>
+
+    <!--  Ads  -->
+
+    <string name="ads_id">ca-app-pub-3940256099942544~3347511713</string>
+    <string name="banner_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="interstitial_id">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="rewarded_video_id">ca-app-pub-3940256099942544/5224354917</string>
+
+</resources>

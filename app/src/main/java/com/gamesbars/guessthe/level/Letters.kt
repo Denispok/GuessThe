@@ -1,26 +1,31 @@
 package com.gamesbars.guessthe.level
 
+import android.app.Activity
 import android.content.Context
+import android.util.DisplayMetrics
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import com.gamesbars.guessthe.R
 import java.util.*
 
-class Letters(context: Context, word: String, pack: String) {
-    private val letterCount = 14
-    private var alphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя012345"
+class Letters(private val activity: Activity, word: String, pack: String) {
+
+    companion object {
+        const val letterCount = 18
+    }
+
+    private var alphabet = activity.resources.getString(R.string.alphabet)
     private val letters: Array<Letter>
-    private lateinit var lettersLayout1: LinearLayout
-    private lateinit var lettersLayout2: LinearLayout
     var removeTipUsed = false
 
     init {
-        val saves = context.getSharedPreferences("saves", Context.MODE_PRIVATE)
+        val saves = activity.getSharedPreferences("saves", Context.MODE_PRIVATE)
         val level = pack + saves.getInt(pack, 1)
         val newLetters = arrayOfNulls<Letter>(letterCount)
 
         if (saves.contains(level)) {
-            val letterString = saves.getString(level, "")
+            val letterString = saves.getString(level, "")!!
             var letterId = 0
             var isLetterNow = false
 
@@ -35,27 +40,38 @@ class Letters(context: Context, word: String, pack: String) {
                     continue
                 }
                 if (isLetterNow) {
-                    val wordLetterId = if (id + 1 < letterString.length && letterString[id + 1].isDigit())
+                    val wordLetterId = if (id + 1 < letterString.length && letterString[id + 1].isDigit()) {
                         if (id + 2 < letterString.length && letterString[id + 2].isDigit()) letterString.substring(id + 1..id + 2).toInt()
                         else letterString[id + 1].toString().toInt()
-                    else null
+                    } else null
+
                     val isGuessed = if (id + 1 < letterString.length && letterString[id + 1] == '*') true
                         else if (id + 2 < letterString.length && letterString[id + 2] == '*') true
                         else if (id + 3 < letterString.length && letterString[id + 3] == '*') true
                         else false
-                    newLetters[letterId] = Letter(context, letterId, char.toLowerCase(), wordLetterId, isGuessed)
+
+                    newLetters[letterId] = Letter(activity, letterId, char.toLowerCase(), wordLetterId, isGuessed)
                     letterId++
                     isLetterNow = false
                 }
             }
-        } else {
+        }
+
+        if (newLetters[0] == null || !isLettersCorrect(word, newLetters.requireNoNulls())) {
+            for (i in 0 until newLetters.size) newLetters[i] = null
+
+            var spaceCount = 0
             for (id in 0 until word.length) {
-                if (word[id] == ' ') continue
+                if (id + 1 - spaceCount > letterCount) break
+                if (word[id] == ' ') {
+                    spaceCount++
+                    continue
+                }
                 var random: Int
                 do {
                     random = (0 until letterCount).random()
                 } while (newLetters[random] != null)
-                newLetters[random] = Letter(context, random, word[id], id)
+                newLetters[random] = Letter(activity, random, word[id], id)
                 alphabet = alphabet.remove(word[id])
             }
 
@@ -63,7 +79,7 @@ class Letters(context: Context, word: String, pack: String) {
                 if (newLetters[id] == null) {
                     val newLetter = alphabet[(0 until alphabet.length).random()]
                     alphabet = alphabet.remove(newLetter)
-                    newLetters[id] = Letter(context, id, newLetter)
+                    newLetters[id] = Letter(activity, id, newLetter)
                 }
             }
 
@@ -80,6 +96,15 @@ class Letters(context: Context, word: String, pack: String) {
         }
 
         letters = newLetters.requireNoNulls()
+    }
+
+    private fun isLettersCorrect(word: String, letters: Array<Letter>): Boolean {
+        var wordShouldBeGuessed = word.remove(' ')
+        wordShouldBeGuessed = wordShouldBeGuessed.slice(0 until minOf(letterCount, wordShouldBeGuessed.length))
+        for (i in letters) {
+            wordShouldBeGuessed = wordShouldBeGuessed.replaceFirst(i.letter.toString(), "")
+        }
+        return wordShouldBeGuessed.isEmpty()
     }
 
     fun tipShowLetter(wordLetters: WordLetters): Letter {
@@ -107,14 +132,23 @@ class Letters(context: Context, word: String, pack: String) {
     }
 
     fun addLettersToLayout(linearLayout1: LinearLayout, linearLayout2: LinearLayout) {
-        lettersLayout1 = linearLayout1
-        lettersLayout2 = linearLayout2
+        val displayMetrics = DisplayMetrics()
+        activity.windowManager.defaultDisplay.getMetrics(displayMetrics)
+        val displayWidth = displayMetrics.widthPixels
+        val layoutWidth = (letters[0].dimension + 2 * letters[0].margin) * (letterCount / 2)
+
+        val params = LinearLayout.LayoutParams(letters[0].dimension, letters[0].dimension, 1f)
+        val margin = activity.resources.getDimension(R.dimen.letter_margins_small).toInt()
+        params.setMargins(margin, margin, margin, margin)
+
         letters.forEach { letter ->
             letter.parent?.also { (it as ViewGroup).removeView(letter) }
+            if (layoutWidth > displayWidth) letter.layoutParams = params
         }
+
         for (i in 1..letterCount) {
-            if (i <= letterCount / 2) lettersLayout1.addView(letters[i - 1])
-            else lettersLayout2.addView(letters[i - 1])
+            if (i <= letterCount / 2) linearLayout1.addView(letters[i - 1])
+            else linearLayout2.addView(letters[i - 1])
         }
     }
 

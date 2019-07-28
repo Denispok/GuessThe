@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#49B0C0"
+    android:layout_margin="@dimen/item_levelselection_margin"
     app:cardCornerRadius="@dimen/item_levelselection_radius">
 
     <ImageView
@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:adjustViewBounds="true"
-        android:background="#49B0C0"
+        android:background="@color/colorLevelSelectionItemBackDark"
         android:scaleType="centerCrop" />
 
     <TextView

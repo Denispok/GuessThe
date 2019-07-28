@@ -6,6 +6,7 @@
     <integer-array name="packs_prices">
         <item>50</item>
         <item>100</item>
+        <item>100</item>
     </integer-array>
 
     <integer name="tip_letter_cost">20</integer>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@color/colorBackground"
@@ -21,7 +22,7 @@
             android:drawableStart="@drawable/baseline_font_download_black_24"
             android:drawablePadding="6dp"
             android:gravity="center"
-            android:text="Показать букву"
+            android:text="@string/tip_letter"
             android:textColor="@android:color/black"
             android:textSize="@dimen/tips_button_text_size" />
 
@@ -32,7 +33,7 @@
             android:layout_gravity="center"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:layout_toLeftOf="@id/tips_letter_cost"
+            android:layout_toStartOf="@id/tips_letter_cost"
             android:background="@android:color/black" />
 
         <TextView
@@ -46,9 +47,9 @@
             android:drawableEnd="@drawable/coin_icon_16"
             android:drawablePadding="@dimen/tips_button_coins_drawable_padding"
             android:gravity="center_vertical"
-            android:text="20"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/tips_button_text_size" />
+            android:textSize="@dimen/tips_button_text_size"
+            tools:text="20" />
 
     </RelativeLayout>
 
@@ -65,7 +66,7 @@
             android:drawableStart="@drawable/baseline_clear_black_24"
             android:drawablePadding="6dp"
             android:gravity="center"
-            android:text="Убрать лишнее"
+            android:text="@string/tip_remove"
             android:textColor="@android:color/black"
             android:textSize="@dimen/tips_button_text_size" />
 
@@ -76,7 +77,7 @@
             android:layout_gravity="center"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:layout_toLeftOf="@id/tips_remove_cost"
+            android:layout_toStartOf="@id/tips_remove_cost"
             android:background="@android:color/black" />
 
         <TextView
@@ -90,9 +91,9 @@
             android:drawableEnd="@drawable/coin_icon_16"
             android:drawablePadding="@dimen/tips_button_coins_drawable_padding"
             android:gravity="center_vertical"
-            android:text="20"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/tips_button_text_size" />
+            android:textSize="@dimen/tips_button_text_size"
+            tools:text="20" />
 
     </RelativeLayout>
 
@@ -108,7 +109,7 @@
             android:drawableStart="@drawable/baseline_exit_to_app_black_24"
             android:drawablePadding="6dp"
             android:gravity="center"
-            android:text="Пропустить уровень"
+            android:text="@string/tip_skip"
             android:textColor="@android:color/black"
             android:textSize="@dimen/tips_button_text_size" />
 
@@ -119,7 +120,7 @@
             android:layout_gravity="center"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:layout_toLeftOf="@id/tips_skip_cost"
+            android:layout_toStartOf="@id/tips_skip_cost"
             android:background="@android:color/black" />
 
         <TextView
@@ -133,9 +134,9 @@
             android:drawableEnd="@drawable/coin_icon_16"
             android:drawablePadding="@dimen/tips_button_coins_drawable_padding"
             android:gravity="center_vertical"
-            android:text="20"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/tips_button_text_size" />
+            android:textSize="@dimen/tips_button_text_size"
+            tools:text="20" />
 
     </RelativeLayout>
 
@@ -148,7 +149,7 @@
         android:gravity="center"
         android:paddingStart="@dimen/tips_cancel_padding"
         android:paddingEnd="@dimen/tips_cancel_padding"
-        android:text="Отмена"
+        android:text="@string/cancel"
         android:textColor="@android:color/black"
         android:textSize="@dimen/tips_button_text_size" />
 
