@@ -6,13 +6,13 @@ import android.os.Handler
 import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
 import com.gamesbars.guessthe.R
-import com.gamesbars.guessthe.customview.LettersLayout
+import com.gamesbars.guessthe.customview.WordLettersLayout
 import com.gamesbars.guessthe.fragment.LevelFragment
 import com.gamesbars.guessthe.level.Letters.Companion.letterCount
 import com.gamesbars.guessthe.playSound
 
 class WordLetters(private val fragment: LevelFragment, private val word: String) {
-    private lateinit var wordLayout: LettersLayout
+    private lateinit var wordLayout: WordLettersLayout
     private val wordLetters = arrayListOf<WordLetter>()
     val animationDuration = 400L
 
@@ -64,12 +64,12 @@ class WordLetters(private val fragment: LevelFragment, private val word: String)
         return null
     }
 
-    fun addLettersToLayout(lettersLayout: LettersLayout) {
-        wordLayout = lettersLayout
+    fun addLettersToLayout(wordLettersLayout: WordLettersLayout) {
+        wordLayout = wordLettersLayout
         for (letter in wordLetters) {
             letter.parent?.also { (it as ViewGroup).removeView(letter) }
         }
-        lettersLayout.setWordLetters(wordLetters)
+        wordLettersLayout.setWordLetters(wordLetters)
     }
 
     fun tipLetterGuessed(letter: Letter) {

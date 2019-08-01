@@ -6,7 +6,7 @@ import android.view.Gravity
 import android.widget.LinearLayout
 import com.gamesbars.guessthe.level.WordLetter
 
-class LettersLayout(context: Context, attrs: AttributeSet? = null) : LinearLayout(context, attrs) {
+class WordLettersLayout(context: Context, attrs: AttributeSet? = null) : LinearLayout(context, attrs) {
 
     companion object {
         const val maxLettersPerLine = 16
@@ -60,7 +60,8 @@ class LettersLayout(context: Context, attrs: AttributeSet? = null) : LinearLayou
         super.onLayout(changed, l, t, r, b)
 
         if (wordLetters != null) {
-            var minSize = wordLetters!![0].width
+            val oldParams = wordLetters!![0].layoutParams as LayoutParams
+            var minSize = wordLetters!![0].width + oldParams.leftMargin + oldParams.rightMargin
 
             for (linear in linearList) {
                 val size = linear.width / linear.childCount
@@ -69,7 +70,9 @@ class LettersLayout(context: Context, attrs: AttributeSet? = null) : LinearLayou
 
             val params = LayoutParams(minSize, wordLetters!![0].height)
             wordLetters!!.forEach {
-                if (it.layoutParams.width != params.width) it.layoutParams = params
+                val oldLetterParams = it.layoutParams as LayoutParams
+                val oldLetterWidth = oldLetterParams.width + oldLetterParams.leftMargin + oldLetterParams.rightMargin
+                if (oldLetterWidth != params.width) it.layoutParams = params
             }
         }
     }
