@@ -2,6 +2,7 @@
 <resources>
     <string name="google_play_market_link">market://details?id=com.gamesbars.whatyouchoose</string>
     <string name="google_play_link">https://play.google.com/store/apps/details?id=com.gamesbars.whatyouchoose</string>
+    <string name="privacy_policy_link">https://gamesbars.github.io/Privacy-Policy</string>
 
     <string name="level_fragment_tag">level</string>
     <string name="win_fragment_tag">win</string>
@@ -11,6 +12,7 @@
 
     <!--  Ads  -->
 
+    <string name="pub_id">INSERT PUB ID</string>
     <string name="ads_id">ca-app-pub-3940256099942544~3347511713</string>
     <string name="banner_id">ca-app-pub-3940256099942544/6300978111</string>
     <string name="interstitial_id">ca-app-pub-3940256099942544/1033173712</string>

@@ -2,6 +2,7 @@ package com.gamesbars.guessthe
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
@@ -11,7 +12,6 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import com.gamesbars.guessthe.fragment.ConfirmDialogFragment
 import com.gamesbars.guessthe.fragment.InternetConnectionDialog
-import com.google.android.gms.ads.AdRequest
 import io.github.inflationx.calligraphy3.CalligraphyConfig
 import io.github.inflationx.calligraphy3.CalligraphyInterceptor
 import io.github.inflationx.viewpump.ViewPump
@@ -24,6 +24,7 @@ class LevelMenuActivity : AppCompatActivity() {
         const val PACK_LEVELS_COUNT = 10
     }
 
+    private lateinit var saves: SharedPreferences
     var isClickable: Boolean = true
     var currentDialog: ConfirmDialogFragment? = null
 
@@ -35,15 +36,18 @@ class LevelMenuActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         ViewPump.init(ViewPump.builder()
-                .addInterceptor(CalligraphyInterceptor(
-                        CalligraphyConfig.Builder()
-                                .setDefaultFontPath("fonts/Exo_2/Exo2-Medium.ttf")
-                                .setFontAttrId(R.attr.fontPath)
-                                .build()))
-                .build())
+            .addInterceptor(CalligraphyInterceptor(
+                CalligraphyConfig.Builder()
+                    .setDefaultFontPath("fonts/Exo_2/Exo2-Medium.ttf")
+                    .setFontAttrId(R.attr.fontPath)
+                    .build()))
+            .build())
 
         hideSystemUI()
         setContentView(R.layout.activity_levelmenu)
+
+        saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
+
         loadPacks()
         findViewById<ImageView>(R.id.levelmenu_back).setOnClickListener {
             if (isClickable) {
@@ -59,14 +63,10 @@ class LevelMenuActivity : AppCompatActivity() {
             }
         }
 
-        val saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
         if (saves.getBoolean("ads", true)) {
             if (hasConnection(this)) {
-                if (hasConnection(this)) {
-                    val adRequest = AdRequest.Builder().build()
-                    adView.visibility = View.VISIBLE
-                    adView.loadAd(adRequest)
-                }
+                adView.visibility = View.VISIBLE
+                adView.loadAd(buildAdRequest(saves))
             }
         }
     }
@@ -79,7 +79,7 @@ class LevelMenuActivity : AppCompatActivity() {
     }
 
     fun updateCoins() {
-        val coins = getSharedPreferences("saves", Context.MODE_PRIVATE).getInt("coins", 0).toString()
+        val coins = saves.getInt("coins", 0).toString()
         findViewById<TextView>(R.id.levelmenu_coins).text = coins
     }
 
@@ -94,7 +94,6 @@ class LevelMenuActivity : AppCompatActivity() {
     }
 
     fun updateProgressBars() {
-        val saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
         val packs = resources.getStringArray(R.array.packs)
         val packsList = findViewById<LinearLayout>(R.id.levels_list)
         for (id in 0 until packsList.childCount) {
@@ -105,8 +104,8 @@ class LevelMenuActivity : AppCompatActivity() {
                 val completedPercent = ((completedLevels + 1).toFloat() / PACK_LEVELS_COUNT * 100).toInt()
                 currentButton.findViewById<ProgressBar>(R.id.levelmenu_button_progress_bar).progress = completedPercent
                 progressBarText.text =
-                        if (completedLevels == PACK_LEVELS_COUNT) getString(R.string.completed)
-                        else getString(R.string.percent, completedLevels + 1, PACK_LEVELS_COUNT)
+                    if (completedLevels == PACK_LEVELS_COUNT) getString(R.string.completed)
+                    else getString(R.string.percent, completedLevels + 1, PACK_LEVELS_COUNT)
                 progressBarText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
                 currentButton.setOnClickListener {
                     if (isClickable) {

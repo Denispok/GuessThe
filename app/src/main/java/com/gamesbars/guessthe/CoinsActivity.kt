@@ -2,6 +2,7 @@ package com.gamesbars.guessthe
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
@@ -11,7 +12,6 @@ import android.widget.TextView
 import android.widget.Toast
 import com.anjlab.android.iab.v3.BillingProcessor
 import com.anjlab.android.iab.v3.TransactionDetails
-import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.reward.RewardItem
 import com.google.android.gms.ads.reward.RewardedVideoAd
@@ -21,7 +21,6 @@ import io.github.inflationx.calligraphy3.CalligraphyInterceptor
 import io.github.inflationx.viewpump.ViewPump
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
 import kotlinx.android.synthetic.main.activity_coins.*
-import java.lang.Exception
 
 class CoinsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler, RewardedVideoAdListener {
 
@@ -35,6 +34,7 @@ class CoinsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler, Rew
 
     var isClickable: Boolean = true
 
+    private lateinit var saves: SharedPreferences
     private lateinit var billingProcessor: BillingProcessor
     private lateinit var mRewardedVideoAd: RewardedVideoAd
 
@@ -46,14 +46,16 @@ class CoinsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler, Rew
         super.onCreate(savedInstanceState)
 
         ViewPump.init(ViewPump.builder()
-                .addInterceptor(CalligraphyInterceptor(
-                        CalligraphyConfig.Builder()
-                                .setDefaultFontPath("fonts/Exo_2/Exo2-Medium.ttf")
-                                .setFontAttrId(R.attr.fontPath)
-                                .build()))
-                .build())
+            .addInterceptor(CalligraphyInterceptor(
+                CalligraphyConfig.Builder()
+                    .setDefaultFontPath("fonts/Exo_2/Exo2-Medium.ttf")
+                    .setFontAttrId(R.attr.fontPath)
+                    .build()))
+            .build())
 
         setContentView(R.layout.activity_coins)
+
+        saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
 
         billingProcessor = BillingProcessor(this, "INSERT LICENSE KEY HERE", this)
         if (BillingProcessor.isIabServiceAvailable(this)) {
@@ -70,12 +72,10 @@ class CoinsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler, Rew
         mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this)
         mRewardedVideoAd.rewardedVideoAdListener = this
 
-        val saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
         if (saves.getBoolean("ads", true)) {
             if (hasConnection(this)) {
-                val adRequest = AdRequest.Builder().build()
                 adView.visibility = View.VISIBLE
-                adView.loadAd(adRequest)
+                adView.loadAd(buildAdRequest(saves))
             }
         }
 
@@ -103,12 +103,11 @@ class CoinsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler, Rew
     }
 
     private fun updateCoins() {
-        val coins = getSharedPreferences("saves", Context.MODE_PRIVATE).getInt("coins", 0).toString()
+        val coins = saves.getInt("coins", 0).toString()
         findViewById<TextView>(R.id.coins_coins).text = coins
     }
 
     private fun checkPurchases() {
-        val saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
         if (!saves.getBoolean("ads", true)) {
             findViewById<TextView>(R.id.coins_purchase_2_ads).visibility = View.GONE
             findViewById<TextView>(R.id.coins_purchase_3_ads).visibility = View.GONE
@@ -116,7 +115,6 @@ class CoinsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler, Rew
     }
 
     private fun addCoins(coins: Int, productId: String? = null, removeAds: Boolean = false) {
-        val saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
         val editor = saves.edit()
         if (removeAds) editor.putBoolean("ads", false)
         editor.putInt("coins", saves.getInt("coins", 0) + coins)
@@ -136,7 +134,6 @@ class CoinsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler, Rew
 
     override fun onBillingInitialized() {
         try {
-            val saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
             val ads = saves.getBoolean("ads", true)
 
             val purchase1 = billingProcessor.getPurchaseListingDetails(PRODUCT_1_ID)
@@ -190,7 +187,6 @@ class CoinsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler, Rew
 
     override fun onPurchaseHistoryRestored() {
         val products = billingProcessor.listOwnedProducts()
-        val saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
         if (saves.getBoolean("ads", true)) {
             if (products.contains(PRODUCT_2_ID_WITH_ADS)) {
                 addCoins(resources.getInteger(R.integer.coins_purchase_2), removeAds = true)
@@ -222,8 +218,7 @@ class CoinsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler, Rew
     }
 
     private fun showRewardedVideoAd() {
-        mRewardedVideoAd.loadAd(getString(R.string.rewarded_video_id),
-                AdRequest.Builder().build())
+        mRewardedVideoAd.loadAd(getString(R.string.rewarded_video_id), buildAdRequest(saves))
         Toast.makeText(this, getString(R.string.video_is_loading), Toast.LENGTH_LONG).show()
     }
 
@@ -242,7 +237,6 @@ class CoinsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler, Rew
     override fun onRewardedVideoCompleted() {}
 
     override fun onRewarded(p0: RewardItem?) {
-        val saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
         saves.edit().apply {
             putInt("coins", saves.getInt("coins", 0) + 2 * resources.getInteger(R.integer.level_reward))
             apply()

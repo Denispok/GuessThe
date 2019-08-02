@@ -1,6 +1,7 @@
 package com.gamesbars.guessthe.fragment
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -16,6 +17,7 @@ import com.gamesbars.guessthe.*
 
 class WinFragment : Fragment() {
 
+    private lateinit var saves: SharedPreferences
     private lateinit var image: String
     private lateinit var word: String
     private lateinit var pack: String
@@ -41,6 +43,7 @@ class WinFragment : Fragment() {
             sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
         }
 
+        saves = context!!.getSharedPreferences("saves", Context.MODE_PRIVATE)
         word = arguments!!.getString("word")
         image = arguments!!.getString("image")
         pack = arguments!!.getString("pack")
@@ -67,7 +70,6 @@ class WinFragment : Fragment() {
             (activity!! as PlayActivity).showRewardedVideoAd()
         }
         activity!!.findViewById<Button>(R.id.win_continue).setOnClickListener {
-            val saves = context!!.getSharedPreferences("saves", Context.MODE_PRIVATE)
             if (hasConnection(context!!)) {
                 if (saves.getInt("without_connection", 0) != 0) {
                     saves.edit().apply {
@@ -91,7 +93,7 @@ class WinFragment : Fragment() {
     }
 
     private fun nextLevel() {
-        if (activity!!.getSharedPreferences("saves", Context.MODE_PRIVATE).getInt(pack, 1) == 1) {
+        if (saves.getInt(pack, 1) == 1) {
             activity!!.finish()
         } else {
             val fragment = LevelFragment.newInstance(pack)
@@ -100,7 +102,7 @@ class WinFragment : Fragment() {
                     .addSharedElement(activity!!.findViewById<ImageView>(R.id.win_image), "ImageTransition")
                     .commit()
         }
-        if (activity!!.getSharedPreferences("saves", Context.MODE_PRIVATE).getInt(pack, 1) % INTERSTITIAL_AD_FREQUENCY == 1)
+        if (saves.getInt(pack, 1) % INTERSTITIAL_AD_FREQUENCY == 1)
             (activity!! as PlayActivity).showInterstitialAd()
     }
 }
