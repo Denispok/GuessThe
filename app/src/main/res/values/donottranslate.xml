@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="google_play_market_link">market://details?id=com.gamesbars.whatyouchoose</string>
-    <string name="google_play_link">https://play.google.com/store/apps/details?id=com.gamesbars.whatyouchoose</string>
+    <string name="google_play_market_link">market://details?id=com.gamesbars.ugadairusskoeavto</string>
+    <string name="google_play_link">https://play.google.com/store/apps/details?id=com.gamesbars.ugadairusskoeavto</string>
     <string name="privacy_policy_link">https://gamesbars.github.io/Privacy-Policy</string>
 
     <string name="level_fragment_tag">level</string>

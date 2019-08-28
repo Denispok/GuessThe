@@ -11,6 +11,8 @@ import android.text.method.LinkMovementMethod
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import com.google.ads.consent.ConsentInformation
+import com.google.firebase.analytics.FirebaseAnalytics
 import io.github.inflationx.calligraphy3.CalligraphyConfig
 import io.github.inflationx.calligraphy3.CalligraphyInterceptor
 import io.github.inflationx.viewpump.ViewPump
@@ -21,6 +23,8 @@ class MenuActivity : AppCompatActivity() {
 
     private lateinit var saves: SharedPreferences
     var isClickable: Boolean = true
+
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase))
@@ -41,10 +45,18 @@ class MenuActivity : AppCompatActivity() {
         setContentView(R.layout.activity_menu)
 
         saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
         findViewById<TextView>(R.id.menu_rate_coins).text = "+".plus(resources.getInteger(R.integer.rate_reward))
         findViewById<TextView>(R.id.privacy_policy).movementMethod = LinkMovementMethod.getInstance()
-        findViewById<TextView>(R.id.ads_settings).setOnClickListener { showConsentForm(this) }
+
+        val consentInformation = ConsentInformation.getInstance(this)
+        val adsSettingsView = findViewById<TextView>(R.id.ads_settings)
+        if (consentInformation.isRequestLocationInEeaOrUnknown) {
+            adsSettingsView.setOnClickListener { showConsentForm(this) }
+        } else {
+            adsSettingsView.visibility = View.GONE
+        }
 
         showBannerAd()
 
@@ -91,6 +103,11 @@ class MenuActivity : AppCompatActivity() {
         if (isClickable) {
             isClickable = false
             playSound(this, R.raw.button)
+
+            val params = Bundle()
+            params.putString("reward", if (saves.getBoolean("rated", false)) "none" else "${resources.getInteger(R.integer.rate_reward)} coins")
+            firebaseAnalytics.logEvent("rate", params)
+
             try {
                 startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.google_play_market_link))))
             } catch (anfe: ActivityNotFoundException) {
@@ -108,6 +125,7 @@ class MenuActivity : AppCompatActivity() {
     fun sound(view: View) {
         if (isClickable) {
             val sound = saves.getBoolean("sound", true)
+            firebaseAnalytics.setUserProperty("sound", if (sound) "off" else "on")
             saves.edit().apply {
                 putBoolean("sound", !sound)
                 apply()
@@ -122,6 +140,8 @@ class MenuActivity : AppCompatActivity() {
         if (isClickable) {
             isClickable = false
             playSound(this, R.raw.button)
+            firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SHARE, null)
+
             val sharingIntent = Intent(Intent.ACTION_SEND)
             sharingIntent.type = "text/plain"
             sharingIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_text) + getString(R.string.google_play_link))

@@ -4,68 +4,113 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import com.gamesbars.guessthe.SplashScreenActivity.Companion.CONSENT_ERROR_TAG
 import com.google.ads.consent.*
 import com.google.android.gms.ads.MobileAds
+import com.google.firebase.analytics.FirebaseAnalytics
 import java.net.URL
 
 class SplashScreenActivity : AppCompatActivity() {
 
     companion object {
         const val CONSENT_ERROR_TAG = "CONSENT"
+        const val CONSENT_INIT_TIME = 5000L
     }
 
-    lateinit var saves: SharedPreferences
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
+    private lateinit var saves: SharedPreferences
+
+    // FUCKING GOOGLE CONSENT SDK KOSTbIL'
+    @Volatile
+    var isConsentTimeOver: Boolean = false
+    @Volatile
+    var isConsentLoaded: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         hideSystemUI()
         setContentView(R.layout.activity_splashscreen)
 
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
 
         val consentInformation = ConsentInformation.getInstance(this)
         val publisherIds = arrayOf(getString(R.string.pub_id))
         consentInformation.requestConsentInfoUpdate(publisherIds, object : ConsentInfoUpdateListener {
             override fun onConsentInfoUpdated(consentStatus: ConsentStatus) {
-                when (consentStatus) {
-                    ConsentStatus.UNKNOWN -> showConsentForm(this@SplashScreenActivity)
 
-                    ConsentStatus.NON_PERSONALIZED -> {
-                        saves.edit().apply {
-                            putBoolean("npa", true)
-                            apply()
+                if (consentInformation.isRequestLocationInEeaOrUnknown) {
+                    firebaseAnalytics.setUserProperty("adslocation", "InEeaOrUnknown")
+                    when (consentStatus) {
+                        ConsentStatus.UNKNOWN -> {
+                            showConsentForm(this@SplashScreenActivity)
+                            Handler().postDelayed({
+                                if (!isConsentLoaded) {
+                                    val errorMessage = "Consent didn't loaded for $CONSENT_INIT_TIME millis"
+                                    Log.e(CONSENT_ERROR_TAG, errorMessage)
+
+                                    val params = Bundle()
+                                    params.putString("message", errorMessage)
+                                    firebaseAnalytics.logEvent("consent_error", params)
+
+                                    isConsentTimeOver = true
+                                    putNpa(this@SplashScreenActivity, true)
+                                    startGame()
+                                }
+                            }, CONSENT_INIT_TIME)
                         }
-                        MobileAds.initialize(this@SplashScreenActivity, getString(R.string.ads_id))
-                        startGame()
+
+                        ConsentStatus.NON_PERSONALIZED -> {
+                            putNpa(this@SplashScreenActivity, true)
+                            MobileAds.initialize(this@SplashScreenActivity, getString(R.string.ads_id))
+                            startGame()
+                        }
+
+                        ConsentStatus.PERSONALIZED -> {
+                            putNpa(this@SplashScreenActivity, false)
+                            MobileAds.initialize(this@SplashScreenActivity, getString(R.string.ads_id))
+                            startGame()
+                        }
                     }
 
-                    ConsentStatus.PERSONALIZED -> {
-                        saves.edit().apply {
-                            putBoolean("npa", false)
-                            apply()
-                        }
-                        MobileAds.initialize(this@SplashScreenActivity, getString(R.string.ads_id))
-                        startGame()
-                    }
+                } else {
+                    firebaseAnalytics.setUserProperty("adslocation", "None")
+                    putNpa(this@SplashScreenActivity, false)
+                    MobileAds.initialize(this@SplashScreenActivity, this@SplashScreenActivity.getString(R.string.ads_id))
+                    startGame()
                 }
             }
 
             override fun onFailedToUpdateConsentInfo(errorDescription: String) {
                 Log.e(CONSENT_ERROR_TAG, errorDescription)
+
+                val params = Bundle()
+                params.putString("message", "onFailedToUpdateConsentInfo: $errorDescription")
+                firebaseAnalytics.logEvent("consent_error", params)
+
+                putNpa(this@SplashScreenActivity, true)
                 MobileAds.initialize(this@SplashScreenActivity, getString(R.string.ads_id))
                 startGame()
             }
         })
 
-        if (!saves.contains("russian_carspurchased"))
+        if (!saves.contains("russian_carspurchased")) {
             saves.edit().apply {
                 putBoolean("russian_carspurchased", true)
                 putInt("coins", 10000)
                 apply()
             }
+
+            val packs = resources.getStringArray(R.array.packs)
+            firebaseAnalytics.setUserProperty(packs[0], "0")
+            for (i in 1 until packs.size) {
+                firebaseAnalytics.setUserProperty(packs[i], "none")
+            }
+            firebaseAnalytics.setUserProperty("sound", "on")
+        }
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
@@ -79,14 +124,34 @@ class SplashScreenActivity : AppCompatActivity() {
     }
 }
 
+fun putNpa(context: Context, npa: Boolean) {
+    val saves = context.getSharedPreferences("saves", Context.MODE_PRIVATE)
+    saves.edit().apply {
+        putBoolean("npa", npa)
+        apply()
+    }
+
+    val firebaseAnalytics = FirebaseAnalytics.getInstance(context)
+    firebaseAnalytics.setUserProperty("npa", if (npa) "non-personalized" else "personalized")
+}
+
 fun showConsentForm(activity: AppCompatActivity) {
-    val saves = activity.getSharedPreferences("saves", Context.MODE_PRIVATE)
+    val firebaseAnalytics = FirebaseAnalytics.getInstance(activity)
     val privacyUrl = URL(activity.getString(R.string.privacy_policy_link))
 
     var form: ConsentForm? = null
     form = ConsentForm.Builder(activity, privacyUrl)
         .withListener(object : ConsentFormListener() {
             override fun onConsentFormLoaded() {
+                if (activity is SplashScreenActivity) {
+                    if (activity.isConsentTimeOver) {
+                        val params = Bundle()
+                        params.putString("message", "onConsentFormLoaded: form loaded after consent time is over")
+                        firebaseAnalytics.logEvent("consent_error", params)
+                        return
+                    }
+                    activity.isConsentLoaded = true
+                }
                 form?.show()
             }
 
@@ -99,29 +164,40 @@ fun showConsentForm(activity: AppCompatActivity) {
                     ConsentStatus.UNKNOWN -> activity.finish()
 
                     ConsentStatus.NON_PERSONALIZED -> {
-                        saves.edit().apply {
-                            putBoolean("npa", true)
-                            apply()
+                        putNpa(activity, true)
+                        if (activity is SplashScreenActivity) {
+                            MobileAds.initialize(activity, activity.getString(R.string.ads_id))
+                            activity.startGame()
                         }
-                        MobileAds.initialize(activity, activity.getString(R.string.ads_id))
-                        if (activity is SplashScreenActivity) activity.startGame()
                     }
 
                     ConsentStatus.PERSONALIZED -> {
-                        saves.edit().apply {
-                            putBoolean("npa", false)
-                            apply()
+                        putNpa(activity, false)
+                        if (activity is SplashScreenActivity) {
+                            MobileAds.initialize(activity, activity.getString(R.string.ads_id))
+                            activity.startGame()
                         }
-                        MobileAds.initialize(activity, activity.getString(R.string.ads_id))
-                        if (activity is SplashScreenActivity) activity.startGame()
                     }
                 }
             }
 
             override fun onConsentFormError(errorDescription: String) {
                 Log.e(CONSENT_ERROR_TAG, errorDescription)
-                MobileAds.initialize(activity, activity.getString(R.string.ads_id))
-                if (activity is SplashScreenActivity) activity.startGame()
+
+                val params = Bundle()
+                params.putString("message", "onConsentFormError: $errorDescription")
+                firebaseAnalytics.logEvent("consent_error", params)
+
+                if (activity is SplashScreenActivity) {
+                    if (activity.isConsentTimeOver) return
+                    activity.isConsentLoaded = true
+                }
+
+                putNpa(activity, true)
+                if (activity is SplashScreenActivity) {
+                    MobileAds.initialize(activity, activity.getString(R.string.ads_id))
+                    activity.startGame()
+                }
             }
         })
         .withPersonalizedAdsOption()

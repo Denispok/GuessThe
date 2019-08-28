@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="dev_name" translatable="false">gamesBARS</string>
     <string name="app_name">GuessThe</string>
     <string name="menu_title">Guess \nRussian Auto!</string>
     <string name="privacy_policy"><a href="https://gamesbars.github.io/Privacy-Policy/">Privacy Policy</a></string>

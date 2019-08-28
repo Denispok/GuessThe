@@ -16,6 +16,7 @@ import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.reward.RewardItem
 import com.google.android.gms.ads.reward.RewardedVideoAd
 import com.google.android.gms.ads.reward.RewardedVideoAdListener
+import com.google.firebase.analytics.FirebaseAnalytics
 import io.github.inflationx.calligraphy3.CalligraphyConfig
 import io.github.inflationx.calligraphy3.CalligraphyInterceptor
 import io.github.inflationx.viewpump.ViewPump
@@ -35,6 +36,7 @@ class CoinsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler, Rew
     var isClickable: Boolean = true
 
     private lateinit var saves: SharedPreferences
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
     private lateinit var billingProcessor: BillingProcessor
     private lateinit var mRewardedVideoAd: RewardedVideoAd
 
@@ -56,6 +58,7 @@ class CoinsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler, Rew
         setContentView(R.layout.activity_coins)
 
         saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
         billingProcessor = BillingProcessor(this, "INSERT LICENSE KEY HERE", this)
         if (BillingProcessor.isIabServiceAvailable(this)) {
@@ -105,6 +108,7 @@ class CoinsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler, Rew
     private fun updateCoins() {
         val coins = saves.getInt("coins", 0).toString()
         findViewById<TextView>(R.id.coins_coins).text = coins
+        firebaseAnalytics.setUserProperty("coins", coins)
     }
 
     private fun checkPurchases() {
@@ -191,10 +195,12 @@ class CoinsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler, Rew
             if (products.contains(PRODUCT_2_ID_WITH_ADS)) {
                 addCoins(resources.getInteger(R.integer.coins_purchase_2), removeAds = true)
                 Toast.makeText(this, getString(R.string.purchases_restored), Toast.LENGTH_LONG).show()
+                firebaseAnalytics.logEvent("purchase_restored", null)
             }
             if (products.contains(PRODUCT_3_ID_WITH_ADS)) {
                 addCoins(resources.getInteger(R.integer.coins_purchase_3), removeAds = true)
                 Toast.makeText(this, getString(R.string.purchases_restored), Toast.LENGTH_LONG).show()
+                firebaseAnalytics.logEvent("purchase_restored", null)
             }
         }
     }

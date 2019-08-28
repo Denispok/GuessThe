@@ -12,6 +12,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import com.gamesbars.guessthe.fragment.ConfirmDialogFragment
 import com.gamesbars.guessthe.fragment.InternetConnectionDialog
+import com.google.firebase.analytics.FirebaseAnalytics
 import io.github.inflationx.calligraphy3.CalligraphyConfig
 import io.github.inflationx.calligraphy3.CalligraphyInterceptor
 import io.github.inflationx.viewpump.ViewPump
@@ -27,6 +28,8 @@ class LevelMenuActivity : AppCompatActivity() {
     private lateinit var saves: SharedPreferences
     var isClickable: Boolean = true
     var currentDialog: ConfirmDialogFragment? = null
+
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase))
@@ -49,6 +52,9 @@ class LevelMenuActivity : AppCompatActivity() {
         saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
 
         loadPacks()
+
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
+
         findViewById<ImageView>(R.id.levelmenu_back).setOnClickListener {
             if (isClickable) {
                 playSound(this, R.raw.button)
@@ -81,6 +87,7 @@ class LevelMenuActivity : AppCompatActivity() {
     fun updateCoins() {
         val coins = saves.getInt("coins", 0).toString()
         findViewById<TextView>(R.id.levelmenu_coins).text = coins
+        firebaseAnalytics.setUserProperty("coins", coins)
     }
 
     private fun loadPacks() {

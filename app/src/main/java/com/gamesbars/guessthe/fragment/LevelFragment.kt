@@ -18,6 +18,7 @@ import com.gamesbars.guessthe.*
 import com.gamesbars.guessthe.level.Letter
 import com.gamesbars.guessthe.level.Letters
 import com.gamesbars.guessthe.level.WordLetters
+import com.google.firebase.analytics.FirebaseAnalytics
 
 class LevelFragment : Fragment() {
 
@@ -29,6 +30,8 @@ class LevelFragment : Fragment() {
     private var isFirstStart = true
     var isClickable = true
     private val tipsDialog = TipsDialogFragment()
+
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
 
     companion object {
         fun newInstance(pack: String): LevelFragment {
@@ -46,6 +49,8 @@ class LevelFragment : Fragment() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
         }
+
+        firebaseAnalytics = FirebaseAnalytics.getInstance(context!!)
 
         pack = arguments!!.getString("pack")
         loadLevel(pack)
@@ -143,6 +148,7 @@ class LevelFragment : Fragment() {
     fun updateCoins() {
         val coins = activity!!.getSharedPreferences("saves", Context.MODE_PRIVATE).getInt("coins", 0).toString()
         activity!!.findViewById<TextView>(R.id.level_coins).text = coins
+        firebaseAnalytics.setUserProperty("coins", coins)
     }
 
     fun win() {
@@ -157,6 +163,7 @@ class LevelFragment : Fragment() {
             editor.putInt(pack + "completed", currentLevel)
             editor.putInt("coins", saves.getInt("coins", 0) + resources.getInteger(R.integer.level_reward))
             isLevelReward = true
+            firebaseAnalytics.setUserProperty(pack, currentLevel.toString())
         }
         if (currentLevel + 1 > LevelMenuActivity.PACK_LEVELS_COUNT) editor.putInt(pack, 1)
         else editor.putInt(pack, currentLevel + 1)
