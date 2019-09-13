@@ -11,13 +11,17 @@ import android.widget.TextView
 import com.gamesbars.guessthe.PlayActivity
 import com.gamesbars.guessthe.R
 import com.gamesbars.guessthe.playSound
+import com.google.firebase.analytics.FirebaseAnalytics
 
 class TipsDialogFragment : DialogFragment() {
+
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(context)
         val view = activity!!.layoutInflater.inflate(R.layout.dialog_tips, null)
 
+        firebaseAnalytics = FirebaseAnalytics.getInstance(context!!)
         val fragment = fragmentManager!!.findFragmentByTag(resources.getString(R.string.level_fragment_tag)) as LevelFragment
 
         val tipLetter = view.findViewById<RelativeLayout>(R.id.tips_letter)
@@ -56,6 +60,10 @@ class TipsDialogFragment : DialogFragment() {
                 editor.putInt("coins", coins - tipLetterCost)
                 editor.apply()
 
+                val params = Bundle()
+                params.putString(FirebaseAnalytics.Param.LEVEL, "${fragment.pack} $level")
+                firebaseAnalytics.logEvent("tip_letter", params)
+
                 playSound(context!!, R.raw.tips)
                 dismiss()
                 updateFragment(fragment)
@@ -70,6 +78,10 @@ class TipsDialogFragment : DialogFragment() {
                 editor.putInt("coins", coins - tipRemoveCost)
                 editor.apply()
 
+                val params = Bundle()
+                params.putString(FirebaseAnalytics.Param.LEVEL, "${fragment.pack} $level")
+                firebaseAnalytics.logEvent("tip_remove", params)
+
                 playSound(context!!, R.raw.tips)
                 dismiss()
                 updateFragment(fragment)
@@ -80,6 +92,10 @@ class TipsDialogFragment : DialogFragment() {
                 val editor = saves.edit()
                 editor.putInt("coins", coins - tipSkipCost)
                 editor.apply()
+
+                val params = Bundle()
+                params.putString(FirebaseAnalytics.Param.LEVEL, "${fragment.pack} $level")
+                firebaseAnalytics.logEvent("tip_skip", params)
 
                 playSound(context!!, R.raw.tips)
                 dismiss()
