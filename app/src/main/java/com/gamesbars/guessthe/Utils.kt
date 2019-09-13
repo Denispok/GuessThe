@@ -47,3 +47,5 @@ fun buildAdRequest(saves: SharedPreferences): AdRequest {
     }
     return adBuilder.build()
 }
+
+fun String.sliceUntilIndex(index: Int): String = this.run { slice(0..minOf(index, length - 1)) }

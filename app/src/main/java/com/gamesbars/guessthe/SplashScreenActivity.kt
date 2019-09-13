@@ -53,7 +53,7 @@ class SplashScreenActivity : AppCompatActivity() {
                                     Log.e(CONSENT_ERROR_TAG, errorMessage)
 
                                     val params = Bundle()
-                                    params.putString("message", errorMessage)
+                                    params.putString("message", errorMessage.sliceUntilIndex(99))
                                     firebaseAnalytics.logEvent("consent_error", params)
 
                                     isConsentTimeOver = true
@@ -88,7 +88,7 @@ class SplashScreenActivity : AppCompatActivity() {
                 Log.e(CONSENT_ERROR_TAG, errorDescription)
 
                 val params = Bundle()
-                params.putString("message", "onFailedToUpdateConsentInfo: $errorDescription")
+                params.putString("message", "onFailedToUpdateConsentInfo: $errorDescription".sliceUntilIndex(99))
                 firebaseAnalytics.logEvent("consent_error", params)
 
                 putNpa(this@SplashScreenActivity, true)
@@ -146,7 +146,7 @@ fun showConsentForm(activity: AppCompatActivity) {
                 if (activity is SplashScreenActivity) {
                     if (activity.isConsentTimeOver) {
                         val params = Bundle()
-                        params.putString("message", "onConsentFormLoaded: form loaded after consent time is over")
+                        params.putString("message", "onConsentFormLoaded: form loaded after consent time is over".sliceUntilIndex(99))
                         firebaseAnalytics.logEvent("consent_error", params)
                         return
                     }
@@ -185,7 +185,7 @@ fun showConsentForm(activity: AppCompatActivity) {
                 Log.e(CONSENT_ERROR_TAG, errorDescription)
 
                 val params = Bundle()
-                params.putString("message", "onConsentFormError: $errorDescription")
+                params.putString("message", "onConsentFormError: $errorDescription".sliceUntilIndex(99))
                 firebaseAnalytics.logEvent("consent_error", params)
 
                 if (activity is SplashScreenActivity) {
