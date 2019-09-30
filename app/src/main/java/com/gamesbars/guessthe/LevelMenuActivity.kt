@@ -65,7 +65,7 @@ class LevelMenuActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.levelmenu_coins).setOnClickListener {
             if (isClickable) {
                 isClickable = false
-                startActivity(Intent(applicationContext, CoinsActivity().javaClass))
+                startActivity(Intent(applicationContext, CoinsActivity::class.java))
             }
         }
 
@@ -119,7 +119,7 @@ class LevelMenuActivity : AppCompatActivity() {
                         isClickable = false
 
                         fun startLevel() {
-                            val intent = Intent(this, PlayActivity().javaClass)
+                            val intent = Intent(this, PlayActivity::class.java)
                             intent.putExtra("pack", packs[id])
                             startActivity(intent)
                         }

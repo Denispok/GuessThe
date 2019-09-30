@@ -87,7 +87,7 @@ class MenuActivity : AppCompatActivity() {
         if (isClickable) {
             isClickable = false
             playSound(this, R.raw.button)
-            startActivity(Intent(applicationContext, LevelMenuActivity().javaClass))
+            startActivity(Intent(applicationContext, LevelMenuActivity::class.java))
         }
     }
 
@@ -95,7 +95,7 @@ class MenuActivity : AppCompatActivity() {
         if (isClickable) {
             isClickable = false
             playSound(this, R.raw.button)
-            startActivity(Intent(applicationContext, CoinsActivity().javaClass))
+            startActivity(Intent(applicationContext, CoinsActivity::class.java))
         }
     }
 

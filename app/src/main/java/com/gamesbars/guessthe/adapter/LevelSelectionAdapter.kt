@@ -8,8 +8,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.gamesbars.guessthe.LevelMenuActivity
 import com.gamesbars.guessthe.R
+import com.gamesbars.guessthe.Storage.getDrawableResIdByName
 import com.gamesbars.guessthe.customview.LevelView
-import com.gamesbars.guessthe.getDrawableResIdByName
 
 class LevelSelectionAdapter(
     private val pack: String,
@@ -31,7 +31,7 @@ class LevelSelectionAdapter(
         viewHolder.itemView.tag = number
 
         if (number <= completedLevelCount + 1) {
-            viewHolder.image.setImageResource(getDrawableResIdByName(viewHolder.itemView.context, pack + number + "thum"))
+            viewHolder.image.setImageResource(getDrawableResIdByName(pack + number + "thum"))
             viewHolder.image.setColorFilter(0x66000000.toInt(), PorterDuff.Mode.DARKEN)
             viewHolder.image.setBackgroundResource(R.color.colorLevelSelectionItemBack)
         } else {

@@ -119,7 +119,7 @@ class SplashScreenActivity : AppCompatActivity() {
     }
 
     fun startGame() {
-        startActivity(Intent(applicationContext, MenuActivity().javaClass))
+        startActivity(Intent(applicationContext, MenuActivity::class.java))
         finish()
     }
 }

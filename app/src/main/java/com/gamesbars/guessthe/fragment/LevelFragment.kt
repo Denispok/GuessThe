@@ -1,6 +1,5 @@
 package com.gamesbars.guessthe.fragment
 
-import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -15,6 +14,11 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.gamesbars.guessthe.*
+import com.gamesbars.guessthe.Storage.getCurrentLevel
+import com.gamesbars.guessthe.Storage.getDrawableResIdByName
+import com.gamesbars.guessthe.Storage.getStringArrayResIdByName
+import com.gamesbars.guessthe.Storage.isLevelHaveInfo
+import com.gamesbars.guessthe.Storage.saves
 import com.gamesbars.guessthe.level.Letter
 import com.gamesbars.guessthe.level.Letters
 import com.gamesbars.guessthe.level.WordLetters
@@ -30,6 +34,7 @@ class LevelFragment : Fragment() {
     private var isFirstStart = true
     var isClickable = true
     private val tipsDialog = TipsDialogFragment()
+    private val infoDialog by lazy { InfoDialogFragment.newInstance(pack) }
 
     private lateinit var firebaseAnalytics: FirebaseAnalytics
 
@@ -65,11 +70,10 @@ class LevelFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.fragment_level, container, false)
 
-        view.findViewById<ImageView>(R.id.level_image).setImageResource(getDrawableResIdByName(context!!, image))
+        view.findViewById<ImageView>(R.id.level_image).setImageResource(getDrawableResIdByName(image))
         wordLetters.addLettersToLayout(view.findViewById(R.id.level_word))
         letters.addLettersToLayout(view.findViewById(R.id.level_letters_1), view.findViewById(R.id.level_letters_2))
 
-        val saves = activity!!.getSharedPreferences("saves", Context.MODE_PRIVATE)
         view.findViewById<Button>(R.id.level_level).text = getString(R.string.level, saves.getInt(pack, 1))
         view.findViewById<ImageView>(R.id.level_back).setOnClickListener {
             if (isClickable) {
@@ -78,6 +82,13 @@ class LevelFragment : Fragment() {
             }
         }
         view.findViewById<TextView>(R.id.level_level).setOnClickListener { startLevelSelection() }
+        view.findViewById<ImageView>(R.id.level_info).apply {
+            if (isLevelHaveInfo(pack, getCurrentLevel(pack))) {
+                setOnClickListener { info() }
+            } else {
+                visibility = View.GONE
+            }
+        }
         view.findViewById<TextView>(R.id.level_coins).setOnClickListener { coins() }
         view.findViewById<TextView>(R.id.level_tips_button).setOnClickListener { tips() }
         view.findViewById<TextView>(R.id.level_coins_button).setOnClickListener { coins() }
@@ -102,7 +113,6 @@ class LevelFragment : Fragment() {
     }
 
     private fun loadLevel(pack: String) {
-        val saves = activity!!.getSharedPreferences("saves", Context.MODE_PRIVATE)
 
         if (!saves.contains(pack)) {
             val editor = saves.edit()
@@ -110,10 +120,10 @@ class LevelFragment : Fragment() {
             editor.apply()
         }
 
-        val currentLevel = saves.getInt(pack, 1)
+        val currentLevel = getCurrentLevel(pack)
 
         image = pack + currentLevel
-        word = resources.getStringArray(resources.getIdentifier(pack, "array", context!!.packageName))[currentLevel - 1]
+        word = resources.getStringArray(getStringArrayResIdByName(pack))[currentLevel - 1]
     }
 
     private fun startLevelSelection() {
@@ -125,6 +135,15 @@ class LevelFragment : Fragment() {
                 .addToBackStack(null)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .commit()
+        }
+    }
+
+    private fun info() {
+        if (isClickable) {
+            isClickable = false
+            playSound(context!!, R.raw.button)
+            (activity!! as PlayActivity).currentDialog = infoDialog
+            infoDialog.show(fragmentManager, null)
         }
     }
 
@@ -141,18 +160,17 @@ class LevelFragment : Fragment() {
         if (isClickable) {
             isClickable = false
             playSound(context!!, R.raw.button)
-            startActivity(Intent(context, CoinsActivity().javaClass))
+            startActivity(Intent(context, CoinsActivity::class.java))
         }
     }
 
     fun updateCoins() {
-        val coins = activity!!.getSharedPreferences("saves", Context.MODE_PRIVATE).getInt("coins", 0).toString()
+        val coins = saves.getInt("coins", 0).toString()
         activity!!.findViewById<TextView>(R.id.level_coins).text = coins
         firebaseAnalytics.setUserProperty("coins", coins)
     }
 
     fun win() {
-        val saves = activity!!.getSharedPreferences("saves", Context.MODE_PRIVATE)
         val currentLevel = saves.getInt(pack, 1)
         val levelName = pack + currentLevel
         var isLevelReward = false

@@ -34,10 +34,6 @@ fun hasConnection(context: Context): Boolean {
     return cm.activeNetworkInfo?.isConnected ?: false
 }
 
-fun getDrawableResIdByName(context: Context, name: String): Int {
-    return context.resources.getIdentifier(name, "drawable", context.packageName)
-}
-
 fun buildAdRequest(saves: SharedPreferences): AdRequest {
     val adBuilder = AdRequest.Builder()
     if (saves.getBoolean("npa", true)) {

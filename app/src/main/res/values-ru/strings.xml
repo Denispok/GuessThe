@@ -44,6 +44,11 @@
     <string name="tip_remove">Убрать лишнее</string>
     <string name="ads_settings">Настройки персонализированной рекламы</string>
 
+    <!-- Level info -->
+    <string name="photo_info">О фото</string>
+    <string name="info_license_title">Лицензия: </string>
+    <string name="info_author_title">Автор: </string>
+
     <!--  Levels  -->
 
     <string name="alphabet">абвгдеёжзийклмнопрстуфхцчшщъыьэюя012345</string>
