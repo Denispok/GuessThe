@@ -4,8 +4,8 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentTransaction
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
@@ -143,7 +143,7 @@ class LevelFragment : Fragment() {
             isClickable = false
             playSound(context!!, R.raw.button)
             (activity!! as PlayActivity).currentDialog = infoDialog
-            infoDialog.show(fragmentManager, null)
+            infoDialog.show(fragmentManager!!, null)
         }
     }
 
@@ -152,7 +152,7 @@ class LevelFragment : Fragment() {
             isClickable = false
             playSound(context!!, R.raw.button)
             (activity!! as PlayActivity).currentDialog = tipsDialog
-            tipsDialog.show(fragmentManager, resources.getString(R.string.tips_dialog_fragment_tag))
+            tipsDialog.show(fragmentManager!!, resources.getString(R.string.tips_dialog_fragment_tag))
         }
     }
 

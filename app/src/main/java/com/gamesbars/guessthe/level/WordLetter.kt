@@ -2,7 +2,7 @@ package com.gamesbars.guessthe.level
 
 import android.content.Context
 import android.graphics.Color
-import android.support.v4.content.res.ResourcesCompat
+import androidx.core.content.res.ResourcesCompat
 import android.util.TypedValue
 import android.view.Gravity
 import android.widget.LinearLayout
