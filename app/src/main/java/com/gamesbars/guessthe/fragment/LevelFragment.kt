@@ -144,6 +144,9 @@ class LevelFragment : Fragment() {
             playSound(context!!, R.raw.button)
             (activity!! as PlayActivity).currentDialog = infoDialog
             infoDialog.show(fragmentManager!!, null)
+            val params = Bundle()
+            params.putString(FirebaseAnalytics.Param.LEVEL, "$pack ${getCurrentLevel(pack)}")
+            firebaseAnalytics.logEvent("level_info", params)
         }
     }
 
@@ -171,7 +174,7 @@ class LevelFragment : Fragment() {
     }
 
     fun win() {
-        val currentLevel = saves.getInt(pack, 1)
+        val currentLevel = getCurrentLevel(pack)
         val levelName = pack + currentLevel
         var isLevelReward = false
 
