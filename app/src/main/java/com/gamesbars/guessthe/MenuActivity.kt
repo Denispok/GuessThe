@@ -6,7 +6,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.text.method.LinkMovementMethod
 import android.view.View
 import android.widget.ImageView
@@ -87,7 +87,7 @@ class MenuActivity : AppCompatActivity() {
         if (isClickable) {
             isClickable = false
             playSound(this, R.raw.button)
-            startActivity(Intent(applicationContext, LevelMenuActivity().javaClass))
+            startActivity(Intent(applicationContext, LevelMenuActivity::class.java))
         }
     }
 
@@ -95,7 +95,7 @@ class MenuActivity : AppCompatActivity() {
         if (isClickable) {
             isClickable = false
             playSound(this, R.raw.button)
-            startActivity(Intent(applicationContext, CoinsActivity().javaClass))
+            startActivity(Intent(applicationContext, CoinsActivity::class.java))
         }
     }
 

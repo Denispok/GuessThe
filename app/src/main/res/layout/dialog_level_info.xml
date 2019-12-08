@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/colorBackground"
+    android:minWidth="240dp"
+    android:paddingStart="4dp"
+    android:paddingTop="@dimen/tips_padding"
+    android:paddingEnd="4dp"
+    android:paddingBottom="@dimen/tips_padding">
+
+    <TextView
+        android:id="@+id/info_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/photo_info"
+        android:textColor="@color/colorText"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/info_barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="end"
+        app:constraint_referenced_ids="info_author_title, info_license_title" />
+
+    <TextView
+        android:id="@+id/info_author_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/info_author_title"
+        android:textColor="@color/colorText"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@id/info_barrier"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/info_title" />
+
+    <TextView
+        android:id="@+id/info_author"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:textColor="@color/colorText"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/info_author_title"
+        app:layout_constraintTop_toTopOf="@id/info_author_title"
+        tools:text="authorrr author author author author author author author author " />
+
+    <TextView
+        android:id="@+id/info_license_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/info_license_title"
+        android:textColor="@color/colorText"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@id/info_barrier"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/info_author" />
+
+    <TextView
+        android:id="@+id/info_license"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:textColor="@color/colorText"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/info_license_title"
+        app:layout_constraintTop_toTopOf="@id/info_license_title"
+        tools:text="License" />
+
+    <TextView
+        android:id="@+id/info_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/tips_button_height"
+        android:layout_marginTop="@dimen/tips_cancel_margin_top"
+        android:background="@drawable/button_selector_white"
+        android:gravity="center"
+        android:paddingStart="@dimen/tips_cancel_padding"
+        android:paddingEnd="@dimen/tips_cancel_padding"
+        android:text="@string/cancel"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/tips_button_text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/info_license" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

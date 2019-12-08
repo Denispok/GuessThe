@@ -4,12 +4,14 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.fragment.app.DialogFragment
+import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import com.gamesbars.guessthe.fragment.InfoDialogFragment
 import com.gamesbars.guessthe.fragment.LevelFragment
 import com.gamesbars.guessthe.fragment.TipsDialogFragment
 import com.google.android.gms.ads.AdListener
@@ -31,7 +33,7 @@ class PlayActivity : AppCompatActivity(), RewardedVideoAdListener {
     private lateinit var saves: SharedPreferences
     private lateinit var mInterstitialAd: InterstitialAd
     private lateinit var mRewardedVideoAd: RewardedVideoAd
-    var currentDialog: TipsDialogFragment? = null
+    var currentDialog: DialogFragment? = null
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase))
@@ -83,10 +85,14 @@ class PlayActivity : AppCompatActivity(), RewardedVideoAdListener {
     }
 
     override fun onBackPressed() {
-        currentDialog?.apply {
+        if (currentDialog == null) super.onBackPressed()
+        else if (currentDialog is TipsDialogFragment) (currentDialog as TipsDialogFragment).apply {
             updateFragment(supportFragmentManager.findFragmentByTag(resources.getString(R.string.level_fragment_tag)) as LevelFragment)
             dismiss()
-        } ?: super.onBackPressed()
+        } else if (currentDialog is InfoDialogFragment) (currentDialog as InfoDialogFragment).apply {
+            updateFragment(supportFragmentManager.findFragmentByTag(resources.getString(R.string.level_fragment_tag)) as LevelFragment)
+            dismiss()
+        }
     }
 
     fun loadBannerAd() {

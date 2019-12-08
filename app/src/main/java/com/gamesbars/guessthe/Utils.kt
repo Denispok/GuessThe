@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 import android.media.MediaPlayer
 import android.net.ConnectivityManager
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.widget.Toast
 import com.google.ads.mediation.admob.AdMobAdapter
@@ -32,10 +32,6 @@ fun playSound(context: Context, resID: Int) {
 fun hasConnection(context: Context): Boolean {
     val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     return cm.activeNetworkInfo?.isConnected ?: false
-}
-
-fun getDrawableResIdByName(context: Context, name: String): Int {
-    return context.resources.getIdentifier(name, "drawable", context.packageName)
 }
 
 fun buildAdRequest(saves: SharedPreferences): AdRequest {

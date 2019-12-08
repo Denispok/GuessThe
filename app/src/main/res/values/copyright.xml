@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="license_by2" translatable="false">&lt;a href="https://creativecommons.org/licenses/by/2.0/deed.en">Attribution 2.0 Generic&lt;/a></string>
+
+    <!-- Levels -->
+
+    <string-array name="russian_cars_author">
+        <item>Claude Valroff, Original uploader was &lt;a href="https://fr.wikipedia.org/wiki/User:JulienV">Julien Valroff&lt;/a> at fr.wikipedia.org</item>
+        <item>&lt;a href="https://commons.wikimedia.org/wiki/User:Pleple2000">Pleple2000&lt;/a></item>
+        <item>-</item>
+        <item>&lt;a href="https://www.flickr.com/people/107086296@N08">Dirk Vorderstraße&lt;/a></item>
+        <item>&lt;a href="https://www.flickr.com/people/12634019@N08">Phil Sangwell&lt;/a> from United Kingdom</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+    </string-array>
+
+    <string-array name="russian_cars_license">
+        <item>&lt;a href="https://creativecommons.org/licenses/by-sa/2.0/fr/deed.en">Attribution-Share Alike 2.0 France&lt;/a></item>
+        <item>&lt;a href="https://creativecommons.org/licenses/by-sa/3.0/deed.en">Attribution-Share Alike 3.0 Unported&lt;/a></item>
+        <item>-</item>
+        <item>@string/license_by2</item>
+        <item>@string/license_by2</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+    </string-array>
+</resources>

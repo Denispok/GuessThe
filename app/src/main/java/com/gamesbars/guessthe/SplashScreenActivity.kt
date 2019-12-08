@@ -5,7 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import com.gamesbars.guessthe.SplashScreenActivity.Companion.CONSENT_ERROR_TAG
 import com.google.ads.consent.*
@@ -119,7 +119,7 @@ class SplashScreenActivity : AppCompatActivity() {
     }
 
     fun startGame() {
-        startActivity(Intent(applicationContext, MenuActivity().javaClass))
+        startActivity(Intent(applicationContext, MenuActivity::class.java))
         finish()
     }
 }

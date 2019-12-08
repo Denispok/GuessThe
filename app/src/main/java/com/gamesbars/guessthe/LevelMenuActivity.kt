@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -65,7 +65,7 @@ class LevelMenuActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.levelmenu_coins).setOnClickListener {
             if (isClickable) {
                 isClickable = false
-                startActivity(Intent(applicationContext, CoinsActivity().javaClass))
+                startActivity(Intent(applicationContext, CoinsActivity::class.java))
             }
         }
 
@@ -119,7 +119,7 @@ class LevelMenuActivity : AppCompatActivity() {
                         isClickable = false
 
                         fun startLevel() {
-                            val intent = Intent(this, PlayActivity().javaClass)
+                            val intent = Intent(this, PlayActivity::class.java)
                             intent.putExtra("pack", packs[id])
                             startActivity(intent)
                         }

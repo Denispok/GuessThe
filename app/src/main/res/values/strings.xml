@@ -41,6 +41,11 @@
     <string name="tip_skip">Skip level</string>
     <string name="ads_settings">Personalized ads settings</string>
 
+    <!-- Level info -->
+    <string name="photo_info">Photo info</string>
+    <string name="info_license_title">License: </string>
+    <string name="info_author_title">Author: </string>
+
     <!--  Levels  -->
 
     <string name="alphabet">abcdefghijklmnopqrstuvwxyz012345</string>
