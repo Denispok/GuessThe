@@ -4,16 +4,13 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import androidx.fragment.app.Fragment
 import com.gamesbars.guessthe.*
+import kotlinx.android.synthetic.main.fragment_win.*
 
 class WinFragment : Fragment() {
 
@@ -57,19 +54,21 @@ class WinFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         playSound(context!!, R.raw.win)
-        activity!!.findViewById<ImageView>(R.id.win_image).setImageResource(
-                resources.getIdentifier(image, "drawable", context!!.packageName))
-        activity!!.findViewById<TextView>(R.id.win_word).text = word
+        winImage.setImageResource(Storage.getWinImageResId(image))
+        winWord.text = word
+
         if (isLevelReward) {
-            activity!!.findViewById<TextView>(R.id.win_reward_coins).text = activity!!.resources.getInteger(R.integer.level_reward).toString()
+            winRewardCoins.text = activity!!.resources.getInteger(R.integer.level_reward).toString()
         } else {
-            activity!!.findViewById<TextView>(R.id.win_reward_coins).visibility = View.GONE
-            activity!!.findViewById<TextView>(R.id.win_x3).text = (2 * activity!!.resources.getInteger(R.integer.level_reward)).toString()
+            winRewardCoins.visibility = View.GONE
+            winX3.text = (2 * activity!!.resources.getInteger(R.integer.level_reward)).toString()
         }
-        activity!!.findViewById<LinearLayout>(R.id.win_rewarded_video).setOnClickListener {
+
+        winRewardedVideo.setOnClickListener {
             (activity!! as PlayActivity).showRewardedVideoAd()
         }
-        activity!!.findViewById<Button>(R.id.win_continue).setOnClickListener {
+
+        winContinue.setOnClickListener {
             if (hasConnection(context!!)) {
                 if (saves.getInt("without_connection", 0) != 0) {
                     saves.edit().apply {
@@ -98,9 +97,9 @@ class WinFragment : Fragment() {
         } else {
             val fragment = LevelFragment.newInstance(pack)
             fragmentManager!!.beginTransaction()
-                    .replace(R.id.activity_play_fragment, fragment, resources.getString(R.string.level_fragment_tag))
-                    .addSharedElement(activity!!.findViewById<ImageView>(R.id.win_image), "ImageTransition")
-                    .commit()
+                .replace(R.id.activity_play_fragment, fragment, resources.getString(R.string.level_fragment_tag))
+                .addSharedElement(winImage, "ImageTransition")
+                .commit()
         }
         if (saves.getInt(pack, 1) % INTERSTITIAL_AD_FREQUENCY == 1)
             (activity!! as PlayActivity).showInterstitialAd()
