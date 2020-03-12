@@ -16,7 +16,7 @@
         android:textSize="@dimen/win_success_text_size" />
 
     <ImageView
-        android:id="@+id/win_image"
+        android:id="@+id/winImage"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginStart="10dp"
@@ -27,7 +27,7 @@
         android:transitionName="ImageTransition" />
 
     <TextView
-        android:id="@+id/win_word"
+        android:id="@+id/winWord"
         fontPath="fonts/Exo_2/Exo2-Bold.ttf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
         android:textSize="@dimen/win_word_text_size" />
 
     <TextView
-        android:id="@+id/win_reward_coins"
+        android:id="@+id/winRewardCoins"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/win_margin"
@@ -57,7 +57,7 @@
         android:textSize="@dimen/win_text_size" />
 
     <LinearLayout
-        android:id="@+id/win_rewarded_video"
+        android:id="@+id/winRewardedVideo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/win_margin"
@@ -67,7 +67,7 @@
         android:padding="@dimen/x3_padding">
 
         <TextView
-            android:id="@+id/win_x3"
+            android:id="@+id/winX3"
             fontPath="fonts/Exo_2/Exo2-Bold.ttf"
             android:layout_width="@dimen/x3_dimen"
             android:layout_height="@dimen/x3_dimen"
@@ -79,7 +79,7 @@
             android:textSize="@dimen/x3_text_size" />
 
         <LinearLayout
-            android:id="@+id/win_x3_text"
+            android:id="@+id/winX3Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
@@ -106,7 +106,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/win_continue"
+        android:id="@+id/winContinue"
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

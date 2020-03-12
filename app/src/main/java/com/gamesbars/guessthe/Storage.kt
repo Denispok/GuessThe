@@ -13,6 +13,12 @@ object Storage {
         return resources.getIdentifier(name, "drawable", App.appContext.packageName)
     }
 
+    fun getWinImageResId(name: String): Int {
+        val winDrawableId = getDrawableResIdByName(name + "_win")
+        return if (winDrawableId == 0) getDrawableResIdByName(name)
+        else winDrawableId
+    }
+
     fun getStringArrayResIdByName(name: String): Int {
         return resources.getIdentifier(name, "array", App.appContext.packageName)
     }
