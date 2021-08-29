@@ -5,7 +5,6 @@ import android.animation.ObjectAnimator
 import android.content.Context
 import android.graphics.Color
 import android.os.Handler
-import androidx.core.content.res.ResourcesCompat
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
@@ -13,8 +12,8 @@ import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.res.ResourcesCompat
 import com.gamesbars.guessthe.R
-import io.github.inflationx.calligraphy3.TypefaceUtils
 
 class Letter(context: Context, val letterId: Int, val letter: Char, val wordLetterId: Int? = null, var isTipGuessed: Boolean = false) : TextView(context) {
 
@@ -24,7 +23,7 @@ class Letter(context: Context, val letterId: Int, val letter: Char, val wordLett
 
     init {
         text = letter.toString()
-        typeface = TypefaceUtils.load(resources.assets, "fonts/Exo_2/Exo2-Bold.ttf")
+        typeface = ResourcesCompat.getFont(context, R.font.exo2_bold)
         setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.letter_text_size))
         setTextColor(Color.BLACK)
 

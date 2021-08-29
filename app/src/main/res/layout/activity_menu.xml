@@ -51,7 +51,6 @@
         android:layout_height="@dimen/menu_button_height"
         android:layout_marginBottom="@dimen/menu_button_margin">
 
-
         <TextView
             android:id="@+id/menu_rate"
             android:layout_width="@dimen/menu_button_width"
