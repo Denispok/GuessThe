@@ -41,9 +41,9 @@ class WinFragment : Fragment() {
         }
 
         saves = context!!.getSharedPreferences("saves", Context.MODE_PRIVATE)
-        word = arguments!!.getString("word")
-        image = arguments!!.getString("image")
-        pack = arguments!!.getString("pack")
+        word = arguments!!.getString("word")!!
+        image = arguments!!.getString("image")!!
+        pack = arguments!!.getString("pack")!!
         isLevelReward = arguments!!.getBoolean("isLevelReward")
     }
 

@@ -20,10 +20,6 @@ import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.reward.RewardItem
 import com.google.android.gms.ads.reward.RewardedVideoAd
 import com.google.android.gms.ads.reward.RewardedVideoAdListener
-import io.github.inflationx.calligraphy3.CalligraphyConfig
-import io.github.inflationx.calligraphy3.CalligraphyInterceptor
-import io.github.inflationx.viewpump.ViewPump
-import io.github.inflationx.viewpump.ViewPumpContextWrapper
 import kotlinx.android.synthetic.main.activity_play.*
 
 const val INTERSTITIAL_AD_FREQUENCY = 3 // every N level show ad
@@ -35,20 +31,8 @@ class PlayActivity : AppCompatActivity(), RewardedVideoAdListener {
     private lateinit var mRewardedVideoAd: RewardedVideoAd
     var currentDialog: DialogFragment? = null
 
-    override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase))
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        ViewPump.init(ViewPump.builder()
-            .addInterceptor(CalligraphyInterceptor(
-                CalligraphyConfig.Builder()
-                    .setDefaultFontPath("fonts/Exo_2/Exo2-Medium.ttf")
-                    .setFontAttrId(R.attr.fontPath)
-                    .build()))
-            .build())
 
         hideSystemUI()
         setContentView(R.layout.activity_play)
@@ -74,7 +58,7 @@ class PlayActivity : AppCompatActivity(), RewardedVideoAdListener {
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.activity_play_fragment,
-                    LevelFragment.newInstance(intent.extras.getString("pack")), resources.getString(R.string.level_fragment_tag))
+                    LevelFragment.newInstance(intent.extras!!.getString("pack")!!), resources.getString(R.string.level_fragment_tag))
                 .commit()
         }
     }

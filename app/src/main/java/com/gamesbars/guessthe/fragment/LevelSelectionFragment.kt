@@ -38,7 +38,7 @@ class LevelSelectionFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        pack = arguments!!.getString("pack")
+        pack = arguments!!.getString("pack")!!
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {

@@ -57,7 +57,7 @@ class LevelFragment : Fragment() {
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(context!!)
 
-        pack = arguments!!.getString("pack")
+        pack = arguments!!.getString("pack")!!
         loadLevel(pack)
 
         wordLetters = WordLetters(this, word)
@@ -179,7 +179,7 @@ class LevelFragment : Fragment() {
         var isLevelReward = false
 
         val editor = saves.edit()
-        editor.putString(levelName, saves.getString(levelName, "").replace("!", "").replace("*", ""))
+        editor.putString(levelName, saves.getString(levelName, "")!!.replace("!", "").replace("*", ""))
         if (currentLevel > saves.getInt(pack + "completed", 0)) {
             editor.putInt(pack + "completed", currentLevel)
             editor.putInt("coins", saves.getInt("coins", 0) + resources.getInteger(R.integer.level_reward))
@@ -190,7 +190,7 @@ class LevelFragment : Fragment() {
         else editor.putInt(pack, currentLevel + 1)
         editor.apply()
 
-        val fragment = WinFragment.newInstance(word, image, arguments!!.getString("pack"), isLevelReward)
+        val fragment = WinFragment.newInstance(word, image, arguments!!.getString("pack")!!, isLevelReward)
         fragmentManager!!.beginTransaction()
             .replace(R.id.activity_play_fragment, fragment, resources.getString(R.string.win_fragment_tag))
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)

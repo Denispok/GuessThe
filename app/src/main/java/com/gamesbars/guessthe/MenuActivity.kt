@@ -13,10 +13,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.google.ads.consent.ConsentInformation
 import com.google.firebase.analytics.FirebaseAnalytics
-import io.github.inflationx.calligraphy3.CalligraphyConfig
-import io.github.inflationx.calligraphy3.CalligraphyInterceptor
-import io.github.inflationx.viewpump.ViewPump
-import io.github.inflationx.viewpump.ViewPumpContextWrapper
 import kotlinx.android.synthetic.main.activity_menu.*
 
 class MenuActivity : AppCompatActivity() {
@@ -26,20 +22,8 @@ class MenuActivity : AppCompatActivity() {
 
     private lateinit var firebaseAnalytics: FirebaseAnalytics
 
-    override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase))
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        ViewPump.init(ViewPump.builder()
-            .addInterceptor(CalligraphyInterceptor(
-                CalligraphyConfig.Builder()
-                    .setDefaultFontPath("fonts/Exo_2/Exo2-Medium.ttf")
-                    .setFontAttrId(R.attr.fontPath)
-                    .build()))
-            .build())
 
         hideSystemUI()
         setContentView(R.layout.activity_menu)

@@ -60,8 +60,8 @@ class InfoDialogFragment : DialogFragment() {
 
         builder.setView(view)
         val dialog = builder.create()
-        dialog.window.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
-        dialog.window.setFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE, WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE)
+        dialog.window!!.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+        dialog.window!!.setFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE, WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE)
         return dialog
     }
 

@@ -8,7 +8,6 @@ import android.view.Gravity
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.gamesbars.guessthe.R
-import io.github.inflationx.calligraphy3.TypefaceUtils
 
 class WordLetter(context: Context, val isSpace: Boolean = false, val knownChar: Char? = null) : TextView(context) {
 
@@ -16,7 +15,7 @@ class WordLetter(context: Context, val isSpace: Boolean = false, val knownChar: 
     val dimension: Int
 
     init {
-        typeface = TypefaceUtils.load(resources.assets, "fonts/Exo_2/Exo2-Bold.ttf")
+        typeface = ResourcesCompat.getFont(context, R.font.exo2_bold)
         setTextSize(TypedValue.COMPLEX_UNIT_PX, resources.getDimension(R.dimen.word_letter_text_size))
         setTextColor(Color.WHITE)
 

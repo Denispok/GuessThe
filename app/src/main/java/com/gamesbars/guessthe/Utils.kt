@@ -5,9 +5,9 @@ import android.content.SharedPreferences
 import android.media.MediaPlayer
 import android.net.ConnectivityManager
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.google.ads.mediation.admob.AdMobAdapter
 import com.google.android.gms.ads.AdRequest
 

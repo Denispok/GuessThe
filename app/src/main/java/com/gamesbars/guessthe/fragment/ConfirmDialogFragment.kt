@@ -31,7 +31,7 @@ class ConfirmDialogFragment : DialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         packId = arguments!!.getInt("packId")
-        pack = arguments!!.getString("pack")
+        pack = arguments!!.getString("pack")!!
         firebaseAnalytics = FirebaseAnalytics.getInstance(context!!)
     }
 
@@ -68,7 +68,7 @@ class ConfirmDialogFragment : DialogFragment() {
             }
         }
         val dialog = builder.create()
-        dialog.window.setFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE, WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE)
+        dialog.window!!.setFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE, WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE)
         return dialog
     }
 

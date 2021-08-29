@@ -53,7 +53,7 @@ class TipsDialogFragment : DialogFragment() {
 
                 val replacedString = "_" + letter.letter + letter.wordLetterId!!.toString()
                 val newString = "_" + letter.letter + letter.wordLetterId.toString() + "*"
-                levelString = levelString.replace(replacedString, newString)
+                levelString = levelString!!.replace(replacedString, newString)
 
                 val editor = saves.edit()
                 editor.putString(levelName, levelString)
@@ -69,7 +69,7 @@ class TipsDialogFragment : DialogFragment() {
                 updateFragment(fragment)
             }
         } else tipLetter.isEnabled = false
-        if (coins >= tipRemoveCost && levelString.last() != '!') {
+        if (coins >= tipRemoveCost && levelString!!.last() != '!') {
             tipRemove.setOnClickListener {
                 fragment.letters.tipRemoveLetters(fragment.wordLetters)
 
@@ -106,8 +106,8 @@ class TipsDialogFragment : DialogFragment() {
 
         builder.setView(view)
         val dialog = builder.create()
-        dialog.window.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
-        dialog.window.setFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE, WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE)
+        dialog.window!!.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+        dialog.window!!.setFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE, WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE)
         return dialog
     }
 
