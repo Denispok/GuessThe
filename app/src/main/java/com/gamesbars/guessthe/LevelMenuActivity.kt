@@ -4,14 +4,15 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import com.gamesbars.guessthe.fragment.ConfirmDialogFragment
 import com.gamesbars.guessthe.fragment.InternetConnectionDialog
+import com.gamesbars.guessthe.screen.coins.CoinsActivity
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.activity_levelmenu.*
 

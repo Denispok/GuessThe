@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- small screens -->
+    <!-- small screens / default -->
 
     <!-- top_pane -->
     <dimen name="top_pane_height">40dp</dimen>
     <dimen name="top_pane_text_size">16sp</dimen>
-    <dimen name="top_pane_side_padding">0dp</dimen>
+    <dimen name="top_pane_side_padding">6dp</dimen>
     <dimen name="top_pane_title_text_size">28sp</dimen>
 
     <dimen name="top_pane_coins_drawable_padding">2dp</dimen>

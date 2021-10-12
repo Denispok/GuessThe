@@ -14,9 +14,11 @@
     <string name="coins_button">COINS</string>
     <string name="video">for watching video</string>
     <string name="next">Next</string>
-    <string name="purchases_unavailable">In-game purchases are not available on your device!</string>
     <string name="purchases_restored">Your purchase has been restored!</string>
+    <string name="purchases_successful">Your purchase has been confirmed!</string>
     <string name="purchases_error">Error while initializing in-game purchases!</string>
+    <string name="purchases_error_retry">Error while initializing in-game purchases! Retrying…</string>
+    <string name="purchases_error_billing_flow">Payment launch error!</string>
     <string name="remove_ads">+ REMOVE ADS</string>
     <string name="level">level %d</string>
     <string name="percent">Level %d/%d</string>

@@ -1,44 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_coins"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground"
-    android:orientation="vertical">
+    android:background="@color/colorBackground">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/toolbarCl"
+        android:layout_width="0dp"
         android:layout_height="@dimen/top_pane_height"
-        android:layout_marginBottom="12dp"
-        android:paddingLeft="4dp"
-        android:paddingRight="4dp">
+        android:paddingHorizontal="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/coins_back"
+            android:id="@+id/backIv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/top_pane_side_padding"
             android:contentDescription="@string/description_back"
             android:padding="6dp"
-            android:src="@drawable/baseline_arrow_back_ios_white_24" />
+            android:src="@drawable/baseline_arrow_back_ios_white_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:text="@string/coins"
             android:textColor="@color/colorText"
-            android:textSize="@dimen/top_pane_title_text_size" />
+            android:textSize="@dimen/top_pane_title_text_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/coins_coins"
+            android:id="@+id/coinsTv"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
+            android:layout_height="0dp"
             android:layout_marginEnd="@dimen/top_pane_side_padding"
             android:background="@drawable/button_selector_green_up"
             android:contentDescription="@string/description_coins"
@@ -46,178 +49,52 @@
             android:drawablePadding="@dimen/top_pane_coins_drawable_padding"
             android:gravity="center_vertical"
             android:padding="@dimen/top_pane_coins_padding"
-            android:text="500"
             android:textColor="@color/colorText"
-            android:textSize="@dimen/top_pane_text_size" />
-    </RelativeLayout>
+            android:textSize="@dimen/top_pane_text_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="500" />
 
-    <LinearLayout
-        android:id="@+id/coins_purchase_1"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/coins_item_height"
-        android:layout_gravity="center_horizontal"
-        android:orientation="horizontal"
-        android:paddingStart="@dimen/coins_item_padding"
-        android:paddingEnd="@dimen/coins_item_padding">
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/coins_purchase_1_coins"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:contentDescription="@string/description_coins"
-            android:drawableEnd="@drawable/coin_icon_16"
-            android:drawablePadding="@dimen/coins_item_drawable_padding"
-            android:text="500"
-            android:textColor="@color/colorText"
-            android:textSize="@dimen/coins_item_text_size" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-
-        <TextView
-            android:id="@+id/coins_purchase_1_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:textColor="@color/colorText"
-            android:textSize="@dimen/coins_item_text_size"
-            tools:text="49,00 Р" />
-    </LinearLayout>
-
-    <View
-        android:id="@+id/coins_divider_1"
-        style="@style/Divider" />
-
-    <LinearLayout
-        android:id="@+id/coins_purchase_2"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/coins_item_height"
-        android:layout_gravity="center_horizontal"
-        android:orientation="horizontal"
-        android:paddingStart="@dimen/coins_item_padding"
-        android:paddingEnd="@dimen/coins_item_padding">
-
-        <TextView
-            android:id="@+id/coins_purchase_2_coins"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:contentDescription="@string/description_coins"
-            android:drawableEnd="@drawable/coin_icon_16"
-            android:drawablePadding="@dimen/coins_item_drawable_padding"
-            android:text="500"
-            android:textColor="@color/colorText"
-            android:textSize="@dimen/coins_item_text_size" />
-
-        <TextView
-            android:id="@+id/coins_purchase_2_ads"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="4dp"
-            android:text="@string/remove_ads"
-            android:textColor="@color/colorText"
-            android:textSize="@dimen/coins_remove_ads_text_size" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-
-        <TextView
-            android:id="@+id/coins_purchase_2_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:textColor="@color/colorText"
-            android:textSize="@dimen/coins_item_text_size"
-            tools:text="49,00 Р" />
-    </LinearLayout>
-
-    <View
-        android:id="@+id/coins_divider_2"
-        style="@style/Divider" />
-
-    <LinearLayout
-        android:id="@+id/coins_purchase_3"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/coins_item_height"
-        android:layout_gravity="center_horizontal"
-        android:orientation="horizontal"
-        android:paddingStart="@dimen/coins_item_padding"
-        android:paddingEnd="@dimen/coins_item_padding">
-
-        <TextView
-            android:id="@+id/coins_purchase_3_coins"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:contentDescription="@string/description_coins"
-            android:drawableEnd="@drawable/coin_icon_16"
-            android:drawablePadding="@dimen/coins_item_drawable_padding"
-            android:text="500"
-            android:textColor="@color/colorText"
-            android:textSize="@dimen/coins_item_text_size" />
-
-        <TextView
-            android:id="@+id/coins_purchase_3_ads"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="4dp"
-            android:text="@string/remove_ads"
-            android:textColor="@color/colorText"
-            android:textSize="@dimen/coins_remove_ads_text_size" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-
-        <TextView
-            android:id="@+id/coins_purchase_3_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:textColor="@color/colorText"
-            android:textSize="@dimen/coins_item_text_size"
-            tools:text="49,00 Р" />
-    </LinearLayout>
-
-    <View
-        android:id="@+id/coins_divider_3"
-        style="@style/Divider" />
-
-    <View
-        android:layout_width="match_parent"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/productRv"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_marginTop="12dp"
+        android:overScrollMode="never"
+        app:layout_constraintBottom_toTopOf="@id/coinsRewardedVideoLl"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbarCl"
+        tools:itemCount="5"
+        tools:listitem="@layout/item_product" />
 
     <LinearLayout
-        android:id="@+id/coins_rewarded_video"
+        android:id="@+id/coinsRewardedVideoLl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
         android:layout_marginBottom="20dp"
         android:background="@drawable/button_selector_green"
         android:gravity="center"
         android:orientation="horizontal"
-        android:padding="@dimen/x3_padding">
+        android:padding="@dimen/x3_padding"
+        app:layout_constraintBottom_toTopOf="@id/adView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
-            android:id="@+id/coins_video"
+            android:id="@+id/coinsVideoTv"
             android:layout_width="@dimen/x3_dimen"
             android:layout_height="@dimen/x3_dimen"
             android:layout_marginEnd="@dimen/x3_margin_end"
             android:background="@drawable/red_circle"
             android:fontFamily="@font/exo2_bold"
             android:gravity="center"
-            android:text="20"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/x3_text_size" />
+            android:textSize="@dimen/x3_text_size"
+            tools:text="20" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -244,11 +121,33 @@
         </LinearLayout>
     </LinearLayout>
 
-    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+    <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        ads:adSize="SMART_BANNER"
-        ads:adUnitId="@string/banner_id" />
-</LinearLayout>
+        app:adSize="SMART_BANNER"
+        app:adUnitId="@string/banner_id"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="visible" />
+
+    <FrameLayout
+        android:id="@+id/progressFl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0"
+        android:background="#4D000000"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="true" />
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
