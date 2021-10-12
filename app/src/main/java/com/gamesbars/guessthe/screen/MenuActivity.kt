@@ -11,7 +11,10 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.gamesbars.guessthe.*
+import com.gamesbars.guessthe.R
+import com.gamesbars.guessthe.buildAdRequest
+import com.gamesbars.guessthe.hasConnection
+import com.gamesbars.guessthe.playSound
 import com.gamesbars.guessthe.screen.coins.CoinsActivity
 import com.google.ads.consent.ConsentInformation
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -26,8 +29,6 @@ class MenuActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        hideSystemUI()
         setContentView(R.layout.activity_menu)
 
         saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
@@ -135,10 +136,5 @@ class MenuActivity : AppCompatActivity() {
             sharingIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_subject))
             startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_chooser_title)))
         }
-    }
-
-    override fun onWindowFocusChanged(hasFocus: Boolean) {
-        super.onWindowFocusChanged(hasFocus)
-        if (hasFocus) hideSystemUI()
     }
 }

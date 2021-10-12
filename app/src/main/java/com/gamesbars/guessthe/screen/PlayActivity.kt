@@ -17,7 +17,6 @@ import com.gamesbars.guessthe.fragment.InfoDialogFragment
 import com.gamesbars.guessthe.fragment.LevelFragment
 import com.gamesbars.guessthe.fragment.TipsDialogFragment
 import com.gamesbars.guessthe.hasConnection
-import com.gamesbars.guessthe.hideSystemUI
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.InterstitialAd
 import com.google.android.gms.ads.MobileAds
@@ -37,8 +36,6 @@ class PlayActivity : AppCompatActivity(), RewardedVideoAdListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        hideSystemUI()
         setContentView(R.layout.activity_play)
 
         saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
@@ -68,11 +65,6 @@ class PlayActivity : AppCompatActivity(), RewardedVideoAdListener {
                 )
                 .commit()
         }
-    }
-
-    override fun onWindowFocusChanged(hasFocus: Boolean) {
-        super.onWindowFocusChanged(hasFocus)
-        if (hasFocus) hideSystemUI()
     }
 
     override fun onBackPressed() {

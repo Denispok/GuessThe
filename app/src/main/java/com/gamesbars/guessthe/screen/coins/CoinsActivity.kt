@@ -73,11 +73,6 @@ class CoinsActivity : AppCompatActivity(), RewardedVideoAdListener, CoroutineSco
         super.onDestroy()
     }
 
-    override fun onWindowFocusChanged(hasFocus: Boolean) {
-        super.onWindowFocusChanged(hasFocus)
-        if (hasFocus) hideSystemUI()
-    }
-
     override fun onRewardedVideoAdClosed() {
         showLoader(false)
     }

@@ -10,9 +10,12 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.gamesbars.guessthe.*
+import com.gamesbars.guessthe.R
+import com.gamesbars.guessthe.buildAdRequest
 import com.gamesbars.guessthe.fragment.ConfirmDialogFragment
 import com.gamesbars.guessthe.fragment.InternetConnectionDialog
+import com.gamesbars.guessthe.hasConnection
+import com.gamesbars.guessthe.playSound
 import com.gamesbars.guessthe.screen.coins.CoinsActivity
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.activity_levelmenu.*
@@ -31,8 +34,6 @@ class LevelMenuActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        hideSystemUI()
         setContentView(R.layout.activity_levelmenu)
 
         saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
@@ -143,11 +144,6 @@ class LevelMenuActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    override fun onWindowFocusChanged(hasFocus: Boolean) {
-        super.onWindowFocusChanged(hasFocus)
-        if (hasFocus) hideSystemUI()
     }
 
     override fun onBackPressed() {

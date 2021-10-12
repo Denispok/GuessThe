@@ -8,7 +8,6 @@ import android.os.Handler
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.gamesbars.guessthe.R
-import com.gamesbars.guessthe.hideSystemUI
 import com.gamesbars.guessthe.screen.SplashScreenActivity.Companion.CONSENT_ERROR_TAG
 import com.gamesbars.guessthe.sliceUntilIndex
 import com.google.ads.consent.*
@@ -34,7 +33,6 @@ class SplashScreenActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        hideSystemUI()
         setContentView(R.layout.activity_splashscreen)
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
@@ -114,11 +112,6 @@ class SplashScreenActivity : AppCompatActivity() {
             }
             firebaseAnalytics.setUserProperty("sound", "on")
         }
-    }
-
-    override fun onWindowFocusChanged(hasFocus: Boolean) {
-        super.onWindowFocusChanged(hasFocus)
-        if (hasFocus) hideSystemUI()
     }
 
     fun startGame() {
