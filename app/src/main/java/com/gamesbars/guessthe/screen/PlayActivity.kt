@@ -16,7 +16,6 @@ import com.gamesbars.guessthe.buildAdRequest
 import com.gamesbars.guessthe.fragment.InfoDialogFragment
 import com.gamesbars.guessthe.fragment.LevelFragment
 import com.gamesbars.guessthe.fragment.TipsDialogFragment
-import com.gamesbars.guessthe.hasConnection
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.InterstitialAd
 import com.google.android.gms.ads.MobileAds
@@ -41,7 +40,7 @@ class PlayActivity : AppCompatActivity(), RewardedVideoAdListener {
         saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
 
         if (saves.getBoolean("ads", true)) {
-            if (hasConnection(this)) loadBannerAd()
+            loadBannerAd()
 
             mInterstitialAd = InterstitialAd(this)
             mInterstitialAd.adUnitId = getString(R.string.interstitial_id)
@@ -78,11 +77,9 @@ class PlayActivity : AppCompatActivity(), RewardedVideoAdListener {
         }
     }
 
-    fun loadBannerAd() {
-        if (saves.getBoolean("ads", true)) {
-            adView.visibility = View.VISIBLE
-            adView.loadAd(buildAdRequest(saves))
-        }
+    private fun loadBannerAd() {
+        adView.visibility = View.VISIBLE
+        adView.loadAd(buildAdRequest(saves))
     }
 
     fun showInterstitialAd() {

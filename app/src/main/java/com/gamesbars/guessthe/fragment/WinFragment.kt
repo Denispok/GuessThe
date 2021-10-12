@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.gamesbars.guessthe.R
 import com.gamesbars.guessthe.Storage
-import com.gamesbars.guessthe.hasConnection
 import com.gamesbars.guessthe.playSound
 import com.gamesbars.guessthe.screen.INTERSTITIAL_AD_FREQUENCY
 import com.gamesbars.guessthe.screen.PlayActivity
@@ -71,25 +70,7 @@ class WinFragment : Fragment() {
         }
 
         winContinue.setOnClickListener {
-            if (hasConnection(context!!)) {
-                if (saves.getInt("without_connection", 0) != 0) {
-                    saves.edit().apply {
-                        putInt("without_connection", 0)
-                        apply()
-                    }
-                    (activity!! as PlayActivity).loadBannerAd()
-                }
-                nextLevel()
-            } else {
-                saves.edit().apply {
-                    putInt("without_connection", saves.getInt("without_connection", 0) + 1)
-                    apply()
-                }
-                if (saves.getInt("without_connection", 0) >= 3)
-                    InternetConnectionDialog().show(fragmentManager!!, getString(R.string.internet_connection_dialog_fragment_tag))
-                else
-                    nextLevel()
-            }
+            nextLevel()
         }
     }
 

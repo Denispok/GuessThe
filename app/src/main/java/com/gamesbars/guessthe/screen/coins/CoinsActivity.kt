@@ -58,10 +58,8 @@ class CoinsActivity : AppCompatActivity(), RewardedVideoAdListener, CoroutineSco
         connectToBilling()
 
         if (saves.getBoolean("ads", true)) {
-            if (hasConnection(this)) {
-                adView.visibility = View.VISIBLE
-                adView.loadAd(buildAdRequest(saves))
-            }
+            adView.visibility = View.VISIBLE
+            adView.loadAd(buildAdRequest(saves))
         }
 
         setupUI()

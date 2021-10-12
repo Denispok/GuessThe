@@ -31,8 +31,6 @@
     <string name="video_is_loading">Video is loading&#8230;</string>
     <string name="video_error">Video loading error.</string>
     <string name="video_reward">Reward has been received!</string>
-    <string name="lost_internet_connection_title">Connection error</string>
-    <string name="lost_internet_connection_message">Connect to the Internet to continue.</string>
     <string name="levels">Levels</string>
     <string name="play">Play</string>
     <string name="shop">Shop</string>

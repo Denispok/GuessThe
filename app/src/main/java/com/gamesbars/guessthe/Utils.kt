@@ -3,7 +3,6 @@ package com.gamesbars.guessthe
 import android.content.Context
 import android.content.SharedPreferences
 import android.media.MediaPlayer
-import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
 import android.util.TypedValue
@@ -33,11 +32,6 @@ fun playSound(context: Context, resID: Int) {
             setOnCompletionListener { release() }
         }
     }
-}
-
-fun hasConnection(context: Context): Boolean {
-    val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-    return cm.activeNetworkInfo?.isConnected ?: false
 }
 
 fun buildAdRequest(saves: SharedPreferences): AdRequest {

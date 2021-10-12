@@ -13,8 +13,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.gamesbars.guessthe.R
 import com.gamesbars.guessthe.buildAdRequest
 import com.gamesbars.guessthe.fragment.ConfirmDialogFragment
-import com.gamesbars.guessthe.fragment.InternetConnectionDialog
-import com.gamesbars.guessthe.hasConnection
 import com.gamesbars.guessthe.playSound
 import com.gamesbars.guessthe.screen.coins.CoinsActivity
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -57,10 +55,8 @@ class LevelMenuActivity : AppCompatActivity() {
         }
 
         if (saves.getBoolean("ads", true)) {
-            if (hasConnection(this)) {
-                adView.visibility = View.VISIBLE
-                adView.loadAd(buildAdRequest(saves))
-            }
+            adView.visibility = View.VISIBLE
+            adView.loadAd(buildAdRequest(saves))
         }
     }
 
@@ -105,30 +101,9 @@ class LevelMenuActivity : AppCompatActivity() {
                     if (isClickable) {
                         isClickable = false
 
-                        fun startLevel() {
-                            val intent = Intent(this, PlayActivity::class.java)
-                            intent.putExtra("pack", packs[id])
-                            startActivity(intent)
-                        }
-
-                        if (hasConnection(this)) {
-                            if (saves.getInt("without_connection", 0) != 0)
-                                saves.edit().apply {
-                                    putInt("without_connection", 0)
-                                    apply()
-                                }
-                            startLevel()
-                        } else {
-                            saves.edit().apply {
-                                putInt("without_connection", saves.getInt("without_connection", 0) + 1)
-                                apply()
-                            }
-                            if (saves.getInt("without_connection", 0) >= 3) {
-                                InternetConnectionDialog().show(supportFragmentManager, getString(R.string.internet_connection_dialog_fragment_tag))
-                                isClickable = true
-                            } else
-                                startLevel()
-                        }
+                        val intent = Intent(this, PlayActivity::class.java)
+                        intent.putExtra("pack", packs[id])
+                        startActivity(intent)
                     }
                 }
             } else {

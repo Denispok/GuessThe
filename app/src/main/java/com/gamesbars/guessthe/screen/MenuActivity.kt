@@ -13,7 +13,6 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.gamesbars.guessthe.R
 import com.gamesbars.guessthe.buildAdRequest
-import com.gamesbars.guessthe.hasConnection
 import com.gamesbars.guessthe.playSound
 import com.gamesbars.guessthe.screen.coins.CoinsActivity
 import com.google.ads.consent.ConsentInformation
@@ -56,10 +55,8 @@ class MenuActivity : AppCompatActivity() {
 
     private fun showBannerAd() {
         if (saves.getBoolean("ads", true)) {
-            if (hasConnection(this)) {
-                adView.visibility = View.VISIBLE
-                adView.loadAd(buildAdRequest(saves))
-            }
+            adView.visibility = View.VISIBLE
+            adView.loadAd(buildAdRequest(saves))
         }
     }
 

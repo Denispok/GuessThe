@@ -16,8 +16,6 @@
     <string name="get_coins">Получить монеты</string>
     <string name="level">уровень %d</string>
     <string name="levels">Уровни</string>
-    <string name="lost_internet_connection_message">Для продолжения подключитесь к сети интернет.</string>
-    <string name="lost_internet_connection_title">Ошибка подключения к сети</string>
     <string name="next">Продолжить</string>
     <string name="ok">ОК</string>
     <string name="percent">Уровень %d/%d</string>
