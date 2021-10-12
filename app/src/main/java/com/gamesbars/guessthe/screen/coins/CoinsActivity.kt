@@ -7,7 +7,6 @@ import android.view.View
 import androidx.annotation.MainThread
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.billingclient.api.*
 import com.gamesbars.guessthe.*
@@ -26,6 +25,7 @@ class CoinsActivity : AppCompatActivity(), RewardedVideoAdListener, CoroutineSco
 
     companion object {
         private const val BILLING_CONNECTION_RETRY_DELAY = 3000L
+        private const val LOADER_ANIMATION_DURATION = 100L
     }
 
     private val productAdapter = ProductAdapter()
@@ -36,8 +36,8 @@ class CoinsActivity : AppCompatActivity(), RewardedVideoAdListener, CoroutineSco
     private lateinit var rewardedVideoAd: RewardedVideoAd
 
     private val activityJob = SupervisorJob()
-    override val coroutineContext: CoroutineContext
-        get() = activityJob + Dispatchers.IO + CoroutineExceptionHandler { _, throwable ->
+    override val coroutineContext: CoroutineContext =
+        activityJob + Dispatchers.IO + CoroutineExceptionHandler { _, throwable ->
             runOnUiThread { throw throwable }
         }
 
@@ -110,8 +110,6 @@ class CoinsActivity : AppCompatActivity(), RewardedVideoAdListener, CoroutineSco
 
         productRv.adapter = productAdapter
         productRv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        val decorator = DividerItemDecoration(this, LinearLayoutManager.VERTICAL)
-        decorator.setDrawable(getDrawable(R.drawable.divider)!!)
         productRv.addItemDecoration(ProductDecoration(this))
         productAdapter.onItemClickListener = { product ->
             launchBillingFlow(product)
@@ -128,7 +126,7 @@ class CoinsActivity : AppCompatActivity(), RewardedVideoAdListener, CoroutineSco
     private fun showLoader(isShow: Boolean) {
         progressFl.isVisible = true
         progressFl.animate()
-            .setDuration(100L)
+            .setDuration(LOADER_ANIMATION_DURATION)
             .alpha(if (isShow) 1f else 0f)
             .withEndAction { if (!isShow) progressFl.isVisible = false }
             .start()
