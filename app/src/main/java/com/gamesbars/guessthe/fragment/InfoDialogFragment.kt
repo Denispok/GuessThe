@@ -3,15 +3,15 @@ package com.gamesbars.guessthe.fragment
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
-import androidx.fragment.app.DialogFragment
 import android.text.Html
 import android.text.method.LinkMovementMethod
 import android.view.WindowManager
 import android.widget.TextView
-import com.gamesbars.guessthe.PlayActivity
+import androidx.fragment.app.DialogFragment
 import com.gamesbars.guessthe.R
 import com.gamesbars.guessthe.Storage.getAuthorAndLicense
 import com.gamesbars.guessthe.Storage.getCurrentLevel
+import com.gamesbars.guessthe.screen.PlayActivity
 
 class InfoDialogFragment : DialogFragment() {
 

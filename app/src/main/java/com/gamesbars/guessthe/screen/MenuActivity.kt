@@ -1,4 +1,4 @@
-package com.gamesbars.guessthe
+package com.gamesbars.guessthe.screen
 
 import android.content.ActivityNotFoundException
 import android.content.Context
@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.gamesbars.guessthe.*
 import com.gamesbars.guessthe.screen.coins.CoinsActivity
 import com.google.ads.consent.ConsentInformation
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -117,7 +118,8 @@ class MenuActivity : AppCompatActivity() {
             }
             findViewById<ImageView>(R.id.menu_sound).setImageResource(
                 if (sound) R.drawable.baseline_volume_off_white_48
-                else R.drawable.baseline_volume_up_white_48)
+                else R.drawable.baseline_volume_up_white_48
+            )
         }
     }
 

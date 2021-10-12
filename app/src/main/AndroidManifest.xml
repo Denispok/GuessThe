@@ -24,7 +24,7 @@
             android:value="true" />
 
         <activity
-            android:name=".SplashScreenActivity"
+            android:name=".screen.SplashScreenActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -34,22 +34,22 @@
         </activity>
 
         <activity
-            android:name=".MenuActivity"
+            android:name=".screen.MenuActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".LevelMenuActivity"
+            android:name=".screen.LevelMenuActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".PlayActivity"
+            android:name=".screen.PlayActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="com.gamesbars.guessthe.screen.coins.CoinsActivity"
+            android:name=".screen.coins.CoinsActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
 

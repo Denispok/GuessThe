@@ -1,19 +1,23 @@
-package com.gamesbars.guessthe
+package com.gamesbars.guessthe.screen
 
 import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.DialogFragment
-import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.DialogFragment
+import com.gamesbars.guessthe.R
+import com.gamesbars.guessthe.buildAdRequest
 import com.gamesbars.guessthe.fragment.InfoDialogFragment
 import com.gamesbars.guessthe.fragment.LevelFragment
 import com.gamesbars.guessthe.fragment.TipsDialogFragment
+import com.gamesbars.guessthe.hasConnection
+import com.gamesbars.guessthe.hideSystemUI
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.InterstitialAd
 import com.google.android.gms.ads.MobileAds
@@ -57,8 +61,11 @@ class PlayActivity : AppCompatActivity(), RewardedVideoAdListener {
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.activity_play_fragment,
-                    LevelFragment.newInstance(intent.extras!!.getString("pack")!!), resources.getString(R.string.level_fragment_tag))
+                .replace(
+                    R.id.activity_play_fragment,
+                    LevelFragment.newInstance(intent.extras!!.getString("pack")!!),
+                    resources.getString(R.string.level_fragment_tag)
+                )
                 .commit()
         }
     }

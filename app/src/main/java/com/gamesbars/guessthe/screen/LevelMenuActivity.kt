@@ -1,4 +1,4 @@
-package com.gamesbars.guessthe
+package com.gamesbars.guessthe.screen
 
 import android.content.Context
 import android.content.Intent
@@ -10,6 +10,7 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.gamesbars.guessthe.*
 import com.gamesbars.guessthe.fragment.ConfirmDialogFragment
 import com.gamesbars.guessthe.fragment.InternetConnectionDialog
 import com.gamesbars.guessthe.screen.coins.CoinsActivity

@@ -12,8 +12,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import com.gamesbars.guessthe.LevelMenuActivity
-import com.gamesbars.guessthe.PlayActivity
 import com.gamesbars.guessthe.R
 import com.gamesbars.guessthe.Storage.getCurrentLevel
 import com.gamesbars.guessthe.Storage.getDrawableResIdByName
@@ -24,6 +22,8 @@ import com.gamesbars.guessthe.level.Letter
 import com.gamesbars.guessthe.level.Letters
 import com.gamesbars.guessthe.level.WordLetters
 import com.gamesbars.guessthe.playSound
+import com.gamesbars.guessthe.screen.LevelMenuActivity
+import com.gamesbars.guessthe.screen.PlayActivity
 import com.gamesbars.guessthe.screen.coins.CoinsActivity
 import com.google.firebase.analytics.FirebaseAnalytics
 

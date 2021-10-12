@@ -1,13 +1,16 @@
-package com.gamesbars.guessthe
+package com.gamesbars.guessthe.screen
 
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
-import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
-import com.gamesbars.guessthe.SplashScreenActivity.Companion.CONSENT_ERROR_TAG
+import androidx.appcompat.app.AppCompatActivity
+import com.gamesbars.guessthe.R
+import com.gamesbars.guessthe.hideSystemUI
+import com.gamesbars.guessthe.screen.SplashScreenActivity.Companion.CONSENT_ERROR_TAG
+import com.gamesbars.guessthe.sliceUntilIndex
 import com.google.ads.consent.*
 import com.google.android.gms.ads.MobileAds
 import com.google.firebase.analytics.FirebaseAnalytics
