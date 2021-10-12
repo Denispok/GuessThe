@@ -28,12 +28,12 @@
 
     <TextView
         android:id="@+id/winWord"
-        fontPath="fonts/Exo_2/Exo2-Bold.ttf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/win_margin"
         android:layout_marginBottom="@dimen/win_margin"
         android:background="@android:color/transparent"
+        android:fontFamily="@font/exo2_bold"
         android:gravity="center"
         android:text="word"
         android:textAllCaps="true"
@@ -68,11 +68,11 @@
 
         <TextView
             android:id="@+id/winX3"
-            fontPath="fonts/Exo_2/Exo2-Bold.ttf"
             android:layout_width="@dimen/x3_dimen"
             android:layout_height="@dimen/x3_dimen"
             android:layout_marginEnd="@dimen/x3_margin_end"
             android:background="@drawable/red_circle"
+            android:fontFamily="@font/exo2_bold"
             android:gravity="center"
             android:text="x3"
             android:textColor="@android:color/white"
