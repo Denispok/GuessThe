@@ -1,16 +1,18 @@
-package com.gamesbars.guessthe
+package com.gamesbars.guessthe.screen
 
 import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.DialogFragment
-import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.DialogFragment
+import com.gamesbars.guessthe.R
+import com.gamesbars.guessthe.buildAdRequest
 import com.gamesbars.guessthe.fragment.InfoDialogFragment
 import com.gamesbars.guessthe.fragment.LevelFragment
 import com.gamesbars.guessthe.fragment.TipsDialogFragment
@@ -33,14 +35,12 @@ class PlayActivity : AppCompatActivity(), RewardedVideoAdListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        hideSystemUI()
         setContentView(R.layout.activity_play)
 
         saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
 
         if (saves.getBoolean("ads", true)) {
-            if (hasConnection(this)) loadBannerAd()
+            loadBannerAd()
 
             mInterstitialAd = InterstitialAd(this)
             mInterstitialAd.adUnitId = getString(R.string.interstitial_id)
@@ -57,15 +57,13 @@ class PlayActivity : AppCompatActivity(), RewardedVideoAdListener {
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.activity_play_fragment,
-                    LevelFragment.newInstance(intent.extras!!.getString("pack")!!), resources.getString(R.string.level_fragment_tag))
+                .replace(
+                    R.id.activity_play_fragment,
+                    LevelFragment.newInstance(intent.extras!!.getString("pack")!!),
+                    resources.getString(R.string.level_fragment_tag)
+                )
                 .commit()
         }
-    }
-
-    override fun onWindowFocusChanged(hasFocus: Boolean) {
-        super.onWindowFocusChanged(hasFocus)
-        if (hasFocus) hideSystemUI()
     }
 
     override fun onBackPressed() {
@@ -79,11 +77,9 @@ class PlayActivity : AppCompatActivity(), RewardedVideoAdListener {
         }
     }
 
-    fun loadBannerAd() {
-        if (saves.getBoolean("ads", true)) {
-            adView.visibility = View.VISIBLE
-            adView.loadAd(buildAdRequest(saves))
-        }
+    private fun loadBannerAd() {
+        adView.visibility = View.VISIBLE
+        adView.loadAd(buildAdRequest(saves))
     }
 
     fun showInterstitialAd() {

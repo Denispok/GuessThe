@@ -1,11 +1,8 @@
 package com.gamesbars.guessthe.fragment
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +10,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import com.gamesbars.guessthe.*
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
+import com.gamesbars.guessthe.R
 import com.gamesbars.guessthe.Storage.getCurrentLevel
 import com.gamesbars.guessthe.Storage.getDrawableResIdByName
 import com.gamesbars.guessthe.Storage.getStringArrayResIdByName
@@ -22,6 +21,10 @@ import com.gamesbars.guessthe.Storage.saves
 import com.gamesbars.guessthe.level.Letter
 import com.gamesbars.guessthe.level.Letters
 import com.gamesbars.guessthe.level.WordLetters
+import com.gamesbars.guessthe.playSound
+import com.gamesbars.guessthe.screen.LevelMenuActivity
+import com.gamesbars.guessthe.screen.PlayActivity
+import com.gamesbars.guessthe.screen.coins.CoinsActivity
 import com.google.firebase.analytics.FirebaseAnalytics
 
 class LevelFragment : Fragment() {
@@ -51,9 +54,7 @@ class LevelFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
-        }
+        sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(context!!)
 

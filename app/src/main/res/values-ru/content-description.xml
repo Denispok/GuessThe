@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="description_back">Назад</string>
+    <string name="description_coins">Монеты</string>
+    <string name="description_image">Угадываемое изображение</string>
+    <string name="description_share">Поделится</string>
+    <string name="description_sound">Выключить/включить звук</string>
+</resources>

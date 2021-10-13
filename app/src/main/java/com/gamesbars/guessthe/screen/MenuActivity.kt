@@ -1,4 +1,4 @@
-package com.gamesbars.guessthe
+package com.gamesbars.guessthe.screen
 
 import android.content.ActivityNotFoundException
 import android.content.Context
@@ -6,11 +6,15 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.text.method.LinkMovementMethod
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import com.gamesbars.guessthe.R
+import com.gamesbars.guessthe.buildAdRequest
+import com.gamesbars.guessthe.playSound
+import com.gamesbars.guessthe.screen.coins.CoinsActivity
 import com.google.ads.consent.ConsentInformation
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.activity_menu.*
@@ -24,8 +28,6 @@ class MenuActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        hideSystemUI()
         setContentView(R.layout.activity_menu)
 
         saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
@@ -53,10 +55,8 @@ class MenuActivity : AppCompatActivity() {
 
     private fun showBannerAd() {
         if (saves.getBoolean("ads", true)) {
-            if (hasConnection(this)) {
-                adView.visibility = View.VISIBLE
-                adView.loadAd(buildAdRequest(saves))
-            }
+            adView.visibility = View.VISIBLE
+            adView.loadAd(buildAdRequest(saves))
         }
     }
 
@@ -116,7 +116,8 @@ class MenuActivity : AppCompatActivity() {
             }
             findViewById<ImageView>(R.id.menu_sound).setImageResource(
                 if (sound) R.drawable.baseline_volume_off_white_48
-                else R.drawable.baseline_volume_up_white_48)
+                else R.drawable.baseline_volume_up_white_48
+            )
         }
     }
 
@@ -132,10 +133,5 @@ class MenuActivity : AppCompatActivity() {
             sharingIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_subject))
             startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_chooser_title)))
         }
-    }
-
-    override fun onWindowFocusChanged(hasFocus: Boolean) {
-        super.onWindowFocusChanged(hasFocus)
-        if (hasFocus) hideSystemUI()
     }
 }

@@ -2,14 +2,17 @@ package com.gamesbars.guessthe.fragment
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.os.Build
 import android.os.Bundle
 import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.gamesbars.guessthe.*
+import com.gamesbars.guessthe.R
+import com.gamesbars.guessthe.Storage
+import com.gamesbars.guessthe.playSound
+import com.gamesbars.guessthe.screen.INTERSTITIAL_AD_FREQUENCY
+import com.gamesbars.guessthe.screen.PlayActivity
 import kotlinx.android.synthetic.main.fragment_win.*
 
 class WinFragment : Fragment() {
@@ -36,9 +39,7 @@ class WinFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
-        }
+        sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
 
         saves = context!!.getSharedPreferences("saves", Context.MODE_PRIVATE)
         word = arguments!!.getString("word")!!
@@ -69,25 +70,7 @@ class WinFragment : Fragment() {
         }
 
         winContinue.setOnClickListener {
-            if (hasConnection(context!!)) {
-                if (saves.getInt("without_connection", 0) != 0) {
-                    saves.edit().apply {
-                        putInt("without_connection", 0)
-                        apply()
-                    }
-                    (activity!! as PlayActivity).loadBannerAd()
-                }
-                nextLevel()
-            } else {
-                saves.edit().apply {
-                    putInt("without_connection", saves.getInt("without_connection", 0) + 1)
-                    apply()
-                }
-                if (saves.getInt("without_connection", 0) >= 3)
-                    InternetConnectionDialog().show(fragmentManager!!, getString(R.string.internet_connection_dialog_fragment_tag))
-                else
-                    nextLevel()
-            }
+            nextLevel()
         }
     }
 

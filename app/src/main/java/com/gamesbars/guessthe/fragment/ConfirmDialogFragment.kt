@@ -4,11 +4,11 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.DialogFragment
 import android.view.WindowManager
-import com.gamesbars.guessthe.LevelMenuActivity
+import androidx.fragment.app.DialogFragment
 import com.gamesbars.guessthe.R
 import com.gamesbars.guessthe.playSound
+import com.gamesbars.guessthe.screen.LevelMenuActivity
 import com.google.firebase.analytics.FirebaseAnalytics
 
 class ConfirmDialogFragment : DialogFragment() {

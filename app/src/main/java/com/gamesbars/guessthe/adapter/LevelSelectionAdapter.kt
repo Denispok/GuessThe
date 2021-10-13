@@ -6,10 +6,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.gamesbars.guessthe.LevelMenuActivity
 import com.gamesbars.guessthe.R
 import com.gamesbars.guessthe.Storage.getDrawableResIdByName
 import com.gamesbars.guessthe.customview.LevelView
+import com.gamesbars.guessthe.screen.LevelMenuActivity
 
 class LevelSelectionAdapter(
     private val pack: String,
