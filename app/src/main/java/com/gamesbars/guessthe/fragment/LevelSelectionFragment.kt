@@ -13,10 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.gamesbars.guessthe.R
 import com.gamesbars.guessthe.adapter.LevelSelectionAdapter
 import com.gamesbars.guessthe.playSound
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 class LevelSelectionFragment : Fragment() {
 
@@ -69,10 +65,7 @@ class LevelSelectionFragment : Fragment() {
                     .commit()
             }
         }
-        CoroutineScope(Dispatchers.Default).launch {
-            delay(200L)
-            launch(Dispatchers.Main) { recycler.adapter = adapter }
-        }
+        recycler.adapter = adapter
 
         return view
     }
