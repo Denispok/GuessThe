@@ -20,10 +20,6 @@ import kotlinx.android.synthetic.main.activity_levelmenu.*
 
 class LevelMenuActivity : AppCompatActivity() {
 
-    companion object {
-        const val PACK_LEVELS_COUNT = 10
-    }
-
     private lateinit var saves: SharedPreferences
     var isClickable: Boolean = true
     var currentDialog: ConfirmDialogFragment? = null
@@ -85,17 +81,21 @@ class LevelMenuActivity : AppCompatActivity() {
 
     fun updateProgressBars() {
         val packs = resources.getStringArray(R.array.packs)
+        val packsSizes = resources.getIntArray(R.array.packs_sizes)
+        val packPrices = resources.getIntArray(R.array.packs_prices)
         val packsList = findViewById<LinearLayout>(R.id.levels_list)
+
         for (id in 0 until packsList.childCount) {
             val currentButton = packsList.getChildAt(id)
             val progressBarText = currentButton.findViewById<TextView>(R.id.levelmenu_button_progress_bar_text)
             if (saves.getBoolean(packs[id] + "purchased", false)) {
                 val completedLevels = saves.getInt(packs[id] + "completed", 0)
-                val completedPercent = ((completedLevels + 1).toFloat() / PACK_LEVELS_COUNT * 100).toInt()
+                val levelCount = packsSizes[id]
+                val completedPercent = ((completedLevels + 1).toFloat() / levelCount * 100).toInt()
                 currentButton.findViewById<ProgressBar>(R.id.levelmenu_button_progress_bar).progress = completedPercent
                 progressBarText.text =
-                    if (completedLevels == PACK_LEVELS_COUNT) getString(R.string.completed)
-                    else getString(R.string.percent, completedLevels + 1, PACK_LEVELS_COUNT)
+                    if (completedLevels == levelCount) getString(R.string.completed)
+                    else getString(R.string.percent, completedLevels + 1, levelCount)
                 progressBarText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
                 currentButton.setOnClickListener {
                     if (isClickable) {
@@ -107,7 +107,7 @@ class LevelMenuActivity : AppCompatActivity() {
                     }
                 }
             } else {
-                progressBarText.text = getString(R.string.buy_levels, resources.getIntArray(R.array.packs_prices)[id])
+                progressBarText.text = getString(R.string.buy_levels, packPrices[id])
                 progressBarText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.coin_icon_16, 0)
                 currentButton.setOnClickListener {
                     if (isClickable) {
