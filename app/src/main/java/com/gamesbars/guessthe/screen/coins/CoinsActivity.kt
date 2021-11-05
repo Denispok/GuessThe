@@ -68,6 +68,7 @@ class CoinsActivity : AppCompatActivity(), RewardedVideoAdListener, CoroutineSco
 
     override fun onDestroy() {
         activityJob.cancel()
+        billingClient.endConnection()
         super.onDestroy()
     }
 
