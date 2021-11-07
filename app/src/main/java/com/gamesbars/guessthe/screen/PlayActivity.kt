@@ -18,7 +18,6 @@ import com.gamesbars.guessthe.ads.RewardedAdDelegate
 import com.gamesbars.guessthe.fragment.InfoDialogFragment
 import com.gamesbars.guessthe.fragment.LevelFragment
 import com.gamesbars.guessthe.fragment.TipsDialogFragment
-import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.activity_play.*
 
 class PlayActivity : AppCompatActivity() {
@@ -28,7 +27,6 @@ class PlayActivity : AppCompatActivity() {
     }
 
     private lateinit var saves: SharedPreferences
-    private lateinit var firebaseAnalytics: FirebaseAnalytics
     private lateinit var rewardedAdDelegate: RewardedAdDelegate
     private lateinit var interstitialAdDelegate: InterstitialAdDelegate
     private lateinit var bannerAdDelegate: BannerAdDelegate
@@ -39,7 +37,6 @@ class PlayActivity : AppCompatActivity() {
         setContentView(R.layout.activity_play)
 
         saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
-        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         rewardedAdDelegate = RewardedAdDelegate(this, saves, ::onRewardEarned)
         interstitialAdDelegate = InterstitialAdDelegate(this, saves)
         bannerAdDelegate = BannerAdDelegate(this, saves)
