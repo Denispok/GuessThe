@@ -8,10 +8,10 @@ import android.os.Handler
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.gamesbars.guessthe.R
+import com.gamesbars.guessthe.ads.AdsUtils.initMobileAds
 import com.gamesbars.guessthe.screen.SplashScreenActivity.Companion.CONSENT_ERROR_TAG
 import com.gamesbars.guessthe.sliceUntilIndex
 import com.google.ads.consent.*
-import com.google.android.gms.ads.MobileAds
 import com.google.firebase.analytics.FirebaseAnalytics
 import java.net.URL
 
@@ -28,6 +28,7 @@ class SplashScreenActivity : AppCompatActivity() {
     // FUCKING GOOGLE CONSENT SDK KOSTbIL'
     @Volatile
     var isConsentTimeOver: Boolean = false
+
     @Volatile
     var isConsentLoaded: Boolean = false
 
@@ -66,13 +67,13 @@ class SplashScreenActivity : AppCompatActivity() {
 
                         ConsentStatus.NON_PERSONALIZED -> {
                             putNpa(this@SplashScreenActivity, true)
-                            MobileAds.initialize(this@SplashScreenActivity, getString(R.string.ads_id))
+                            initMobileAds(this@SplashScreenActivity)
                             startGame()
                         }
 
                         ConsentStatus.PERSONALIZED -> {
                             putNpa(this@SplashScreenActivity, false)
-                            MobileAds.initialize(this@SplashScreenActivity, getString(R.string.ads_id))
+                            initMobileAds(this@SplashScreenActivity)
                             startGame()
                         }
                     }
@@ -80,7 +81,7 @@ class SplashScreenActivity : AppCompatActivity() {
                 } else {
                     firebaseAnalytics.setUserProperty("adslocation", "None")
                     putNpa(this@SplashScreenActivity, false)
-                    MobileAds.initialize(this@SplashScreenActivity, this@SplashScreenActivity.getString(R.string.ads_id))
+                    initMobileAds(this@SplashScreenActivity)
                     startGame()
                 }
             }
@@ -93,7 +94,7 @@ class SplashScreenActivity : AppCompatActivity() {
                 firebaseAnalytics.logEvent("consent_error", params)
 
                 putNpa(this@SplashScreenActivity, true)
-                MobileAds.initialize(this@SplashScreenActivity, getString(R.string.ads_id))
+                initMobileAds(this@SplashScreenActivity)
                 startGame()
             }
         })
@@ -162,7 +163,7 @@ fun showConsentForm(activity: AppCompatActivity) {
                     ConsentStatus.NON_PERSONALIZED -> {
                         putNpa(activity, true)
                         if (activity is SplashScreenActivity) {
-                            MobileAds.initialize(activity, activity.getString(R.string.ads_id))
+                            initMobileAds(activity)
                             activity.startGame()
                         }
                     }
@@ -170,7 +171,7 @@ fun showConsentForm(activity: AppCompatActivity) {
                     ConsentStatus.PERSONALIZED -> {
                         putNpa(activity, false)
                         if (activity is SplashScreenActivity) {
-                            MobileAds.initialize(activity, activity.getString(R.string.ads_id))
+                            initMobileAds(activity)
                             activity.startGame()
                         }
                     }
@@ -191,7 +192,7 @@ fun showConsentForm(activity: AppCompatActivity) {
 
                 putNpa(activity, true)
                 if (activity is SplashScreenActivity) {
-                    MobileAds.initialize(activity, activity.getString(R.string.ads_id))
+                    initMobileAds(activity)
                     activity.startGame()
                 }
             }

@@ -11,8 +11,8 @@ import androidx.fragment.app.Fragment
 import com.gamesbars.guessthe.R
 import com.gamesbars.guessthe.Storage
 import com.gamesbars.guessthe.playSound
-import com.gamesbars.guessthe.screen.INTERSTITIAL_AD_FREQUENCY
 import com.gamesbars.guessthe.screen.PlayActivity
+import com.gamesbars.guessthe.screen.PlayActivity.Companion.INTERSTITIAL_AD_FREQUENCY
 import kotlinx.android.synthetic.main.fragment_win.*
 
 class WinFragment : Fragment() {

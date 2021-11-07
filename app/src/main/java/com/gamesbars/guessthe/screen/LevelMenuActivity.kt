@@ -11,7 +11,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.gamesbars.guessthe.R
-import com.gamesbars.guessthe.buildAdRequest
+import com.gamesbars.guessthe.ads.BannerAdDelegate
 import com.gamesbars.guessthe.fragment.ConfirmDialogFragment
 import com.gamesbars.guessthe.playSound
 import com.gamesbars.guessthe.screen.coins.CoinsActivity
@@ -25,16 +25,17 @@ class LevelMenuActivity : AppCompatActivity() {
     var currentDialog: ConfirmDialogFragment? = null
 
     private lateinit var firebaseAnalytics: FirebaseAnalytics
+    private lateinit var bannerAdDelegate: BannerAdDelegate
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_levelmenu)
 
         saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
+        bannerAdDelegate = BannerAdDelegate(this, saves)
 
         loadPacks()
-
-        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
         findViewById<ImageView>(R.id.levelmenu_back).setOnClickListener {
             if (isClickable) {
@@ -51,8 +52,8 @@ class LevelMenuActivity : AppCompatActivity() {
         }
 
         if (saves.getBoolean("ads", true)) {
-            adView.visibility = View.VISIBLE
-            adView.loadAd(buildAdRequest(saves))
+            adViewContainer.visibility = View.VISIBLE
+            bannerAdDelegate.loadBanner(adViewContainer)
         }
     }
 

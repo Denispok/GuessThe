@@ -12,7 +12,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.gamesbars.guessthe.R
-import com.gamesbars.guessthe.buildAdRequest
+import com.gamesbars.guessthe.ads.BannerAdDelegate
 import com.gamesbars.guessthe.playSound
 import com.gamesbars.guessthe.screen.coins.CoinsActivity
 import com.google.ads.consent.ConsentInformation
@@ -25,6 +25,7 @@ class MenuActivity : AppCompatActivity() {
     var isClickable: Boolean = true
 
     private lateinit var firebaseAnalytics: FirebaseAnalytics
+    private lateinit var bannerAdDelegate: BannerAdDelegate
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +33,7 @@ class MenuActivity : AppCompatActivity() {
 
         saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
+        bannerAdDelegate = BannerAdDelegate(this, saves)
 
         findViewById<TextView>(R.id.menu_rate_coins).text = "+".plus(resources.getInteger(R.integer.rate_reward))
         findViewById<TextView>(R.id.privacy_policy).movementMethod = LinkMovementMethod.getInstance()
@@ -55,8 +57,8 @@ class MenuActivity : AppCompatActivity() {
 
     private fun showBannerAd() {
         if (saves.getBoolean("ads", true)) {
-            adView.visibility = View.VISIBLE
-            adView.loadAd(buildAdRequest(saves))
+            adViewContainer.visibility = View.VISIBLE
+            bannerAdDelegate.loadBanner(adViewContainer)
         }
     }
 
@@ -89,7 +91,8 @@ class MenuActivity : AppCompatActivity() {
             playSound(this, R.raw.button)
 
             val params = Bundle()
-            params.putString("reward", if (saves.getBoolean("rated", false)) "none" else "${resources.getInteger(R.integer.rate_reward)} coins")
+            val rateReward = resources.getInteger(R.integer.rate_reward)
+            params.putString("reward", if (saves.getBoolean("rated", false)) "none" else "$rateReward coins")
             firebaseAnalytics.logEvent("rate", params)
 
             try {
