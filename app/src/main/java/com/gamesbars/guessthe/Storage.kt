@@ -23,6 +23,11 @@ object Storage {
         return resources.getIdentifier(name, "array", App.appContext.packageName)
     }
 
+    fun getLevelCount(pack: String): Int {
+        val packId = resources.getStringArray(R.array.packs).indexOf(pack)
+        return resources.getIntArray(R.array.packs_sizes)[packId]
+    }
+
     fun getAuthorAndLicense(pack: String, level: Int): Pair<String, String> {
         val authorResId = getStringArrayResIdByName(pack + "_author")
         val author = resources.getStringArray(authorResId)[level - 1]

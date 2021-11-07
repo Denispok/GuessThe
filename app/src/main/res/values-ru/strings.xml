@@ -29,7 +29,6 @@
     <string name="tips">Подсказки</string>
     <string name="video">за просмотр видео</string>
     <string name="video_error">Ошибка загрузки видео.</string>
-    <string name="video_is_loading">Видео загружается&#8230;</string>
     <string name="video_reward">Награда получена!</string>
     <string name="coins">Монеты</string>
     <string name="play">Играть</string>

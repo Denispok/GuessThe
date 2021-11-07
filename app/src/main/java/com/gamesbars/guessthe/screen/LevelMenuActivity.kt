@@ -11,7 +11,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.gamesbars.guessthe.R
-import com.gamesbars.guessthe.buildAdRequest
+import com.gamesbars.guessthe.ads.BannerAdDelegate
 import com.gamesbars.guessthe.fragment.ConfirmDialogFragment
 import com.gamesbars.guessthe.playSound
 import com.gamesbars.guessthe.screen.coins.CoinsActivity
@@ -20,25 +20,22 @@ import kotlinx.android.synthetic.main.activity_levelmenu.*
 
 class LevelMenuActivity : AppCompatActivity() {
 
-    companion object {
-        const val PACK_LEVELS_COUNT = 10
-    }
-
     private lateinit var saves: SharedPreferences
     var isClickable: Boolean = true
     var currentDialog: ConfirmDialogFragment? = null
 
     private lateinit var firebaseAnalytics: FirebaseAnalytics
+    private lateinit var bannerAdDelegate: BannerAdDelegate
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_levelmenu)
 
         saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
+        bannerAdDelegate = BannerAdDelegate(this, saves)
 
         loadPacks()
-
-        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
         findViewById<ImageView>(R.id.levelmenu_back).setOnClickListener {
             if (isClickable) {
@@ -55,8 +52,8 @@ class LevelMenuActivity : AppCompatActivity() {
         }
 
         if (saves.getBoolean("ads", true)) {
-            adView.visibility = View.VISIBLE
-            adView.loadAd(buildAdRequest(saves))
+            adViewContainer.visibility = View.VISIBLE
+            bannerAdDelegate.loadBanner(adViewContainer)
         }
     }
 
@@ -85,17 +82,21 @@ class LevelMenuActivity : AppCompatActivity() {
 
     fun updateProgressBars() {
         val packs = resources.getStringArray(R.array.packs)
+        val packsSizes = resources.getIntArray(R.array.packs_sizes)
+        val packPrices = resources.getIntArray(R.array.packs_prices)
         val packsList = findViewById<LinearLayout>(R.id.levels_list)
+
         for (id in 0 until packsList.childCount) {
             val currentButton = packsList.getChildAt(id)
             val progressBarText = currentButton.findViewById<TextView>(R.id.levelmenu_button_progress_bar_text)
             if (saves.getBoolean(packs[id] + "purchased", false)) {
                 val completedLevels = saves.getInt(packs[id] + "completed", 0)
-                val completedPercent = ((completedLevels + 1).toFloat() / PACK_LEVELS_COUNT * 100).toInt()
+                val levelCount = packsSizes[id]
+                val completedPercent = ((completedLevels + 1).toFloat() / levelCount * 100).toInt()
                 currentButton.findViewById<ProgressBar>(R.id.levelmenu_button_progress_bar).progress = completedPercent
                 progressBarText.text =
-                    if (completedLevels == PACK_LEVELS_COUNT) getString(R.string.completed)
-                    else getString(R.string.percent, completedLevels + 1, PACK_LEVELS_COUNT)
+                    if (completedLevels == levelCount) getString(R.string.completed)
+                    else getString(R.string.percent, completedLevels + 1, levelCount)
                 progressBarText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
                 currentButton.setOnClickListener {
                     if (isClickable) {
@@ -107,7 +108,7 @@ class LevelMenuActivity : AppCompatActivity() {
                     }
                 }
             } else {
-                progressBarText.text = getString(R.string.buy_levels, resources.getIntArray(R.array.packs_prices)[id])
+                progressBarText.text = getString(R.string.buy_levels, packPrices[id])
                 progressBarText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.coin_icon_16, 0)
                 currentButton.setOnClickListener {
                     if (isClickable) {

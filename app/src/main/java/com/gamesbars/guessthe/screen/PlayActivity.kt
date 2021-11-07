@@ -12,25 +12,24 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.gamesbars.guessthe.R
-import com.gamesbars.guessthe.buildAdRequest
+import com.gamesbars.guessthe.ads.BannerAdDelegate
+import com.gamesbars.guessthe.ads.InterstitialAdDelegate
+import com.gamesbars.guessthe.ads.RewardedAdDelegate
 import com.gamesbars.guessthe.fragment.InfoDialogFragment
 import com.gamesbars.guessthe.fragment.LevelFragment
 import com.gamesbars.guessthe.fragment.TipsDialogFragment
-import com.google.android.gms.ads.AdListener
-import com.google.android.gms.ads.InterstitialAd
-import com.google.android.gms.ads.MobileAds
-import com.google.android.gms.ads.reward.RewardItem
-import com.google.android.gms.ads.reward.RewardedVideoAd
-import com.google.android.gms.ads.reward.RewardedVideoAdListener
 import kotlinx.android.synthetic.main.activity_play.*
 
-const val INTERSTITIAL_AD_FREQUENCY = 3 // every N level show ad
+class PlayActivity : AppCompatActivity() {
 
-class PlayActivity : AppCompatActivity(), RewardedVideoAdListener {
+    companion object {
+        const val INTERSTITIAL_AD_FREQUENCY = 3 // every N level show ad
+    }
 
     private lateinit var saves: SharedPreferences
-    private lateinit var mInterstitialAd: InterstitialAd
-    private lateinit var mRewardedVideoAd: RewardedVideoAd
+    private lateinit var rewardedAdDelegate: RewardedAdDelegate
+    private lateinit var interstitialAdDelegate: InterstitialAdDelegate
+    private lateinit var bannerAdDelegate: BannerAdDelegate
     var currentDialog: DialogFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,22 +37,16 @@ class PlayActivity : AppCompatActivity(), RewardedVideoAdListener {
         setContentView(R.layout.activity_play)
 
         saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
+        rewardedAdDelegate = RewardedAdDelegate(this, saves, ::onRewardEarned)
+        interstitialAdDelegate = InterstitialAdDelegate(this, saves)
+        bannerAdDelegate = BannerAdDelegate(this, saves)
 
         if (saves.getBoolean("ads", true)) {
             loadBannerAd()
-
-            mInterstitialAd = InterstitialAd(this)
-            mInterstitialAd.adUnitId = getString(R.string.interstitial_id)
-            mInterstitialAd.adListener = object : AdListener() {
-                override fun onAdClosed() {
-                    mInterstitialAd.loadAd(buildAdRequest(saves))
-                }
-            }
-            mInterstitialAd.loadAd(buildAdRequest(saves))
+            interstitialAdDelegate.loadInterstitialAd()
         }
 
-        mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this)
-        mRewardedVideoAd.rewardedVideoAdListener = this
+        rewardedAdDelegate.loadRewardedAd()
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
@@ -77,35 +70,20 @@ class PlayActivity : AppCompatActivity(), RewardedVideoAdListener {
         }
     }
 
-    private fun loadBannerAd() {
-        adView.visibility = View.VISIBLE
-        adView.loadAd(buildAdRequest(saves))
-    }
-
     fun showInterstitialAd() {
-        if (saves.getBoolean("ads", true) && mInterstitialAd.isLoaded) {
-            mInterstitialAd.show()
-        }
+        interstitialAdDelegate.showInterstitialAd()
     }
 
     fun showRewardedVideoAd() {
-        mRewardedVideoAd.loadAd(getString(R.string.rewarded_video_id), buildAdRequest(saves))
-        Toast.makeText(this, getString(R.string.video_is_loading), Toast.LENGTH_LONG).show()
+        rewardedAdDelegate.showRewardedVideoAd()
     }
 
-    override fun onRewardedVideoAdClosed() {}
-
-    override fun onRewardedVideoAdLeftApplication() {}
-
-    override fun onRewardedVideoAdLoaded() {
-        mRewardedVideoAd.show()
+    private fun loadBannerAd() {
+        adViewContainer.visibility = View.VISIBLE
+        bannerAdDelegate.loadBanner(adViewContainer)
     }
 
-    override fun onRewardedVideoAdOpened() {}
-
-    override fun onRewardedVideoCompleted() {}
-
-    override fun onRewarded(p0: RewardItem?) {
+    private fun onRewardEarned() {
         saves.edit().apply {
             putInt("coins", saves.getInt("coins", 0) + 2 * resources.getInteger(R.integer.level_reward))
             apply()
@@ -121,11 +99,5 @@ class PlayActivity : AppCompatActivity(), RewardedVideoAdListener {
             compoundDrawablePadding = resources.getDimension(R.dimen.win_coins_drawable_padding).toInt()
             text = "+".plus(2 * resources.getInteger(R.integer.level_reward))
         }
-    }
-
-    override fun onRewardedVideoStarted() {}
-
-    override fun onRewardedVideoAdFailedToLoad(p0: Int) {
-        Toast.makeText(this, getString(R.string.video_error), Toast.LENGTH_LONG).show()
     }
 }

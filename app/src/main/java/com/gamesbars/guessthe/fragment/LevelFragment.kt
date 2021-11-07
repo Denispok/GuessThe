@@ -15,6 +15,7 @@ import androidx.fragment.app.FragmentTransaction
 import com.gamesbars.guessthe.R
 import com.gamesbars.guessthe.Storage.getCurrentLevel
 import com.gamesbars.guessthe.Storage.getDrawableResIdByName
+import com.gamesbars.guessthe.Storage.getLevelCount
 import com.gamesbars.guessthe.Storage.getStringArrayResIdByName
 import com.gamesbars.guessthe.Storage.isLevelHaveInfo
 import com.gamesbars.guessthe.Storage.saves
@@ -22,7 +23,6 @@ import com.gamesbars.guessthe.level.Letter
 import com.gamesbars.guessthe.level.Letters
 import com.gamesbars.guessthe.level.WordLetters
 import com.gamesbars.guessthe.playSound
-import com.gamesbars.guessthe.screen.LevelMenuActivity
 import com.gamesbars.guessthe.screen.PlayActivity
 import com.gamesbars.guessthe.screen.coins.CoinsActivity
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -176,6 +176,7 @@ class LevelFragment : Fragment() {
 
     fun win() {
         val currentLevel = getCurrentLevel(pack)
+        val levelCount = getLevelCount(pack)
         val levelName = pack + currentLevel
         var isLevelReward = false
 
@@ -187,7 +188,7 @@ class LevelFragment : Fragment() {
             isLevelReward = true
             firebaseAnalytics.setUserProperty(pack, currentLevel.toString())
         }
-        if (currentLevel + 1 > LevelMenuActivity.PACK_LEVELS_COUNT) editor.putInt(pack, 1)
+        if (currentLevel + 1 > levelCount) editor.putInt(pack, 1)
         else editor.putInt(pack, currentLevel + 1)
         editor.apply()
 

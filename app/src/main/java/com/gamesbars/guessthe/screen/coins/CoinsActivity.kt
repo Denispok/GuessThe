@@ -9,19 +9,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.billingclient.api.*
-import com.gamesbars.guessthe.*
+import com.gamesbars.guessthe.R
+import com.gamesbars.guessthe.ads.BannerAdDelegate
+import com.gamesbars.guessthe.ads.RewardedAdDelegate
+import com.gamesbars.guessthe.playSound
 import com.gamesbars.guessthe.screen.coins.data.ProductDTO
 import com.gamesbars.guessthe.screen.coins.data.ProductDTOProvider
-import com.google.android.gms.ads.MobileAds
-import com.google.android.gms.ads.reward.RewardItem
-import com.google.android.gms.ads.reward.RewardedVideoAd
-import com.google.android.gms.ads.reward.RewardedVideoAdListener
+import com.gamesbars.guessthe.sliceUntilIndex
+import com.gamesbars.guessthe.toast
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.activity_coins.*
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
-class CoinsActivity : AppCompatActivity(), RewardedVideoAdListener, CoroutineScope {
+class CoinsActivity : AppCompatActivity(), CoroutineScope {
 
     companion object {
         private const val BILLING_CONNECTION_RETRY_DELAY = 3000L
@@ -33,7 +34,8 @@ class CoinsActivity : AppCompatActivity(), RewardedVideoAdListener, CoroutineSco
     private lateinit var billingClient: BillingClient
     private lateinit var saves: SharedPreferences
     private lateinit var firebaseAnalytics: FirebaseAnalytics
-    private lateinit var rewardedVideoAd: RewardedVideoAd
+    private lateinit var rewardedAdDelegate: RewardedAdDelegate
+    private lateinit var bannerAdDelegate: BannerAdDelegate
 
     private val activityJob = SupervisorJob()
     override val coroutineContext: CoroutineContext =
@@ -48,8 +50,8 @@ class CoinsActivity : AppCompatActivity(), RewardedVideoAdListener, CoroutineSco
         saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         productDTOList = ProductDTOProvider.getProductDTOList(resources)
-        rewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this)
-        rewardedVideoAd.rewardedVideoAdListener = this
+        rewardedAdDelegate = RewardedAdDelegate(this, saves, ::onRewardEarned)
+        bannerAdDelegate = BannerAdDelegate(this, saves)
 
         billingClient = BillingClient.newBuilder(this)
             .setListener(PurchasesUpdatedListenerImpl())
@@ -58,9 +60,11 @@ class CoinsActivity : AppCompatActivity(), RewardedVideoAdListener, CoroutineSco
         connectToBilling()
 
         if (saves.getBoolean("ads", true)) {
-            adView.visibility = View.VISIBLE
-            adView.loadAd(buildAdRequest(saves))
+            adViewContainer.visibility = View.VISIBLE
+            bannerAdDelegate.loadBanner(adViewContainer)
         }
+
+        rewardedAdDelegate.loadRewardedAd()
 
         setupUI()
         updateCoins()
@@ -68,37 +72,8 @@ class CoinsActivity : AppCompatActivity(), RewardedVideoAdListener, CoroutineSco
 
     override fun onDestroy() {
         activityJob.cancel()
+        billingClient.endConnection()
         super.onDestroy()
-    }
-
-    override fun onRewardedVideoAdClosed() {
-        showLoader(false)
-    }
-
-    override fun onRewardedVideoAdLeftApplication() {}
-
-    override fun onRewardedVideoAdLoaded() {
-        rewardedVideoAd.show()
-    }
-
-    override fun onRewardedVideoAdOpened() {}
-
-    override fun onRewardedVideoCompleted() {}
-
-    override fun onRewarded(p0: RewardItem?) {
-        saves.edit().apply {
-            putInt("coins", saves.getInt("coins", 0) + 2 * resources.getInteger(R.integer.level_reward))
-            apply()
-        }
-        toast(getString(R.string.video_reward))
-        updateCoins()
-    }
-
-    override fun onRewardedVideoStarted() {}
-
-    override fun onRewardedVideoAdFailedToLoad(p0: Int) {
-        toast(getString(R.string.video_error))
-        showLoader(false)
     }
 
     @MainThread
@@ -117,8 +92,7 @@ class CoinsActivity : AppCompatActivity(), RewardedVideoAdListener, CoroutineSco
 
         coinsVideoTv.text = (2 * resources.getInteger(R.integer.level_reward)).toString()
         coinsRewardedVideoLl.setOnClickListener {
-            showLoader(true)
-            showRewardedVideoAd()
+            rewardedAdDelegate.showRewardedVideoAd()
         }
     }
 
@@ -132,9 +106,13 @@ class CoinsActivity : AppCompatActivity(), RewardedVideoAdListener, CoroutineSco
             .start()
     }
 
-    private fun showRewardedVideoAd() {
-        rewardedVideoAd.loadAd(getString(R.string.rewarded_video_id), buildAdRequest(saves))
-        toast(getString(R.string.video_is_loading))
+    private fun onRewardEarned() {
+        saves.edit().apply {
+            putInt("coins", saves.getInt("coins", 0) + 2 * resources.getInteger(R.integer.level_reward))
+            apply()
+        }
+        toast(getString(R.string.video_reward))
+        updateCoins()
     }
 
     private fun connectToBilling() {
