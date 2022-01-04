@@ -12,4 +12,11 @@ object AnalyticsHelper {
         params.putString("message", message.sliceUntilIndex(99))
         firebaseAnalytics.logEvent("ads_error", params)
     }
+
+    fun logLevelComplete(pack: String, level: Int) {
+        val params = Bundle()
+        params.putString("completed_level", (pack + level).sliceUntilIndex(99))
+        firebaseAnalytics.logEvent("level_complete", params)
+        firebaseAnalytics.setUserProperty(pack, level.toString())
+    }
 }
