@@ -12,6 +12,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import com.gamesbars.guessthe.AnalyticsHelper
 import com.gamesbars.guessthe.R
 import com.gamesbars.guessthe.Storage.getCurrentLevel
 import com.gamesbars.guessthe.Storage.getDrawableResIdByName
@@ -186,7 +187,7 @@ class LevelFragment : Fragment() {
             editor.putInt(pack + "completed", currentLevel)
             editor.putInt("coins", saves.getInt("coins", 0) + resources.getInteger(R.integer.level_reward))
             isLevelReward = true
-            firebaseAnalytics.setUserProperty(pack, currentLevel.toString())
+            AnalyticsHelper.logLevelComplete(pack, currentLevel)
         }
         if (currentLevel + 1 > levelCount) editor.putInt(pack, 1)
         else editor.putInt(pack, currentLevel + 1)
