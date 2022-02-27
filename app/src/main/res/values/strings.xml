@@ -28,7 +28,8 @@
     <string name="cancel">Cancel</string>
     <string name="dont_enough_coins">Not enough coins</string>
     <string name="confirm_dialog_message">Unlock new levels for %d coins?</string>
-    <string name="video_error">Video loading error.</string>
+    <string name="video_error">Video loading error. Check your internet connection.</string>
+    <string name="video_is_loading">Video is loading&#8230;</string>
     <string name="video_reward">Reward has been received!</string>
     <string name="levels">Levels</string>
     <string name="play">Play</string>
