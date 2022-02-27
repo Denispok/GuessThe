@@ -6,14 +6,14 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
 
     defaultConfig {
         applicationId "com.gamesbars.guessthe"
         minSdkVersion 21
-        targetSdkVersion 30
-        versionCode 8
-        versionName "1.8i"
+        targetSdkVersion 31
+        versionCode 9
+        versionName "1.9j"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -55,12 +55,10 @@ dependencies {
 
     implementation "com.android.billingclient:billing-ktx:4.0.0"
 
-    implementation 'com.google.firebase:firebase-core:20.0.0'
-    implementation 'com.google.firebase:firebase-ads:20.4.0'
-    implementation 'com.google.firebase:firebase-crashlytics:18.2.4'
-    implementation 'com.google.firebase:firebase-analytics:20.0.0'
-
     implementation 'com.google.android.ads.consent:consent-library:1.0.7'
+    implementation 'com.google.android.gms:play-services-ads:20.5.0'
+    implementation 'com.google.firebase:firebase-analytics:20.0.2'
+    implementation 'com.google.firebase:firebase-crashlytics:18.2.7'
 
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     kapt 'com.github.bumptech.glide:compiler:4.12.0'

@@ -66,7 +66,6 @@
     <dimen name="tips_padding">32dp</dimen>
 
     <dimen name="tips_button_width">400dp</dimen>
-    <dimen name="tips_button_height">50dp</dimen>
     <dimen name="tips_button_text_size">24sp</dimen>
     <dimen name="tips_button_margin">12dp</dimen>
 

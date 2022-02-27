@@ -37,7 +37,7 @@ class InterstitialAdDelegate(
                 }
 
                 override fun onAdFailedToLoad(adError: LoadAdError) {
-                    AnalyticsHelper.logAdsError("InterstitialAdFailedToLoad: ${adError.message}")
+                    AnalyticsHelper.logInterstitialAdError("onAdFailedToLoad: ${adError.message}")
                     mInterstitialAd = null
                     Handler(activity.mainLooper).postDelayed({
                         if (activity.lifecycle.currentState != Lifecycle.State.DESTROYED) loadInterstitialAd()
@@ -49,7 +49,7 @@ class InterstitialAdDelegate(
 
     fun showInterstitialAd() {
         if (saves.getBoolean("ads", true)) {
-            mInterstitialAd?.show(activity) ?: AnalyticsHelper.logAdsError("InterstitialAd is null")
+            mInterstitialAd?.show(activity) ?: AnalyticsHelper.logInterstitialAdError("InterstitialAd is null")
         }
     }
 
@@ -61,7 +61,7 @@ class InterstitialAdDelegate(
         }
 
         override fun onAdFailedToShowFullScreenContent(adError: AdError) {
-            AnalyticsHelper.logAdsError("InterstitialAdFailedToShowFullScreenContent: ${adError.message}")
+            AnalyticsHelper.logInterstitialAdError("onAdFailedToShowFullScreenContent: ${adError.message}")
             mInterstitialAd = null
             loadInterstitialAd()
         }
