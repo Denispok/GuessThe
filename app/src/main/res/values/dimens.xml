@@ -75,7 +75,6 @@
     <dimen name="tips_padding">12dp</dimen>
 
     <dimen name="tips_button_width">260dp</dimen>
-    <dimen name="tips_button_height">42dp</dimen>
     <dimen name="tips_button_text_size">16sp</dimen>
     <dimen name="tips_button_margin">8dp</dimen>
     <dimen name="tips_button_coins_drawable_padding">2dp</dimen>
