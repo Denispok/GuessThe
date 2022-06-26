@@ -7,8 +7,6 @@ object Storage {
     val resources get() = App.appContext.resources!!
     val saves get() = App.appContext.getSharedPreferences("saves", Context.MODE_PRIVATE)!!
 
-    fun getCurrentLevel(pack: String) = saves.getInt(pack, 1)
-
     fun getDrawableResIdByName(name: String): Int {
         return resources.getIdentifier(name, "drawable", App.appContext.packageName)
     }
@@ -23,9 +21,26 @@ object Storage {
         return resources.getIdentifier(name, "array", App.appContext.packageName)
     }
 
+    fun getCurrentLevel(pack: String) = saves.getInt(pack, 1)
+
     fun getLevelCount(pack: String): Int {
         val packId = resources.getStringArray(R.array.packs).indexOf(pack)
         return resources.getIntArray(R.array.packs_sizes)[packId]
+    }
+
+    fun getLevelsToUnlock(packIndex: Int): Int {
+        return resources.getIntArray(R.array.packs_levels_to_unlock)[packIndex] - getCompletedLevelsCount()
+    }
+
+    fun getCompletedLevels(pack: String): Int {
+        return saves.getInt(pack + "completed", 0)
+    }
+
+    fun getCompletedLevelsCount(): Int {
+        val packs = resources.getStringArray(R.array.packs)
+        return packs.fold(0, { completedLevels, pack ->
+            completedLevels + getCompletedLevels(pack)
+        })
     }
 
     fun getAuthorAndLicense(pack: String, level: Int): Pair<String, String> {
@@ -42,4 +57,10 @@ object Storage {
         return if (getStringArrayResIdByName(pack + "_author") == 0) false
         else getAuthorAndLicense(pack, level).first != "-"
     }
+
+    fun isPackOpen(pack: String, packIndex: Int): Boolean {
+        return isPackPurchased(pack) || getCompletedLevelsCount() >= resources.getIntArray(R.array.packs_levels_to_unlock)[packIndex]
+    }
+
+    fun isPackPurchased(pack: String) = saves.getBoolean(pack + "purchased", false)
 }

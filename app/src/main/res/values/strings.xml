@@ -24,6 +24,7 @@
     <string name="percent">Level %d/%d</string>
     <string name="completed">Completed!</string>
     <string name="buy_levels">Unlock for %d</string>
+    <string name="complete_levels_to_unlock">or complete %d more levels</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="dont_enough_coins">Not enough coins</string>
