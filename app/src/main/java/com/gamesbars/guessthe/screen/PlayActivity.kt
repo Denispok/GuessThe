@@ -42,7 +42,7 @@ class PlayActivity : AppCompatActivity() {
         bannerAdDelegate = BannerAdDelegate(this, saves)
 
         if (saves.getBoolean("ads", true)) {
-            loadBannerAd()
+            bannerAdDelegate.loadBanner(this, adViewContainer)
             interstitialAdDelegate.loadInterstitialAd()
         }
 
@@ -57,6 +57,11 @@ class PlayActivity : AppCompatActivity() {
                 )
                 .commit()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateBannerAd()
     }
 
     override fun onBackPressed() {
@@ -78,9 +83,13 @@ class PlayActivity : AppCompatActivity() {
         rewardedAdDelegate.showRewardedVideoAd()
     }
 
-    private fun loadBannerAd() {
-        adViewContainer.visibility = View.VISIBLE
-        bannerAdDelegate.loadBanner(adViewContainer)
+    private fun updateBannerAd() {
+        if (saves.getBoolean("ads", true)) {
+            adViewContainer.visibility = View.VISIBLE
+            bannerAdDelegate.updateBanner(this, adViewContainer)
+        } else {
+            adViewContainer.visibility = View.GONE
+        }
     }
 
     private fun onRewardEarned() {

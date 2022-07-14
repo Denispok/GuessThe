@@ -59,15 +59,17 @@ class CoinsActivity : AppCompatActivity(), CoroutineScope {
             .build()
         connectToBilling()
 
-        if (saves.getBoolean("ads", true)) {
-            adViewContainer.visibility = View.VISIBLE
-            bannerAdDelegate.loadBanner(adViewContainer)
-        }
+        if (saves.getBoolean("ads", true)) bannerAdDelegate.loadBanner(this, adViewContainer)
 
         rewardedAdDelegate.loadRewardedAd()
 
         setupUI()
         updateCoins()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateBannerAd()
     }
 
     override fun onDestroy() {
@@ -104,6 +106,15 @@ class CoinsActivity : AppCompatActivity(), CoroutineScope {
             .alpha(if (isShow) 1f else 0f)
             .withEndAction { if (!isShow) progressFl.isVisible = false }
             .start()
+    }
+
+    private fun updateBannerAd() {
+        if (saves.getBoolean("ads", true)) {
+            adViewContainer.visibility = View.VISIBLE
+            bannerAdDelegate.updateBanner(this, adViewContainer)
+        } else {
+            adViewContainer.visibility = View.GONE
+        }
     }
 
     private fun onRewardEarned() {

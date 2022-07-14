@@ -11,6 +11,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 object AnalyticsHelper {
 
     private const val TAG_DEBUG = "DEBUG"
+    private const val TAG_CONSENT = "CONSENT"
     private const val EVENT_ERROR_AD_REWARDED = "error_ad_rewarded"
     private const val EVENT_ERROR_AD_INTERSTITIAL = "error_ad_interstitial"
     private const val EVENT_LEVEL_COMPLETE = "level_complete"
@@ -57,6 +58,21 @@ object AnalyticsHelper {
             firebaseAnalytics.logEvent(EVENT_LEVEL_COMPLETE, params)
             firebaseAnalytics.setUserProperty(pack, level.toString())
         }
+    }
+
+    fun logConsentError(errorMessage: String) {
+        if (BuildConfig.DEBUG) {
+            Log.e(TAG_CONSENT, errorMessage)
+        } else {
+            val params = Bundle()
+            params.putString("message", errorMessage.sliceUntilIndex(99))
+            firebaseAnalytics.logEvent("consent_error", params)
+        }
+    }
+
+    fun logAdsLocation(inEeaOrUnknown: Boolean) {
+        val location = if (inEeaOrUnknown) "InEeaOrUnknown" else "None"
+        firebaseAnalytics.setUserProperty("adslocation", location)
     }
 
     private fun getConnectivityInfo(): String? {

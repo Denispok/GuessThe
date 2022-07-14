@@ -11,11 +11,12 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.gamesbars.guessthe.R
 import com.gamesbars.guessthe.ads.BannerAdDelegate
+import com.gamesbars.guessthe.ads.consent.ConsentInfoManager
 import com.gamesbars.guessthe.playSound
 import com.gamesbars.guessthe.screen.coins.CoinsActivity
-import com.google.ads.consent.ConsentInformation
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.activity_menu.*
 
@@ -38,27 +39,28 @@ class MenuActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.menu_rate_coins).text = "+".plus(resources.getInteger(R.integer.rate_reward))
         findViewById<TextView>(R.id.privacy_policy).movementMethod = LinkMovementMethod.getInstance()
 
-        val consentInformation = ConsentInformation.getInstance(this)
         val adsSettingsView = findViewById<TextView>(R.id.ads_settings)
-        if (consentInformation.isRequestLocationInEeaOrUnknown) {
-            adsSettingsView.setOnClickListener { showConsentForm(this) }
-        } else {
-            adsSettingsView.visibility = View.GONE
-        }
+        adsSettingsView.setOnClickListener { ConsentInfoManager.showConsentForm(this) }
 
-        showBannerAd()
+        ConsentInfoManager.isUserInConsentZoneAsync(this) { isUserInConsentZone ->
+            adsSettingsView.isVisible = isUserInConsentZone
+        }
 
         val sound = saves.getBoolean("sound", true)
         findViewById<ImageView>(R.id.menu_sound).setImageResource(
             if (sound) R.drawable.baseline_volume_up_white_48
             else R.drawable.baseline_volume_off_white_48
         )
+
+        if (saves.getBoolean("ads", true)) bannerAdDelegate.loadBanner(this, adViewContainer)
     }
 
-    private fun showBannerAd() {
+    private fun updateBannerAd() {
         if (saves.getBoolean("ads", true)) {
             adViewContainer.visibility = View.VISIBLE
-            bannerAdDelegate.loadBanner(adViewContainer)
+            bannerAdDelegate.updateBanner(this, adViewContainer)
+        } else {
+            adViewContainer.visibility = View.GONE
         }
     }
 
@@ -66,6 +68,7 @@ class MenuActivity : AppCompatActivity() {
         super.onResume()
         if (saves.getBoolean("rated", false))
             findViewById<TextView>(R.id.menu_rate_coins).visibility = View.GONE
+        updateBannerAd()
         isClickable = true
     }
 

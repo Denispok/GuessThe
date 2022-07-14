@@ -4,9 +4,11 @@ import android.content.SharedPreferences
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
+import com.appodeal.ads.Appodeal
+import com.appodeal.ads.RewardedVideoCallbacks
 import com.gamesbars.guessthe.AnalyticsHelper
 import com.gamesbars.guessthe.R
-import com.gamesbars.guessthe.buildAdRequest
+import com.gamesbars.guessthe.ads.AdsUtils.buildAdmobAdRequest
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
@@ -30,11 +32,25 @@ class RewardedAdDelegate(
     private var rewardedAdLoadCallback: RewardedAdLoadCallback? = null
 
     fun loadRewardedAd() {
+        when (AdsUtils.AD_MEDIATION_TYPE) {
+            AdsUtils.AD_MEDIATION_TYPE_ADMOB -> loadRewardedAdAdmob()
+            AdsUtils.AD_MEDIATION_TYPE_APPODEAL -> Unit // Appodeal doesn't need preload
+        }
+    }
+
+    fun showRewardedVideoAd() {
+        when (AdsUtils.AD_MEDIATION_TYPE) {
+            AdsUtils.AD_MEDIATION_TYPE_ADMOB -> showRewardedVideoAdAdmob()
+            AdsUtils.AD_MEDIATION_TYPE_APPODEAL -> showRewardedVideoAdAppodeal()
+        }
+    }
+
+    private fun loadRewardedAdAdmob() {
         adState = AdState.LOADING
         RewardedAd.load(
             activity,
             activity.getString(R.string.rewarded_video_id),
-            buildAdRequest(saves),
+            buildAdmobAdRequest(saves),
             object : RewardedAdLoadCallback() {
 
                 override fun onAdLoaded(rewardedAd: RewardedAd) {
@@ -57,7 +73,7 @@ class RewardedAdDelegate(
         )
     }
 
-    fun showRewardedVideoAd() {
+    private fun showRewardedVideoAdAdmob() {
         if (mRewardedAd != null) {
             mRewardedAd?.show(activity) { _ ->
                 onRewardEarned.invoke()
@@ -75,6 +91,43 @@ class RewardedAdDelegate(
                 adRetryJob?.cancel()
                 loadRewardedAd()
             }
+        }
+    }
+
+    private fun showRewardedVideoAdAppodeal() {
+        if (!Appodeal.isInitialized(Appodeal.REWARDED_VIDEO)) {
+            Toast.makeText(activity, activity.getString(R.string.video_error), Toast.LENGTH_LONG).show()
+        } else if (!Appodeal.isLoaded(Appodeal.REWARDED_VIDEO)) {
+            Toast.makeText(activity, activity.getString(R.string.video_is_loading), Toast.LENGTH_SHORT).show()
+        } else {
+            Appodeal.setRewardedVideoCallbacks(object : RewardedVideoCallbacks {
+
+                override fun onRewardedVideoClicked() {
+                }
+
+                override fun onRewardedVideoClosed(finished: Boolean) {
+                }
+
+                override fun onRewardedVideoExpired() {
+                }
+
+                override fun onRewardedVideoFailedToLoad() {
+                }
+
+                override fun onRewardedVideoFinished(amount: Double, name: String?) {
+                    onRewardEarned.invoke()
+                }
+
+                override fun onRewardedVideoLoaded(isPrecache: Boolean) {
+                }
+
+                override fun onRewardedVideoShowFailed() {
+                }
+
+                override fun onRewardedVideoShown() {
+                }
+            })
+            Appodeal.show(activity, Appodeal.REWARDED_VIDEO)
         }
     }
 

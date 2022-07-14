@@ -51,16 +51,14 @@ class LevelMenuActivity : AppCompatActivity() {
             }
         }
 
-        if (saves.getBoolean("ads", true)) {
-            adViewContainer.visibility = View.VISIBLE
-            bannerAdDelegate.loadBanner(adViewContainer)
-        }
+        if (saves.getBoolean("ads", true)) bannerAdDelegate.loadBanner(this, adViewContainer)
     }
 
     override fun onResume() {
         super.onResume()
         updateCoins()
         updateProgressBars()
+        updateBannerAd()
         isClickable = true
     }
 
@@ -77,6 +75,15 @@ class LevelMenuActivity : AppCompatActivity() {
             val button = layoutInflater.inflate(R.layout.button_levelmenu, packsList, false)
             button.findViewById<TextView>(R.id.levelmenu_button_pack_name).text = packsNames[id]
             packsList.addView(button)
+        }
+    }
+
+    private fun updateBannerAd() {
+        if (saves.getBoolean("ads", true)) {
+            adViewContainer.visibility = View.VISIBLE
+            bannerAdDelegate.updateBanner(this, adViewContainer)
+        } else {
+            adViewContainer.visibility = View.GONE
         }
     }
 

@@ -18,4 +18,6 @@
     <string name="interstitial_id">ca-app-pub-3940256099942544/1033173712</string>
     <string name="rewarded_video_id">ca-app-pub-3940256099942544/5224354917</string>
 
+    <string name="appodeal_app_id">INSERT APPODEAL APP ID</string>
+
 </resources>
