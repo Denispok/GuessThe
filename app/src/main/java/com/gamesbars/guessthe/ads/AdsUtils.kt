@@ -31,6 +31,22 @@ object AdsUtils {
         }
     }
 
+    /** Appodeal banners ruin scaledDensity value for no reason and this caused
+     *  the text sizes to break (custom system font size resets to default) */
+    fun fixDensity(resources: Resources) {
+        resources.displayMetrics.scaledDensity = resources.displayMetrics.density * resources.configuration.fontScale
+    }
+
+    fun buildAdmobAdRequest(saves: SharedPreferences): AdRequest {
+        val adBuilder = AdRequest.Builder()
+        if (saves.getBoolean("npa", true)) {
+            val extras = Bundle()
+            extras.putString("npa", "1")
+            adBuilder.addNetworkExtrasBundle(AdMobAdapter::class.java, extras)
+        }
+        return adBuilder.build()
+    }
+
     private fun initAdmob(context: Context) {
         MobileAds.initialize(context)
     }
@@ -110,21 +126,5 @@ object AdsUtils {
             override fun onRewardedVideoShown() {
             }
         })
-    }
-
-    /** Appodeal banners ruin scaledDensity value for no reason and this caused
-     *  the text sizes to break (custom system font size resets to default) */
-    fun fixDensity(resources: Resources) {
-        resources.displayMetrics.scaledDensity = resources.displayMetrics.density * resources.configuration.fontScale
-    }
-
-    fun buildAdmobAdRequest(saves: SharedPreferences): AdRequest {
-        val adBuilder = AdRequest.Builder()
-        if (saves.getBoolean("npa", true)) {
-            val extras = Bundle()
-            extras.putString("npa", "1")
-            adBuilder.addNetworkExtrasBundle(AdMobAdapter::class.java, extras)
-        }
-        return adBuilder.build()
     }
 }
