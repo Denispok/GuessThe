@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import com.appodeal.ads.Appodeal
 import com.appodeal.ads.RewardedVideoCallbacks
-import com.gamesbars.guessthe.AnalyticsHelper
+import com.gamesbars.guessthe.AnalyticsHelper.logRewardedAdError
 import com.gamesbars.guessthe.R
 import com.gamesbars.guessthe.ads.AdsUtils.buildAdmobAdRequest
 import com.google.android.gms.ads.AdError
@@ -61,7 +61,7 @@ class RewardedAdDelegate(
 
                 override fun onAdFailedToLoad(adError: LoadAdError) {
                     adState = AdState.ERROR_DELAY
-                    AnalyticsHelper.logRewardedAdError("onAdFailedToLoad: ${adError.message}")
+                    logRewardedAdError("onAdFailedToLoad: ${adError.message}")
                     mRewardedAd = null
 
                     adRetryJob = CoroutineScope(Dispatchers.Main).launch {
@@ -79,7 +79,7 @@ class RewardedAdDelegate(
                 onRewardEarned.invoke()
             }
         } else {
-            AnalyticsHelper.logRewardedAdError("RewardedAd is null, state: $adState")
+            logRewardedAdError("RewardedAd is null, state: $adState")
 
             if (adState == AdState.LOADING) {
                 Toast.makeText(activity, activity.getString(R.string.video_is_loading), Toast.LENGTH_SHORT).show()
@@ -112,6 +112,9 @@ class RewardedAdDelegate(
                 }
 
                 override fun onRewardedVideoFailedToLoad() {
+                    val isInitialized = Appodeal.isInitialized(Appodeal.REWARDED_VIDEO)
+                    val isLoaded = Appodeal.isLoaded(Appodeal.REWARDED_VIDEO)
+                    logRewardedAdError("onRewardedVideoFailedToLoad: isInitialized=$isInitialized, isLoaded=$isLoaded")
                 }
 
                 override fun onRewardedVideoFinished(amount: Double, name: String?) {
@@ -122,6 +125,9 @@ class RewardedAdDelegate(
                 }
 
                 override fun onRewardedVideoShowFailed() {
+                    val isInitialized = Appodeal.isInitialized(Appodeal.REWARDED_VIDEO)
+                    val isLoaded = Appodeal.isLoaded(Appodeal.REWARDED_VIDEO)
+                    logRewardedAdError("onRewardedVideoShowFailed: isInitialized=$isInitialized, isLoaded=$isLoaded")
                 }
 
                 override fun onRewardedVideoShown() {
@@ -139,7 +145,7 @@ class RewardedAdDelegate(
         }
 
         override fun onAdFailedToShowFullScreenContent(adError: AdError) {
-            AnalyticsHelper.logRewardedAdError("onAdFailedToShowFullScreenContent: ${adError.message}")
+            logRewardedAdError("onAdFailedToShowFullScreenContent: ${adError.message}")
             mRewardedAd = null
             loadRewardedAd()
         }

@@ -2,7 +2,6 @@ package com.gamesbars.guessthe.ads.consent
 
 import android.content.Context
 import android.os.Handler
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.appodeal.consent.Consent
 import com.appodeal.consent.ConsentManager
@@ -216,7 +215,6 @@ object ConsentInfoManager {
         val consentFormListener = object : com.appodeal.consent.ConsentFormListener() {
 
             override fun onConsentFormClosed(consent: Consent) {
-                Log.d("CONSENT", "onConsentFormClosed тупа")
                 when (consent.status) {
                     Consent.Status.PERSONALIZED -> {
                         putNpa(activity, false)
