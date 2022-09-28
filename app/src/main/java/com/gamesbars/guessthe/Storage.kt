@@ -63,4 +63,41 @@ object Storage {
     }
 
     fun isPackPurchased(pack: String) = saves.getBoolean(pack + "purchased", false)
+
+    /** @return is level completed first time */
+    fun completeLevel(pack: String): Boolean {
+        val currentLevel = getCurrentLevel(pack)
+        val levelCount = getLevelCount(pack)
+        val levelName = pack + currentLevel
+        var isCompletedFirstTime = false
+
+        val editor = saves.edit()
+        editor.putString(levelName, saves.getString(levelName, "")!!.replace("!", "").replace("*", ""))
+        if (currentLevel > saves.getInt(pack + "completed", 0)) {
+            editor.putInt(pack + "completed", currentLevel)
+            editor.putInt("coins", saves.getInt("coins", 0) + resources.getInteger(R.integer.level_reward))
+            isCompletedFirstTime = true
+            AnalyticsHelper.logLevelComplete(pack, currentLevel)
+        }
+        if (currentLevel + 1 > levelCount) editor.putInt(pack, 1)
+        else editor.putInt(pack, currentLevel + 1)
+        editor.apply()
+
+        if (isCompletedFirstTime) checkUnlockedLevels()
+
+        return isCompletedFirstTime
+    }
+
+    private fun checkUnlockedLevels() {
+        val packs = resources.getStringArray(R.array.packs)
+        val packsLevelsToUnlock = resources.getIntArray(R.array.packs_levels_to_unlock)
+        val completedLevelsCount = getCompletedLevelsCount()
+
+        for (id in packs.indices) {
+            val pack = packs[id]
+            if (packsLevelsToUnlock[id] == completedLevelsCount && !isPackPurchased(pack)) {
+                AnalyticsHelper.logPackUnlock(pack, "levels")
+            }
+        }
+    }
 }

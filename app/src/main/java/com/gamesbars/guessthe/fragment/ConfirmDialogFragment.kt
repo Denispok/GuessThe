@@ -6,11 +6,11 @@ import android.content.Context
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
+import com.gamesbars.guessthe.AnalyticsHelper
 import com.gamesbars.guessthe.R
 import com.gamesbars.guessthe.ads.AdsUtils
 import com.gamesbars.guessthe.playSound
 import com.gamesbars.guessthe.screen.LevelMenuActivity
-import com.google.firebase.analytics.FirebaseAnalytics
 
 class ConfirmDialogFragment : DialogFragment() {
 
@@ -25,7 +25,6 @@ class ConfirmDialogFragment : DialogFragment() {
         }
     }
 
-    private lateinit var firebaseAnalytics: FirebaseAnalytics
     private var packId: Int = -1
     private lateinit var pack: String
 
@@ -33,7 +32,6 @@ class ConfirmDialogFragment : DialogFragment() {
         super.onCreate(savedInstanceState)
         packId = arguments!!.getInt("packId")
         pack = arguments!!.getString("pack")!!
-        firebaseAnalytics = FirebaseAnalytics.getInstance(context!!)
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -50,10 +48,7 @@ class ConfirmDialogFragment : DialogFragment() {
                     apply()
                 }
 
-                firebaseAnalytics.setUserProperty(pack, "0")
-                val params = Bundle()
-                params.putString("pack", pack)
-                firebaseAnalytics.logEvent("pack_purchased", params)
+                AnalyticsHelper.logPackUnlock(pack, "coins")
 
                 playSound(context!!, R.raw.button)
                 updateActivity()
