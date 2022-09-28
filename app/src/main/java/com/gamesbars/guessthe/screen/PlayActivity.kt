@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.gamesbars.guessthe.R
+import com.gamesbars.guessthe.ads.AdsUtils
 import com.gamesbars.guessthe.ads.BannerAdDelegate
 import com.gamesbars.guessthe.ads.InterstitialAdDelegate
 import com.gamesbars.guessthe.ads.RewardedAdDelegate
@@ -34,6 +35,7 @@ class PlayActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AdsUtils.fixDensity(resources)
         setContentView(R.layout.activity_play)
 
         saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
@@ -42,7 +44,7 @@ class PlayActivity : AppCompatActivity() {
         bannerAdDelegate = BannerAdDelegate(this, saves)
 
         if (saves.getBoolean("ads", true)) {
-            loadBannerAd()
+            bannerAdDelegate.loadBanner(this, adViewContainer)
             interstitialAdDelegate.loadInterstitialAd()
         }
 
@@ -57,6 +59,11 @@ class PlayActivity : AppCompatActivity() {
                 )
                 .commit()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateBannerAd()
     }
 
     override fun onBackPressed() {
@@ -78,9 +85,13 @@ class PlayActivity : AppCompatActivity() {
         rewardedAdDelegate.showRewardedVideoAd()
     }
 
-    private fun loadBannerAd() {
-        adViewContainer.visibility = View.VISIBLE
-        bannerAdDelegate.loadBanner(adViewContainer)
+    private fun updateBannerAd() {
+        if (saves.getBoolean("ads", true)) {
+            adViewContainer.visibility = View.VISIBLE
+            bannerAdDelegate.updateBanner(this, adViewContainer)
+        } else {
+            adViewContainer.visibility = View.GONE
+        }
     }
 
     private fun onRewardEarned() {

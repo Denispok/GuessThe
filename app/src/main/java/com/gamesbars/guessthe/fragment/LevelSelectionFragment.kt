@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gamesbars.guessthe.R
 import com.gamesbars.guessthe.adapter.LevelSelectionAdapter
+import com.gamesbars.guessthe.ads.AdsUtils
 import com.gamesbars.guessthe.playSound
 
 class LevelSelectionFragment : Fragment() {
@@ -38,6 +39,7 @@ class LevelSelectionFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        AdsUtils.fixDensity(resources)
         val view = inflater.inflate(R.layout.fragment_levelselection, container, false)
         val saves = activity!!.getSharedPreferences("saves", Context.MODE_PRIVATE)
 

@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.gamesbars.guessthe.R
 import com.gamesbars.guessthe.Storage
+import com.gamesbars.guessthe.ads.AdsUtils
 import com.gamesbars.guessthe.playSound
 import com.gamesbars.guessthe.screen.PlayActivity
 import com.gamesbars.guessthe.screen.PlayActivity.Companion.INTERSTITIAL_AD_FREQUENCY
@@ -49,11 +50,11 @@ class WinFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        AdsUtils.fixDensity(resources)
         return inflater.inflate(R.layout.fragment_win, container, false)
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         playSound(context!!, R.raw.win)
         winImage.setImageResource(Storage.getWinImageResId(image))
         winWord.text = word

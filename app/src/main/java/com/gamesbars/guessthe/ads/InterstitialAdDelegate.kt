@@ -4,9 +4,10 @@ import android.content.SharedPreferences
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
+import com.appodeal.ads.Appodeal
 import com.gamesbars.guessthe.AnalyticsHelper
 import com.gamesbars.guessthe.R
-import com.gamesbars.guessthe.buildAdRequest
+import com.gamesbars.guessthe.ads.AdsUtils.buildAdmobAdRequest
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
@@ -25,10 +26,26 @@ class InterstitialAdDelegate(
     private var mInterstitialAd: InterstitialAd? = null
 
     fun loadInterstitialAd() {
+        when (AdsUtils.AD_MEDIATION_TYPE) {
+            AdsUtils.AD_MEDIATION_TYPE_ADMOB -> loadInterstitialAdAdmob()
+            AdsUtils.AD_MEDIATION_TYPE_APPODEAL -> Unit // Appodeal doesn't need preload
+        }
+    }
+
+    fun showInterstitialAd() {
+        if (saves.getBoolean("ads", true)) {
+            when (AdsUtils.AD_MEDIATION_TYPE) {
+                AdsUtils.AD_MEDIATION_TYPE_ADMOB -> showInterstitialAdAdmob()
+                AdsUtils.AD_MEDIATION_TYPE_APPODEAL -> showInterstitialAdAppodeal()
+            }
+        }
+    }
+
+    private fun loadInterstitialAdAdmob() {
         InterstitialAd.load(
             activity,
             activity.getString(R.string.interstitial_id),
-            buildAdRequest(saves),
+            buildAdmobAdRequest(saves),
             object : InterstitialAdLoadCallback() {
 
                 override fun onAdLoaded(interstitialAd: InterstitialAd) {
@@ -47,10 +64,12 @@ class InterstitialAdDelegate(
         )
     }
 
-    fun showInterstitialAd() {
-        if (saves.getBoolean("ads", true)) {
-            mInterstitialAd?.show(activity) ?: AnalyticsHelper.logInterstitialAdError("InterstitialAd is null")
-        }
+    private fun showInterstitialAdAdmob() {
+        mInterstitialAd?.show(activity) ?: AnalyticsHelper.logInterstitialAdError("InterstitialAd is null")
+    }
+
+    private fun showInterstitialAdAppodeal() {
+        Appodeal.show(activity, Appodeal.INTERSTITIAL)
     }
 
     inner class InterstitialAdFullScreenContentCallback : FullScreenContentCallback() {

@@ -34,14 +34,4 @@ fun playSound(context: Context, resID: Int) {
     }
 }
 
-fun buildAdRequest(saves: SharedPreferences): AdRequest {
-    val adBuilder = AdRequest.Builder()
-    if (saves.getBoolean("npa", true)) {
-        val extras = Bundle()
-        extras.putString("npa", "1")
-        adBuilder.addNetworkExtrasBundle(AdMobAdapter::class.java, extras)
-    }
-    return adBuilder.build()
-}
-
 fun String.sliceUntilIndex(index: Int): String = this.run { slice(0..minOf(index, length - 1)) }
