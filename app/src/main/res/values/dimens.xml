@@ -32,6 +32,7 @@
 
     <dimen name="levelmenu_progress_bar_height">36dp</dimen>
     <dimen name="levelmenu_progress_bar_text_size">12sp</dimen>
+    <dimen name="levelmenu_progress_bar_text_margin">8dp</dimen>
 
     <!-- fragment_level -->
     <dimen name="buttons_height">48dp</dimen>

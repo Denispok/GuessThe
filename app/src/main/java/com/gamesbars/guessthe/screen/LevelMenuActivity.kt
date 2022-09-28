@@ -10,7 +10,9 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
+import androidx.core.view.updateLayoutParams
 import com.gamesbars.guessthe.R
 import com.gamesbars.guessthe.Storage
 import com.gamesbars.guessthe.ads.AdsUtils
@@ -111,6 +113,9 @@ class LevelMenuActivity : AppCompatActivity() {
                     if (completedLevels == levelCount) getString(R.string.completed)
                     else getString(R.string.percent, completedLevels + 1, levelCount)
                 progressBarText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
+                currentButton.levelmenu_button_progress_bar_text.updateLayoutParams<ConstraintLayout.LayoutParams> {
+                    topMargin = 0
+                }
                 currentButton.completeLevelsTv.isVisible = false
                 currentButton.setOnClickListener {
                     if (isClickable) {
@@ -125,8 +130,13 @@ class LevelMenuActivity : AppCompatActivity() {
                 progressBarText.text = getString(R.string.buy_levels, packPrices[id])
                 progressBarText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.coin_icon_16, 0)
                 val levelsToUnlock = Storage.getLevelsToUnlock(id)
+                currentButton.levelmenu_button_progress_bar_text.updateLayoutParams<ConstraintLayout.LayoutParams> {
+                    topMargin = resources.getDimension(R.dimen.levelmenu_progress_bar_text_margin).toInt()
+                }
                 currentButton.completeLevelsTv.isVisible = true
-                currentButton.completeLevelsTv.text = getString(R.string.complete_levels_to_unlock, levelsToUnlock)
+                currentButton.completeLevelsTv.text = resources.getQuantityString(
+                    R.plurals.complete_levels_to_unlock, levelsToUnlock, levelsToUnlock
+                )
                 currentButton.setOnClickListener {
                     if (isClickable) {
                         isClickable = false

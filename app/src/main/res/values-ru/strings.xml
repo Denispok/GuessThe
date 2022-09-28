@@ -7,7 +7,13 @@
     <string name="share_text">"Играй вместе со мной! "</string>
     <string name="share_chooser_title">Отправить с помощью&#8230;</string>
 
-    <string name="buy_levels">Открыть за %d</string>
+    <string name="buy_levels">Откройте за %d</string>
+    <plurals name="complete_levels_to_unlock">
+        <item quantity="one">или пройдите еще %d уровень</item>
+        <item quantity="few">или пройдите еще %d уровня</item>
+        <item quantity="many">или пройдите еще %d уровней</item>
+        <item quantity="other">или пройдите еще %d уровней</item>
+    </plurals>
     <string name="cancel">Отмена</string>
     <string name="coins_button">МОНЕТ</string>
     <string name="completed">Пройдено!</string>
