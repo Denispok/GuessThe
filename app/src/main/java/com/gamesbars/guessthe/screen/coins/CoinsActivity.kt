@@ -10,6 +10,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.billingclient.api.*
 import com.gamesbars.guessthe.R
+import com.gamesbars.guessthe.ads.AdsUtils
 import com.gamesbars.guessthe.ads.BannerAdDelegate
 import com.gamesbars.guessthe.ads.RewardedAdDelegate
 import com.gamesbars.guessthe.playSound
@@ -45,6 +46,7 @@ class CoinsActivity : AppCompatActivity(), CoroutineScope {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AdsUtils.fixDensity(resources)
         setContentView(R.layout.activity_coins)
 
         saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
@@ -59,15 +61,17 @@ class CoinsActivity : AppCompatActivity(), CoroutineScope {
             .build()
         connectToBilling()
 
-        if (saves.getBoolean("ads", true)) {
-            adViewContainer.visibility = View.VISIBLE
-            bannerAdDelegate.loadBanner(adViewContainer)
-        }
+        if (saves.getBoolean("ads", true)) bannerAdDelegate.loadBanner(this, adViewContainer)
 
         rewardedAdDelegate.loadRewardedAd()
 
         setupUI()
         updateCoins()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateBannerAd()
     }
 
     override fun onDestroy() {
@@ -104,6 +108,15 @@ class CoinsActivity : AppCompatActivity(), CoroutineScope {
             .alpha(if (isShow) 1f else 0f)
             .withEndAction { if (!isShow) progressFl.isVisible = false }
             .start()
+    }
+
+    private fun updateBannerAd() {
+        if (saves.getBoolean("ads", true)) {
+            adViewContainer.visibility = View.VISIBLE
+            bannerAdDelegate.updateBanner(this, adViewContainer)
+        } else {
+            adViewContainer.visibility = View.GONE
+        }
     }
 
     private fun onRewardEarned() {

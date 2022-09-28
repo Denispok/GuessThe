@@ -20,6 +20,7 @@ import com.gamesbars.guessthe.Storage.getLevelCount
 import com.gamesbars.guessthe.Storage.getStringArrayResIdByName
 import com.gamesbars.guessthe.Storage.isLevelHaveInfo
 import com.gamesbars.guessthe.Storage.saves
+import com.gamesbars.guessthe.ads.AdsUtils
 import com.gamesbars.guessthe.level.Letter
 import com.gamesbars.guessthe.level.Letters
 import com.gamesbars.guessthe.level.WordLetters
@@ -54,6 +55,7 @@ class LevelFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AdsUtils.fixDensity(resources)
 
         sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
 
@@ -70,6 +72,7 @@ class LevelFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        AdsUtils.fixDensity(resources)
         val view = inflater.inflate(R.layout.fragment_level, container, false)
 
         view.findViewById<ImageView>(R.id.level_image).setImageResource(getDrawableResIdByName(image))

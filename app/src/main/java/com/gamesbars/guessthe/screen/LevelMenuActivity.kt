@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.gamesbars.guessthe.R
 import com.gamesbars.guessthe.Storage
+import com.gamesbars.guessthe.ads.AdsUtils
 import com.gamesbars.guessthe.ads.BannerAdDelegate
 import com.gamesbars.guessthe.fragment.ConfirmDialogFragment
 import com.gamesbars.guessthe.playSound
@@ -32,6 +33,7 @@ class LevelMenuActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AdsUtils.fixDensity(resources)
         setContentView(R.layout.activity_levelmenu)
 
         saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
@@ -54,16 +56,14 @@ class LevelMenuActivity : AppCompatActivity() {
             }
         }
 
-        if (saves.getBoolean("ads", true)) {
-            adViewContainer.visibility = View.VISIBLE
-            bannerAdDelegate.loadBanner(adViewContainer)
-        }
+        if (saves.getBoolean("ads", true)) bannerAdDelegate.loadBanner(this, adViewContainer)
     }
 
     override fun onResume() {
         super.onResume()
         updateCoins()
         updateProgressBars()
+        updateBannerAd()
         isClickable = true
     }
 
@@ -80,6 +80,15 @@ class LevelMenuActivity : AppCompatActivity() {
             val button = layoutInflater.inflate(R.layout.button_levelmenu, packsList, false)
             button.findViewById<TextView>(R.id.levelmenu_button_pack_name).text = packsNames[id]
             packsList.addView(button)
+        }
+    }
+
+    private fun updateBannerAd() {
+        if (saves.getBoolean("ads", true)) {
+            adViewContainer.visibility = View.VISIBLE
+            bannerAdDelegate.updateBanner(this, adViewContainer)
+        } else {
+            adViewContainer.visibility = View.GONE
         }
     }
 

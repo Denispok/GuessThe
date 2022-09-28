@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.gamesbars.guessthe.R
+import com.gamesbars.guessthe.ads.AdsUtils
 import kotlinx.android.synthetic.main.item_product.view.*
 
 class ProductAdapter : ListAdapter<Product, ProductAdapter.ProductViewHolder>(ProductItemCallback()) {
@@ -15,6 +16,7 @@ class ProductAdapter : ListAdapter<Product, ProductAdapter.ProductViewHolder>(Pr
     var onItemClickListener: ((Product) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
+        AdsUtils.fixDensity(parent.resources)
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_product, parent, false)
         view.setOnClickListener {
             (view.tag as? Product)?.also { product ->
