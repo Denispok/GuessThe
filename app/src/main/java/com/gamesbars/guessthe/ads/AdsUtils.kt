@@ -2,6 +2,7 @@ package com.gamesbars.guessthe.ads
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.content.res.Resources
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.appodeal.ads.Appodeal
@@ -109,6 +110,12 @@ object AdsUtils {
             override fun onRewardedVideoShown() {
             }
         })
+    }
+
+    /** Appodeal banners ruin scaledDensity value for no reason and this caused
+     *  the text sizes to break (custom system font size resets to default) */
+    fun fixDensity(resources: Resources) {
+        resources.displayMetrics.scaledDensity = resources.displayMetrics.density * resources.configuration.fontScale
     }
 
     fun buildAdmobAdRequest(saves: SharedPreferences): AdRequest {

@@ -13,6 +13,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.gamesbars.guessthe.R
+import com.gamesbars.guessthe.ads.AdsUtils
 import com.gamesbars.guessthe.ads.BannerAdDelegate
 import com.gamesbars.guessthe.ads.consent.ConsentInfoManager
 import com.gamesbars.guessthe.playSound
@@ -30,6 +31,7 @@ class MenuActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AdsUtils.fixDensity(resources)
         setContentView(R.layout.activity_menu)
 
         saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
@@ -43,7 +45,7 @@ class MenuActivity : AppCompatActivity() {
         adsSettingsView.setOnClickListener { ConsentInfoManager.showConsentForm(this) }
 
         ConsentInfoManager.isUserInConsentZoneAsync(this) { isUserInConsentZone ->
-            adsSettingsView.isVisible = isUserInConsentZone
+            runOnUiThread { adsSettingsView.isVisible = isUserInConsentZone }
         }
 
         val sound = saves.getBoolean("sound", true)
