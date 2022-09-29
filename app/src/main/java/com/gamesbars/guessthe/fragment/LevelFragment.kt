@@ -12,11 +12,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import com.gamesbars.guessthe.AnalyticsHelper
 import com.gamesbars.guessthe.R
+import com.gamesbars.guessthe.Storage
 import com.gamesbars.guessthe.Storage.getCurrentLevel
 import com.gamesbars.guessthe.Storage.getDrawableResIdByName
-import com.gamesbars.guessthe.Storage.getLevelCount
 import com.gamesbars.guessthe.Storage.getStringArrayResIdByName
 import com.gamesbars.guessthe.Storage.isLevelHaveInfo
 import com.gamesbars.guessthe.Storage.saves
@@ -179,22 +178,7 @@ class LevelFragment : Fragment() {
     }
 
     fun win() {
-        val currentLevel = getCurrentLevel(pack)
-        val levelCount = getLevelCount(pack)
-        val levelName = pack + currentLevel
-        var isLevelReward = false
-
-        val editor = saves.edit()
-        editor.putString(levelName, saves.getString(levelName, "")!!.replace("!", "").replace("*", ""))
-        if (currentLevel > saves.getInt(pack + "completed", 0)) {
-            editor.putInt(pack + "completed", currentLevel)
-            editor.putInt("coins", saves.getInt("coins", 0) + resources.getInteger(R.integer.level_reward))
-            isLevelReward = true
-            AnalyticsHelper.logLevelComplete(pack, currentLevel)
-        }
-        if (currentLevel + 1 > levelCount) editor.putInt(pack, 1)
-        else editor.putInt(pack, currentLevel + 1)
-        editor.apply()
+        val isLevelReward = Storage.completeLevel(pack)
 
         val fragment = WinFragment.newInstance(word, image, arguments!!.getString("pack")!!, isLevelReward)
         fragmentManager!!.beginTransaction()

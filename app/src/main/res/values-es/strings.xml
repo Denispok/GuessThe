@@ -7,7 +7,11 @@
     <string name="share_text">"¡Juega conmigo! "</string>
     <string name="share_chooser_title">Enviar a través de&#8230;</string>
 
-    <string name="buy_levels">Abrir por %d</string>
+    <string name="buy_levels">Desbloquee por %d</string>
+    <plurals name="complete_levels_to_unlock">
+        <item quantity="one">O complete %d nivel más</item>
+        <item quantity="other">O complete %d niveles más</item>
+    </plurals>
     <string name="cancel">Cancelar</string>
     <string name="coins_button">MONEDAS</string>
     <string name="completed">¡Completado!</string>

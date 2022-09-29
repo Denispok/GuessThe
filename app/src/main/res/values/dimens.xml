@@ -26,13 +26,13 @@
 
     <!-- activity_levelmenu -->
     <dimen name="levelmenu_button_width">260dp</dimen>
-    <dimen name="levelmenu_button_height">92dp</dimen>
     <dimen name="levelmenu_button_margin_bottom">10dp</dimen>
     <dimen name="levelmenu_button_padding">12dp</dimen>
     <dimen name="levelmenu_button_text_size">20sp</dimen>
 
     <dimen name="levelmenu_progress_bar_height">36dp</dimen>
     <dimen name="levelmenu_progress_bar_text_size">12sp</dimen>
+    <dimen name="levelmenu_progress_bar_text_margin">8dp</dimen>
 
     <!-- fragment_level -->
     <dimen name="buttons_height">48dp</dimen>

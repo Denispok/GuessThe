@@ -10,7 +10,11 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.isVisible
+import androidx.core.view.updateLayoutParams
 import com.gamesbars.guessthe.R
+import com.gamesbars.guessthe.Storage
 import com.gamesbars.guessthe.ads.AdsUtils
 import com.gamesbars.guessthe.ads.BannerAdDelegate
 import com.gamesbars.guessthe.fragment.ConfirmDialogFragment
@@ -18,6 +22,7 @@ import com.gamesbars.guessthe.playSound
 import com.gamesbars.guessthe.screen.coins.CoinsActivity
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.activity_levelmenu.*
+import kotlinx.android.synthetic.main.button_levelmenu.view.*
 
 class LevelMenuActivity : AppCompatActivity() {
 
@@ -98,8 +103,9 @@ class LevelMenuActivity : AppCompatActivity() {
         for (id in 0 until packsList.childCount) {
             val currentButton = packsList.getChildAt(id)
             val progressBarText = currentButton.findViewById<TextView>(R.id.levelmenu_button_progress_bar_text)
-            if (saves.getBoolean(packs[id] + "purchased", false)) {
-                val completedLevels = saves.getInt(packs[id] + "completed", 0)
+            val currentPack = packs[id]
+            if (Storage.isPackOpen(currentPack, id)) {
+                val completedLevels = Storage.getCompletedLevels(currentPack)
                 val levelCount = packsSizes[id]
                 val completedPercent = ((completedLevels + 1).toFloat() / levelCount * 100).toInt()
                 currentButton.findViewById<ProgressBar>(R.id.levelmenu_button_progress_bar).progress = completedPercent
@@ -107,23 +113,35 @@ class LevelMenuActivity : AppCompatActivity() {
                     if (completedLevels == levelCount) getString(R.string.completed)
                     else getString(R.string.percent, completedLevels + 1, levelCount)
                 progressBarText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
+                currentButton.levelmenu_button_progress_bar_text.updateLayoutParams<ConstraintLayout.LayoutParams> {
+                    topMargin = 0
+                }
+                currentButton.completeLevelsTv.isVisible = false
                 currentButton.setOnClickListener {
                     if (isClickable) {
                         isClickable = false
 
                         val intent = Intent(this, PlayActivity::class.java)
-                        intent.putExtra("pack", packs[id])
+                        intent.putExtra("pack", currentPack)
                         startActivity(intent)
                     }
                 }
             } else {
                 progressBarText.text = getString(R.string.buy_levels, packPrices[id])
                 progressBarText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.coin_icon_16, 0)
+                val levelsToUnlock = Storage.getLevelsToUnlock(id)
+                currentButton.levelmenu_button_progress_bar_text.updateLayoutParams<ConstraintLayout.LayoutParams> {
+                    topMargin = resources.getDimension(R.dimen.levelmenu_progress_bar_text_margin).toInt()
+                }
+                currentButton.completeLevelsTv.isVisible = true
+                currentButton.completeLevelsTv.text = resources.getQuantityString(
+                    R.plurals.complete_levels_to_unlock, levelsToUnlock, levelsToUnlock
+                )
                 currentButton.setOnClickListener {
                     if (isClickable) {
                         isClickable = false
                         playSound(this, R.raw.button)
-                        currentDialog = ConfirmDialogFragment.newInstance(id, packs[id])
+                        currentDialog = ConfirmDialogFragment.newInstance(id, currentPack)
                         currentDialog!!.show(supportFragmentManager, getString(R.string.confirm_dialog_fragment_tag))
                     }
                 }

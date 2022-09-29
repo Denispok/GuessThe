@@ -24,6 +24,10 @@
     <string name="percent">Level %d/%d</string>
     <string name="completed">Completed!</string>
     <string name="buy_levels">Unlock for %d</string>
+    <plurals name="complete_levels_to_unlock">
+        <item quantity="one">or complete %d more level</item>
+        <item quantity="other">or complete %d more levels</item>
+    </plurals>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="dont_enough_coins">Not enough coins</string>
