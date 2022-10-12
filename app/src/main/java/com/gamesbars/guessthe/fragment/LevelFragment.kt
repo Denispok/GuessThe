@@ -2,7 +2,6 @@ package com.gamesbars.guessthe.fragment
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.view.doOnNextLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.gamesbars.guessthe.R
@@ -98,11 +98,11 @@ class LevelFragment : Fragment() {
         view.findViewById<TextView>(R.id.level_coins_button).setOnClickListener { coins() }
 
         if (isFirstStart) {
-            Handler().postDelayed({
+            view.doOnNextLayout {
                 playSound(view.context, R.raw.start)
                 letters.showChosenLetters(wordLetters)
                 if (letters.removeTipUsed) letters.tipRemoveLetters(wordLetters)
-            }, 100L)
+            }
 
             isFirstStart = false
         }
