@@ -129,14 +129,23 @@ class LevelMenuActivity : AppCompatActivity() {
             } else {
                 progressBarText.text = getString(R.string.buy_levels, packPrices[id])
                 progressBarText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.coin_icon_16, 0)
-                val levelsToUnlock = Storage.getLevelsToUnlock(id)
-                currentButton.levelmenu_button_progress_bar_text.updateLayoutParams<ConstraintLayout.LayoutParams> {
-                    topMargin = resources.getDimension(R.dimen.levelmenu_progress_bar_text_margin).toInt()
+
+                val levelsRemainingToUnlock = Storage.getLevelsRemainingToUnlock(id)
+                if (levelsRemainingToUnlock != null) {
+                    currentButton.levelmenu_button_progress_bar_text.updateLayoutParams<ConstraintLayout.LayoutParams> {
+                        topMargin = resources.getDimension(R.dimen.levelmenu_progress_bar_text_margin).toInt()
+                    }
+                    currentButton.completeLevelsTv.isVisible = true
+                    currentButton.completeLevelsTv.text = resources.getQuantityString(
+                        R.plurals.complete_levels_to_unlock, levelsRemainingToUnlock, levelsRemainingToUnlock
+                    )
+                } else {
+                    currentButton.levelmenu_button_progress_bar_text.updateLayoutParams<ConstraintLayout.LayoutParams> {
+                        topMargin = 0
+                    }
+                    currentButton.completeLevelsTv.isVisible = false
                 }
-                currentButton.completeLevelsTv.isVisible = true
-                currentButton.completeLevelsTv.text = resources.getQuantityString(
-                    R.plurals.complete_levels_to_unlock, levelsToUnlock, levelsToUnlock
-                )
+
                 currentButton.setOnClickListener {
                     if (isClickable) {
                         isClickable = false

@@ -28,8 +28,10 @@ object Storage {
         return resources.getIntArray(R.array.packs_sizes)[packId]
     }
 
-    fun getLevelsToUnlock(packIndex: Int): Int {
-        return resources.getIntArray(R.array.packs_levels_to_unlock)[packIndex] - getCompletedLevelsCount()
+    fun getLevelsRemainingToUnlock(packIndex: Int): Int? {
+        val levelsToUnlock = resources.getIntArray(R.array.packs_levels_to_unlock)[packIndex]
+        if (levelsToUnlock == -1) return null
+        return levelsToUnlock - getCompletedLevelsCount()
     }
 
     fun getCompletedLevels(pack: String): Int {
@@ -59,7 +61,9 @@ object Storage {
     }
 
     fun isPackOpen(pack: String, packIndex: Int): Boolean {
-        return isPackPurchased(pack) || getCompletedLevelsCount() >= resources.getIntArray(R.array.packs_levels_to_unlock)[packIndex]
+        val levelsToUnlock = resources.getIntArray(R.array.packs_levels_to_unlock)[packIndex]
+        val isPackOpenedByLevels = levelsToUnlock != -1 && getCompletedLevelsCount() >= levelsToUnlock
+        return isPackPurchased(pack) || isPackOpenedByLevels
     }
 
     fun isPackPurchased(pack: String) = saves.getBoolean(pack + "purchased", false)

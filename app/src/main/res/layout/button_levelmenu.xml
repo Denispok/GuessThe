@@ -18,7 +18,7 @@
         android:textAlignment="center"
         android:textColor="@android:color/white"
         android:textSize="@dimen/levelmenu_button_text_size"
-        tools:text="Русские Авто" />
+        tools:text="Уровень 1" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -69,7 +69,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/levelmenu_button_progress_bar_text"
-            tools:text="@string/complete_levels_to_unlock" />
+            tools:text="or complete 10 more levels" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

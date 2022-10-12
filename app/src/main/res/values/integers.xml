@@ -18,7 +18,7 @@
     <integer-array name="packs_levels_to_unlock">
         <item>0</item>
         <item>5</item>
-        <item>10</item>
+        <item>-1</item>
     </integer-array>
 
     <integer name="tip_letter_cost">20</integer>
