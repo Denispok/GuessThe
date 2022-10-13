@@ -49,7 +49,7 @@ class TipsDialogFragment : DialogFragment() {
         val levelName = Storage.getLevelName(fragment.pack, level)
         var levelString = saves.getString(levelName, "")
 
-        val coins = saves.getInt("coins", 0)
+        val coins = Storage.getCoins()
         if (coins >= tipLetterCost) {
             tipLetter.setOnClickListener {
                 val letter = fragment.letters.tipShowLetter(fragment.wordLetters)
@@ -60,8 +60,8 @@ class TipsDialogFragment : DialogFragment() {
 
                 val editor = saves.edit()
                 editor.putString(levelName, levelString)
-                editor.putInt("coins", coins - tipLetterCost)
                 editor.apply()
+                Storage.addCoins(-tipLetterCost)
 
                 val params = Bundle()
                 params.putString(FirebaseAnalytics.Param.LEVEL, "${fragment.pack} $level")
@@ -78,8 +78,8 @@ class TipsDialogFragment : DialogFragment() {
 
                 val editor = saves.edit()
                 editor.putString(levelName, "$levelString!")
-                editor.putInt("coins", coins - tipRemoveCost)
                 editor.apply()
+                Storage.addCoins(-tipRemoveCost)
 
                 val params = Bundle()
                 params.putString(FirebaseAnalytics.Param.LEVEL, "${fragment.pack} $level")
@@ -92,9 +92,7 @@ class TipsDialogFragment : DialogFragment() {
         } else tipRemove.isEnabled = false
         if (coins >= tipSkipCost) {
             tipSkip.setOnClickListener {
-                val editor = saves.edit()
-                editor.putInt("coins", coins - tipSkipCost)
-                editor.apply()
+                Storage.addCoins(-tipSkipCost)
 
                 val params = Bundle()
                 params.putString(FirebaseAnalytics.Param.LEVEL, "${fragment.pack} $level")

@@ -70,7 +70,7 @@ class LevelMenuActivity : AppCompatActivity() {
     }
 
     fun updateCoins() {
-        val coins = saves.getInt("coins", 0).toString()
+        val coins = Storage.getCoins().toString()
         findViewById<TextView>(R.id.levelmenu_coins).text = coins
         firebaseAnalytics.setUserProperty("coins", coins)
     }

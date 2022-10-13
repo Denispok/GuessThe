@@ -172,7 +172,7 @@ class LevelFragment : Fragment() {
     }
 
     fun updateCoins() {
-        val coins = saves.getInt("coins", 0).toString()
+        val coins = Storage.getCoins().toString()
         activity!!.findViewById<TextView>(R.id.level_coins).text = coins
         firebaseAnalytics.setUserProperty("coins", coins)
     }

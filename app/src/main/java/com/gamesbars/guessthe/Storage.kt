@@ -47,6 +47,15 @@ object Storage {
         })
     }
 
+    fun getCoins() = saves.getInt("coins", 0)
+
+    fun addCoins(coinsToAdd: Int) {
+        saves.edit().apply {
+            putInt("coins", getCoins() + coinsToAdd)
+            apply()
+        }
+    }
+
     fun getAuthorAndLicense(pack: String, level: Int): Pair<String, String> {
         val authorResId = getStringArrayResIdByName(pack + "_author")
         val author = resources.getStringArray(authorResId)[level - 1]
@@ -81,7 +90,7 @@ object Storage {
         editor.putString(levelName, saves.getString(levelName, "")!!.replace("!", "").replace("*", ""))
         if (currentLevel > saves.getInt(pack + "completed", 0)) {
             editor.putInt(pack + "completed", currentLevel)
-            editor.putInt("coins", saves.getInt("coins", 0) + resources.getInteger(R.integer.level_reward))
+            addCoins(resources.getInteger(R.integer.level_reward))
             isCompletedFirstTime = true
             AnalyticsHelper.logLevelComplete(pack, currentLevel)
         }

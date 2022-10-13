@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.gamesbars.guessthe.R
+import com.gamesbars.guessthe.Storage
 import com.gamesbars.guessthe.ads.AdsUtils
 import com.gamesbars.guessthe.ads.BannerAdDelegate
 import com.gamesbars.guessthe.ads.InterstitialAdDelegate
@@ -95,10 +96,7 @@ class PlayActivity : AppCompatActivity() {
     }
 
     private fun onRewardEarned() {
-        saves.edit().apply {
-            putInt("coins", saves.getInt("coins", 0) + 2 * resources.getInteger(R.integer.level_reward))
-            apply()
-        }
+        Storage.addCoins(2 * resources.getInteger(R.integer.level_reward))
         Toast.makeText(this, R.string.video_reward, Toast.LENGTH_LONG).show()
 
         findViewById<LinearLayout>(R.id.winRewardedVideo)?.isClickable = false

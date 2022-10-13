@@ -9,15 +9,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.billingclient.api.*
-import com.gamesbars.guessthe.R
+import com.gamesbars.guessthe.*
 import com.gamesbars.guessthe.ads.AdsUtils
 import com.gamesbars.guessthe.ads.BannerAdDelegate
 import com.gamesbars.guessthe.ads.RewardedAdDelegate
-import com.gamesbars.guessthe.playSound
 import com.gamesbars.guessthe.screen.coins.data.ProductDTO
 import com.gamesbars.guessthe.screen.coins.data.ProductDTOProvider
-import com.gamesbars.guessthe.sliceUntilIndex
-import com.gamesbars.guessthe.toast
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.activity_coins.*
 import kotlinx.coroutines.*
@@ -120,10 +117,7 @@ class CoinsActivity : AppCompatActivity(), CoroutineScope {
     }
 
     private fun onRewardEarned() {
-        saves.edit().apply {
-            putInt("coins", saves.getInt("coins", 0) + 2 * resources.getInteger(R.integer.level_reward))
-            apply()
-        }
+        Storage.addCoins(2 * resources.getInteger(R.integer.level_reward))
         toast(getString(R.string.video_reward))
         updateCoins()
     }
@@ -154,15 +148,16 @@ class CoinsActivity : AppCompatActivity(), CoroutineScope {
     }
 
     private fun addAndUpdateCoins(coins: Int, removeAds: Boolean = false) {
-        val editor = saves.edit()
-        if (removeAds) editor.putBoolean("ads", false)
-        editor.putInt("coins", saves.getInt("coins", 0) + coins)
-        editor.apply()
+        if (removeAds) saves.edit().apply {
+            putBoolean("ads", false)
+            apply()
+        }
+        Storage.addCoins(coins)
         updateCoins()
     }
 
     private fun updateCoins() {
-        val coins = saves.getInt("coins", 0).toString()
+        val coins = Storage.getCoins().toString()
         runOnUiThread {
             coinsTv.text = coins
         }

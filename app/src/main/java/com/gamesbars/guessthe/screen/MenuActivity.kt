@@ -13,6 +13,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.gamesbars.guessthe.R
+import com.gamesbars.guessthe.Storage
 import com.gamesbars.guessthe.ads.AdsUtils
 import com.gamesbars.guessthe.ads.BannerAdDelegate
 import com.gamesbars.guessthe.ads.consent.ConsentInfoManager
@@ -108,8 +109,8 @@ class MenuActivity : AppCompatActivity() {
             if (!saves.getBoolean("rated", false)) {
                 val editor = saves.edit()
                 editor.putBoolean("rated", true)
-                editor.putInt("coins", saves.getInt("coins", 0) + resources.getInteger(R.integer.rate_reward))
                 editor.apply()
+                Storage.addCoins(resources.getInteger(R.integer.rate_reward))
             }
         }
     }
