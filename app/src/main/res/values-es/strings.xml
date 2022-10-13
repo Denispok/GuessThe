@@ -42,7 +42,7 @@
     <string name="tip_letter">Mostrar una letra</string>
     <string name="tip_remove">Quitar los que no se usan</string>
     <string name="tip_skip">Saltar el nivel</string>
-    <string name="ads_settings">Configuración de anuncios personalizados</string>
+    <string name="ads_settings"><u>Configuración de anuncios personalizados</u></string>
 
     <!-- Level info -->
     <string name="photo_info">Sobre la foto</string>

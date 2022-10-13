@@ -44,7 +44,7 @@
     <string name="tip_letter">Показать букву</string>
     <string name="tip_remove">Убрать лишнее</string>
     <string name="tip_skip">Пропустить уровень</string>
-    <string name="ads_settings">Настройки персонализированной рекламы</string>
+    <string name="ads_settings"><u>Настройки персонализированной рекламы</u></string>
 
     <!-- Level info -->
     <string name="photo_info">О фото</string>

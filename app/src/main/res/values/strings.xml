@@ -43,7 +43,7 @@
     <string name="tip_letter">Open letter</string>
     <string name="tip_remove">Remove unused</string>
     <string name="tip_skip">Skip level</string>
-    <string name="ads_settings">Personalized ads settings</string>
+    <string name="ads_settings"><u>Personalized ads settings</u></string>
 
     <!-- Level info -->
     <string name="photo_info">Photo info</string>
