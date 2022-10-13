@@ -11,6 +11,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withC
 import com.gamesbars.guessthe.R
 import com.gamesbars.guessthe.Storage.getDrawableResIdByName
 import com.gamesbars.guessthe.Storage.getLevelCount
+import com.gamesbars.guessthe.Storage.getLevelName
 import com.gamesbars.guessthe.customview.LevelView
 
 class LevelSelectionAdapter(
@@ -34,7 +35,7 @@ class LevelSelectionAdapter(
 
         if (number <= completedLevelCount + 1) {
             Glide.with(viewHolder.itemView)
-                .load(getDrawableResIdByName(pack + number))
+                .load(getDrawableResIdByName(getLevelName(pack, number)))
                 .transition(withCrossFade())
                 .into(viewHolder.image)
         } else {

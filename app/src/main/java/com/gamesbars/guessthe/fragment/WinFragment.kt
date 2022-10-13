@@ -1,7 +1,5 @@
 package com.gamesbars.guessthe.fragment
 
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.transition.TransitionInflater
 import android.view.LayoutInflater
@@ -18,7 +16,6 @@ import kotlinx.android.synthetic.main.fragment_win.*
 
 class WinFragment : Fragment() {
 
-    private lateinit var saves: SharedPreferences
     private lateinit var image: String
     private lateinit var word: String
     private lateinit var pack: String
@@ -42,7 +39,6 @@ class WinFragment : Fragment() {
 
         sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
 
-        saves = context!!.getSharedPreferences("saves", Context.MODE_PRIVATE)
         word = arguments!!.getString("word")!!
         image = arguments!!.getString("image")!!
         pack = arguments!!.getString("pack")!!
@@ -76,7 +72,7 @@ class WinFragment : Fragment() {
     }
 
     private fun nextLevel() {
-        if (saves.getInt(pack, 1) == 1) {
+        if (Storage.getCurrentLevel(pack) == 1) {
             activity!!.finish()
         } else {
             val fragment = LevelFragment.newInstance(pack)
@@ -85,7 +81,8 @@ class WinFragment : Fragment() {
                 .addSharedElement(winImage, "ImageTransition")
                 .commit()
         }
-        if (saves.getInt(pack, 1) % INTERSTITIAL_AD_FREQUENCY == 1)
+        if (Storage.getCurrentLevel(pack) % INTERSTITIAL_AD_FREQUENCY == 1) {
             (activity!! as PlayActivity).showInterstitialAd()
+        }
     }
 }

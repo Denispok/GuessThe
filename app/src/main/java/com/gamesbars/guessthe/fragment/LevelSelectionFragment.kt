@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gamesbars.guessthe.R
+import com.gamesbars.guessthe.Storage
 import com.gamesbars.guessthe.adapter.LevelSelectionAdapter
 import com.gamesbars.guessthe.ads.AdsUtils
 import com.gamesbars.guessthe.playSound
@@ -52,7 +53,7 @@ class LevelSelectionFragment : Fragment() {
 
         recycler = view.findViewById(R.id.levelselection_recycler)
         recycler.layoutManager = GridLayoutManager(view.context, 4)
-        val completedLevelCount = saves.getInt(pack + "completed", 0)
+        val completedLevelCount = Storage.getCompletedLevels(pack)
         val adapter = LevelSelectionAdapter(pack, completedLevelCount)
         adapter.onItemClickListener = { level ->
             if (level <= completedLevelCount + 1) {

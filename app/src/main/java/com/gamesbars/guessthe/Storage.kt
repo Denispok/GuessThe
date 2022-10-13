@@ -23,6 +23,8 @@ object Storage {
 
     fun getCurrentLevel(pack: String) = saves.getInt(pack, 1)
 
+    fun getLevelName(pack: String, level: Int) = pack + "_" + level
+
     fun getLevelCount(pack: String): Int {
         val packId = resources.getStringArray(R.array.packs).indexOf(pack)
         return resources.getIntArray(R.array.packs_sizes)[packId]

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.gamesbars.guessthe.R
+import com.gamesbars.guessthe.Storage
 import java.util.*
 
 class Letters(private val activity: Activity, word: String, pack: String) {
@@ -21,7 +22,7 @@ class Letters(private val activity: Activity, word: String, pack: String) {
 
     init {
         val saves = activity.getSharedPreferences("saves", Context.MODE_PRIVATE)
-        val level = pack + saves.getInt(pack, 1)
+        val level = Storage.getLevelName(pack, Storage.getCurrentLevel(pack))
         val newLetters = arrayOfNulls<Letter>(letterCount)
         val letterString = saves.getString(level, null)
 

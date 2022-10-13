@@ -16,9 +16,9 @@ import com.gamesbars.guessthe.R
 import com.gamesbars.guessthe.Storage
 import com.gamesbars.guessthe.Storage.getCurrentLevel
 import com.gamesbars.guessthe.Storage.getDrawableResIdByName
+import com.gamesbars.guessthe.Storage.getLevelName
 import com.gamesbars.guessthe.Storage.getStringArrayResIdByName
 import com.gamesbars.guessthe.Storage.isLevelHaveInfo
-import com.gamesbars.guessthe.Storage.saves
 import com.gamesbars.guessthe.ads.AdsUtils
 import com.gamesbars.guessthe.level.Letter
 import com.gamesbars.guessthe.level.Letters
@@ -40,6 +40,7 @@ class LevelFragment : Fragment() {
     private val tipsDialog = TipsDialogFragment()
     private val infoDialog by lazy { InfoDialogFragment.newInstance(pack) }
 
+    private val saves = Storage.saves
     private lateinit var firebaseAnalytics: FirebaseAnalytics
 
     companion object {
@@ -78,7 +79,7 @@ class LevelFragment : Fragment() {
         wordLetters.addLettersToLayout(view.findViewById(R.id.level_word))
         letters.addLettersToLayout(view.findViewById(R.id.level_letters_1), view.findViewById(R.id.level_letters_2))
 
-        view.findViewById<Button>(R.id.level_level).text = getString(R.string.level, saves.getInt(pack, 1))
+        view.findViewById<Button>(R.id.level_level).text = getString(R.string.level, getCurrentLevel(pack))
         view.findViewById<ImageView>(R.id.level_back).setOnClickListener {
             if (isClickable) {
                 playSound(context!!, R.raw.button)
@@ -117,7 +118,6 @@ class LevelFragment : Fragment() {
     }
 
     private fun loadLevel(pack: String) {
-
         if (!saves.contains(pack)) {
             val editor = saves.edit()
             editor.putInt(pack, 1)
@@ -126,7 +126,7 @@ class LevelFragment : Fragment() {
 
         val currentLevel = getCurrentLevel(pack)
 
-        image = pack + currentLevel
+        image = getLevelName(pack, currentLevel)
         word = resources.getStringArray(getStringArrayResIdByName(pack))[currentLevel - 1]
     }
 

@@ -77,7 +77,7 @@ object AnalyticsHelper {
 
     fun logLevelComplete(pack: String, level: Int) {
         val params = Bundle()
-        params.putString("completed_level", (pack + level).sliceUntilIndex(99))
+        params.putString("completed_level", (Storage.getLevelName(pack, level)).sliceUntilIndex(99))
         if (BuildConfig.DEBUG) {
             Log.d(TAG_DEBUG, "FA event $EVENT_LEVEL_COMPLETE: $params")
             Log.d(TAG_DEBUG, "FA set user property $pack to $level")

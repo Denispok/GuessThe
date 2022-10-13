@@ -9,6 +9,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import com.gamesbars.guessthe.R
+import com.gamesbars.guessthe.Storage
 import com.gamesbars.guessthe.ads.AdsUtils
 import com.gamesbars.guessthe.playSound
 import com.gamesbars.guessthe.screen.PlayActivity
@@ -44,8 +45,8 @@ class TipsDialogFragment : DialogFragment() {
         view.findViewById<TextView>(R.id.tips_skip_cost).text = tipSkipCost.toString()
 
         val saves = context!!.getSharedPreferences("saves", Context.MODE_PRIVATE)
-        val level = saves.getInt(fragment.pack, 0)
-        val levelName = fragment.pack + level
+        val level = Storage.getCurrentLevel(fragment.pack)
+        val levelName = Storage.getLevelName(fragment.pack, level)
         var levelString = saves.getString(levelName, "")
 
         val coins = saves.getInt("coins", 0)
