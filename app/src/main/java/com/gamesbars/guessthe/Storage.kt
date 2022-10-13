@@ -88,7 +88,7 @@ object Storage {
 
         val editor = saves.edit()
         editor.putString(levelName, saves.getString(levelName, "")!!.replace("!", "").replace("*", ""))
-        if (currentLevel > saves.getInt(pack + "completed", 0)) {
+        if (currentLevel > getCompletedLevels(pack)) {
             editor.putInt(pack + "completed", currentLevel)
             addCoins(resources.getInteger(R.integer.level_reward))
             isCompletedFirstTime = true
