@@ -23,9 +23,9 @@ class Letters(private val activity: Activity, word: String, pack: String) {
         val saves = activity.getSharedPreferences("saves", Context.MODE_PRIVATE)
         val level = pack + saves.getInt(pack, 1)
         val newLetters = arrayOfNulls<Letter>(letterCount)
+        val letterString = saves.getString(level, null)
 
-        if (saves.contains(level)) {
-            val letterString = saves.getString(level, "")!!
+        if (letterString != null && getLettersCount(letterString) == letterCount) {
             var letterId = 0
             var isLetterNow = false
 
@@ -46,9 +46,9 @@ class Letters(private val activity: Activity, word: String, pack: String) {
                     } else null
 
                     val isGuessed = if (id + 1 < letterString.length && letterString[id + 1] == '*') true
-                        else if (id + 2 < letterString.length && letterString[id + 2] == '*') true
-                        else if (id + 3 < letterString.length && letterString[id + 3] == '*') true
-                        else false
+                    else if (id + 2 < letterString.length && letterString[id + 2] == '*') true
+                    else if (id + 3 < letterString.length && letterString[id + 3] == '*') true
+                    else false
 
                     newLetters[letterId] = Letter(activity, letterId, char.toLowerCase(), wordLetterId, isGuessed)
                     letterId++
@@ -157,8 +157,12 @@ class Letters(private val activity: Activity, word: String, pack: String) {
             letter.setOnClickListener(onClickListener)
         }
     }
+
+    private fun getLettersCount(letterString: String): Int {
+        return letterString.split("_").size - 1
+    }
+
+    private fun ClosedRange<Int>.random() = Random().nextInt((endInclusive + 1) - start) + start
+
+    private fun String.remove(char: Char) = this.replace(char.toString(), "")
 }
-
-fun ClosedRange<Int>.random() = Random().nextInt((endInclusive + 1) - start) + start
-
-fun String.remove(char: Char) = this.replace(char.toString(), "")
