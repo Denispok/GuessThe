@@ -7,6 +7,21 @@
     <string name="share_text">"Играй вместе со мной! "</string>
     <string name="share_chooser_title">Отправить с помощью&#8230;</string>
 
+    <string name="tips">Подсказки</string>
+    <string name="get_coins">Получить монеты</string>
+    <string name="success">Правильно!</string>
+    <string name="coins_button">МОНЕТ</string>
+    <string name="video">за просмотр видео</string>
+    <string name="next">Продолжить</string>
+    <string name="purchases_restored">Ваша покупка была восстановлена!</string>
+    <string name="purchases_successful">Ваша покупка была подтверждена!</string>
+    <string name="purchases_error">Ошибка инициализации внутриигровых покупок!</string>
+    <string name="purchases_error_retry">Ошибка инициализации внутриигровых покупок! Повторная попытка…</string>
+    <string name="purchases_error_billing_flow">Ошибка старта платежа!</string>
+    <string name="remove_ads">+ УБРАТЬ РЕКЛАМУ</string>
+    <string name="level">уровень %d</string>
+    <string name="percent">Уровень %d/%d</string>
+    <string name="completed">Пройдено!</string>
     <string name="buy_levels">Откройте за %d</string>
     <plurals name="complete_levels_to_unlock">
         <item quantity="one">или пройдите еще %d уровень</item>
@@ -14,36 +29,21 @@
         <item quantity="many">или пройдите еще %d уровней</item>
         <item quantity="other">или пройдите еще %d уровней</item>
     </plurals>
-    <string name="cancel">Отмена</string>
-    <string name="coins_button">МОНЕТ</string>
-    <string name="completed">Пройдено!</string>
-    <string name="confirm_dialog_message">Открыть новые уровни за %d монет?</string>
-    <string name="dont_enough_coins">Недостаточно монет</string>
-    <string name="get_coins">Получить монеты</string>
-    <string name="level">уровень %d</string>
-    <string name="levels">Уровни</string>
-    <string name="next">Продолжить</string>
     <string name="ok">ОК</string>
-    <string name="percent">Уровень %d/%d</string>
-    <string name="purchases_restored">Ваша покупка была восстановлена!</string>
-    <string name="purchases_successful">Ваша покупка была подтверждена!</string>
-    <string name="purchases_error">Ошибка инициализации внутриигровых покупок!</string>
-    <string name="purchases_error_retry">Ошибка инициализации внутриигровых покупок! Повторная попытка…</string>
-    <string name="purchases_error_billing_flow">Ошибка старта платежа!</string>
-    <string name="remove_ads">+ УБРАТЬ РЕКЛАМУ</string>
-    <string name="success">Правильно!</string>
-    <string name="tips">Подсказки</string>
-    <string name="video">за просмотр видео</string>
+    <string name="cancel">Отмена</string>
+    <string name="dont_enough_coins">Недостаточно монет</string>
+    <string name="confirm_dialog_message">Открыть новые уровни за %d монет?</string>
     <string name="video_error">Ошибка загрузки видео. Проверьте ваше подключение к сети.</string>
     <string name="video_is_loading">Видео загружается&#8230;</string>
     <string name="video_reward">Награда получена!</string>
-    <string name="coins">Монеты</string>
+    <string name="levels">Уровни</string>
     <string name="play">Играть</string>
-    <string name="rate">Оценить</string>
     <string name="shop">Магазин</string>
+    <string name="rate">Оценить</string>
+    <string name="coins">Монеты</string>
     <string name="tip_letter">Показать букву</string>
-    <string name="tip_skip">Пропустить уровень</string>
     <string name="tip_remove">Убрать лишнее</string>
+    <string name="tip_skip">Пропустить уровень</string>
     <string name="ads_settings">Настройки персонализированной рекламы</string>
 
     <!-- Level info -->

@@ -7,41 +7,41 @@
     <string name="share_text">"¡Juega conmigo! "</string>
     <string name="share_chooser_title">Enviar a través de&#8230;</string>
 
-    <string name="buy_levels">Desbloquee por %d</string>
-    <plurals name="complete_levels_to_unlock">
-        <item quantity="one">O complete %d nivel más</item>
-        <item quantity="other">O complete %d niveles más</item>
-    </plurals>
-    <string name="cancel">Cancelar</string>
-    <string name="coins_button">MONEDAS</string>
-    <string name="completed">¡Completado!</string>
-    <string name="confirm_dialog_message">¿Abrir nuevos niveles por %d monedas?</string>
-    <string name="dont_enough_coins">No hay suficientes monedas</string>
+    <string name="tips">Pistas</string>
     <string name="get_coins">Obtener monedas</string>
-    <string name="level">nivel %d</string>
-    <string name="levels">Niveles</string>
+    <string name="success">¡Correcto!</string>
+    <string name="coins_button">MONEDAS</string>
+    <string name="video">por ver videos</string>
     <string name="next">Continuar</string>
-    <string name="ok">ОК</string>
-    <string name="percent">Nivel %d/%d</string>
     <string name="purchases_restored">¡Tu compra ha sido restaurada!</string>
     <string name="purchases_successful">¡Tu compra ha sido confirmada!</string>
     <string name="purchases_error">¡Error al inicializar las compras en el juego!</string>
     <string name="purchases_error_retry">¡Error al inicializar las compras en el juego! Reintentando…</string>
     <string name="purchases_error_billing_flow">¡Error al iniciar el pago!</string>
     <string name="remove_ads">+ QUITAR ANUNCIOS</string>
-    <string name="success">¡Correcto!</string>
-    <string name="tips">Pistas</string>
-    <string name="video">por ver videos</string>
+    <string name="level">nivel %d</string>
+    <string name="percent">Nivel %d/%d</string>
+    <string name="completed">¡Completado!</string>
+    <string name="buy_levels">Desbloquee por %d</string>
+    <plurals name="complete_levels_to_unlock">
+        <item quantity="one">O complete %d nivel más</item>
+        <item quantity="other">O complete %d niveles más</item>
+    </plurals>
+    <string name="ok">ОК</string>
+    <string name="cancel">Cancelar</string>
+    <string name="dont_enough_coins">No hay suficientes monedas</string>
+    <string name="confirm_dialog_message">¿Abrir nuevos niveles por %d monedas?</string>
     <string name="video_error">Error al cargar el vídeo. Comprueba tu conexión a Internet.</string>
     <string name="video_is_loading">El video se está cargando&#8230;</string>
     <string name="video_reward">¡Se ha recibido la recompensa!</string>
-    <string name="coins">Monedas</string>
+    <string name="levels">Niveles</string>
     <string name="play">Jugar</string>
-    <string name="rate">Calificar</string>
     <string name="shop">La tienda</string>
+    <string name="rate">Calificar</string>
+    <string name="coins">Monedas</string>
     <string name="tip_letter">Mostrar una letra</string>
-    <string name="tip_skip">Saltar el nivel</string>
     <string name="tip_remove">Quitar los que no se usan</string>
+    <string name="tip_skip">Saltar el nivel</string>
     <string name="ads_settings">Configuración de anuncios personalizados</string>
 
     <!-- Level info -->
