@@ -17,6 +17,10 @@ object Storage {
         else winDrawableId
     }
 
+    fun getStringResIdByName(name: String): Int {
+        return resources.getIdentifier(name, "string", App.appContext.packageName)
+    }
+
     fun getStringArrayResIdByName(name: String): Int {
         return resources.getIdentifier(name, "array", App.appContext.packageName)
     }
@@ -69,6 +73,23 @@ object Storage {
     fun isLevelHaveInfo(pack: String, level: Int): Boolean {
         return if (getStringArrayResIdByName(pack + "_author") == 0) false
         else getAuthorAndLicense(pack, level).first != "-"
+    }
+
+    fun getLevelCaption(pack: String, level: Int): String? {
+        val levelCaptionsResId = getStringArrayResIdByName(pack + "_captions")
+        if (levelCaptionsResId != 0) {
+            val levelCaptions = resources.getStringArray(levelCaptionsResId)
+            val levelCaption = levelCaptions[level - 1]
+            if (levelCaption == "-") return null
+            if (levelCaption != "*") return levelCaption
+        }
+
+        val packCaptionResId = getStringResIdByName(pack + "_caption")
+        if (packCaptionResId != 0) {
+            return resources.getString(packCaptionResId)
+        }
+
+        return null
     }
 
     fun isPackOpen(pack: String, packIndex: Int): Boolean {

@@ -81,6 +81,21 @@
         <item>six</item>
     </string-array>
 
+    <string name="russian_cars_caption">What is on the photo?</string>
+
+    <string-array name="russian_cars_captions">
+        <item>Caption 1</item>
+        <item>-</item>
+        <item>*</item>
+        <item>Caption 4</item>
+        <item>*</item>
+        <item>*</item>
+        <item>*</item>
+        <item>*</item>
+        <item>*</item>
+        <item>Caption 10</item>
+    </string-array>
+
     <string-array name="test">
         <item>большоесловоцц</item>
         <item>что</item>
@@ -93,6 +108,8 @@
         <item>тут всё</item>
         <item>конец</item>
     </string-array>
+
+    <string name="test_caption">Test Pack Caption</string>
 
     <string-array name="big_words_test">
         <item>австралийский шелковистый терьер</item>

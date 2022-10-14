@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.doOnNextLayout
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.gamesbars.guessthe.R
@@ -74,6 +75,13 @@ class LevelFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         AdsUtils.fixDensity(resources)
         val view = inflater.inflate(R.layout.fragment_level, container, false)
+
+        val levelCaption = Storage.getLevelCaption(pack, getCurrentLevel(pack))
+        if (levelCaption != null) {
+            view.findViewById<TextView>(R.id.imageCaptionTv).text = levelCaption
+        } else {
+            view.findViewById<TextView>(R.id.imageCaptionTv).isVisible = false
+        }
 
         view.findViewById<ImageView>(R.id.level_image).setImageResource(getDrawableResIdByName(image))
         wordLetters.addLettersToLayout(view.findViewById(R.id.level_word))
