@@ -165,7 +165,7 @@ class CoinsActivity : AppCompatActivity(), CoroutineScope {
     }
 
     private suspend fun handlePurchase(purchase: Purchase) {
-        val productId = purchase.skus.getOrNull(0)
+        val productId = purchase.products.getOrNull(0)
 
         productDTOList.forEach { productDto ->
             if (productId == productDto.id) {
@@ -209,7 +209,10 @@ class CoinsActivity : AppCompatActivity(), CoroutineScope {
     }
 
     private suspend fun checkUnhandledPurchases() {
-        val purchasesResult = billingClient.queryPurchasesAsync(BillingClient.SkuType.INAPP)
+        val params = QueryPurchasesParams.newBuilder()
+            .setProductType(BillingClient.ProductType.INAPP)
+            .build()
+        val purchasesResult = billingClient.queryPurchasesAsync(params)
 
         if (purchasesResult.billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
             purchasesResult.purchasesList.forEach { purchase ->
@@ -224,8 +227,14 @@ class CoinsActivity : AppCompatActivity(), CoroutineScope {
 
     private fun launchBillingFlow(product: Product) {
         runOnUiThread { showLoader(true) }
+        val productDetailsParamsList =
+            listOf(
+                BillingFlowParams.ProductDetailsParams.newBuilder()
+                    .setProductDetails(product.productDetails)
+                    .build()
+            )
         val flowParams = BillingFlowParams.newBuilder()
-            .setSkuDetails(product.skuDetails)
+            .setProductDetailsParamsList(productDetailsParamsList)
             .build()
         val billingResult = billingClient.launchBillingFlow(this, flowParams)
         if (billingResult.responseCode != BillingClient.BillingResponseCode.OK) {
@@ -237,32 +246,35 @@ class CoinsActivity : AppCompatActivity(), CoroutineScope {
     private suspend fun loadProducts() {
         val ads = saves.getBoolean("ads", true)
 
-        val skuList = productDTOList.map { productDto ->
-            if (productDto.isSellingWithAds(ads)) productDto.adsId else productDto.id
+        val queryDetailsProductList = productDTOList.map { productDto ->
+            QueryProductDetailsParams.Product.newBuilder()
+                .setProductId(if (productDto.isSellingWithAds(ads)) productDto.adsId!! else productDto.id)
+                .setProductType(BillingClient.ProductType.INAPP)
+                .build()
         }
 
-        val params = SkuDetailsParams.newBuilder()
-            .setSkusList(skuList)
-            .setType(BillingClient.SkuType.INAPP)
+        val params = QueryProductDetailsParams.newBuilder()
+            .setProductList(queryDetailsProductList)
             .build()
 
-        val skuDetailsResult = billingClient.querySkuDetails(params)
+        val productDetailsResult = billingClient.queryProductDetails(params)
 
-        if (skuDetailsResult.billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-            val skuDetailsList = skuDetailsResult.skuDetailsList
-            if (!skuDetailsList.isNullOrEmpty()) {
+        if (productDetailsResult.billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
+            val productDetailsList = productDetailsResult.productDetailsList
+            if (!productDetailsList.isNullOrEmpty()) {
 
                 val productList = mutableListOf<Product>()
                 for (productDTO in productDTOList) {
 
-                    val productSku = if (productDTO.isSellingWithAds(ads)) productDTO.adsId else productDTO.id
-                    val skuDetails = skuDetailsList.find { productSku == it.sku }
-                    if (skuDetails != null) {
+                    val productId = if (productDTO.isSellingWithAds(ads)) productDTO.adsId else productDTO.id
+                    val productDetails = productDetailsList.find { productId == it.productId }
+                    val oneTimePurchaseOfferDetails = productDetails?.oneTimePurchaseOfferDetails
+                    if (productDetails != null && oneTimePurchaseOfferDetails != null) {
                         productList.add(
                             Product(
                                 coins = productDTO.coinsCount,
-                                price = skuDetails.price,
-                                skuDetails = skuDetails,
+                                price = oneTimePurchaseOfferDetails.formattedPrice,
+                                productDetails = productDetails,
                                 isAdsTitleVisible = productDTO.isSellingWithAds(ads)
                             )
                         )
@@ -274,11 +286,11 @@ class CoinsActivity : AppCompatActivity(), CoroutineScope {
             } else {
                 showBillingError(
                     getString(R.string.purchases_error),
-                    "skuDetailsList is null or empty: ${skuDetailsResult.billingResult.debugMessage}"
+                    "productDetailsList is null or empty: ${productDetailsResult.billingResult.debugMessage}"
                 )
             }
         } else {
-            showBillingError(getString(R.string.purchases_error), "loadProducts: ${skuDetailsResult.billingResult.debugMessage}")
+            showBillingError(getString(R.string.purchases_error), "loadProducts: ${productDetailsResult.billingResult.debugMessage}")
         }
     }
 

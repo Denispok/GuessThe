@@ -1,10 +1,10 @@
 package com.gamesbars.guessthe.screen.coins
 
-import com.android.billingclient.api.SkuDetails
+import com.android.billingclient.api.ProductDetails
 
 data class Product(
     val coins: Int,
     val price: String,
-    val skuDetails: SkuDetails,
+    val productDetails: ProductDetails,
     val isAdsTitleVisible: Boolean = false
 )
