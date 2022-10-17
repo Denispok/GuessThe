@@ -15,7 +15,7 @@
         android:paddingRight="4dp">
 
         <ImageView
-            android:id="@+id/level_back"
+            android:id="@+id/backIv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -26,7 +26,7 @@
             android:src="@drawable/baseline_arrow_back_ios_white_24" />
 
         <Button
-            android:id="@+id/level_level"
+            android:id="@+id/levelTitleBtn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentTop="true"
@@ -39,12 +39,12 @@
             tools:text="@string/level" />
 
         <ImageView
-            android:id="@+id/level_info"
+            android:id="@+id/levelInfoIv"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentTop="true"
             android:layout_marginEnd="4dp"
-            android:layout_toLeftOf="@id/level_coins"
+            android:layout_toLeftOf="@id/coinsTv"
             android:background="@drawable/button_selector_blue_up"
             android:contentDescription="@string/description_coins"
             android:gravity="center_vertical"
@@ -53,7 +53,7 @@
             android:src="@drawable/ic_info" />
 
         <TextView
-            android:id="@+id/level_coins"
+            android:id="@+id/coinsTv"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentTop="true"
@@ -89,7 +89,7 @@
             tools:text="What is on the photo?" />
 
         <ImageView
-            android:id="@+id/level_image"
+            android:id="@+id/levelImageIv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -103,7 +103,7 @@
     </LinearLayout>
 
     <com.gamesbars.guessthe.customview.WordLettersLayout
-        android:id="@+id/level_word"
+        android:id="@+id/wordLettersL"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -116,7 +116,7 @@
         android:padding="@dimen/buttons_margin">
 
         <Button
-            android:id="@+id/level_tips_button"
+            android:id="@+id/tipsBtn"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -129,7 +129,7 @@
             android:textSize="@dimen/buttons_text_size" />
 
         <Button
-            android:id="@+id/level_coins_button"
+            android:id="@+id/getCoinsBtn"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -143,7 +143,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/level_letters_1"
+        android:id="@+id/letters1Ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/letter_margins_small"
@@ -152,7 +152,7 @@
         android:orientation="horizontal" />
 
     <LinearLayout
-        android:id="@+id/level_letters_2"
+        android:id="@+id/letters2Ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/letter_margins_small"

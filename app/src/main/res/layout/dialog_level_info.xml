@@ -12,7 +12,7 @@
     android:paddingBottom="@dimen/tips_padding">
 
     <TextView
-        android:id="@+id/info_title"
+        android:id="@+id/titleTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/photo_info"
@@ -23,14 +23,14 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/info_barrier"
+        android:id="@+id/barrierV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="end"
-        app:constraint_referenced_ids="info_author_title, info_license_title" />
+        app:constraint_referenced_ids="authorTitleTv, licenseTitleTv" />
 
     <TextView
-        android:id="@+id/info_author_title"
+        android:id="@+id/authorTitleTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -38,25 +38,25 @@
         android:text="@string/info_author_title"
         android:textColor="@color/colorText"
         android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@id/info_barrier"
+        app:layout_constraintEnd_toStartOf="@id/barrierV"
         app:layout_constraintHorizontal_bias="1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/info_title" />
+        app:layout_constraintTop_toBottomOf="@id/titleTv" />
 
     <TextView
-        android:id="@+id/info_author"
+        android:id="@+id/authorTv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="3dp"
         android:textColor="@color/colorText"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/info_author_title"
-        app:layout_constraintTop_toTopOf="@id/info_author_title"
+        app:layout_constraintStart_toEndOf="@id/authorTitleTv"
+        app:layout_constraintTop_toTopOf="@id/authorTitleTv"
         tools:text="authorrr author author author author author author author author " />
 
     <TextView
-        android:id="@+id/info_license_title"
+        android:id="@+id/licenseTitleTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -64,25 +64,25 @@
         android:text="@string/info_license_title"
         android:textColor="@color/colorText"
         android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@id/info_barrier"
+        app:layout_constraintEnd_toStartOf="@id/barrierV"
         app:layout_constraintHorizontal_bias="1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/info_author" />
+        app:layout_constraintTop_toBottomOf="@id/authorTv" />
 
     <TextView
-        android:id="@+id/info_license"
+        android:id="@+id/licenseTv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="3dp"
         android:textColor="@color/colorText"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/info_license_title"
-        app:layout_constraintTop_toTopOf="@id/info_license_title"
+        app:layout_constraintStart_toEndOf="@id/licenseTitleTv"
+        app:layout_constraintTop_toTopOf="@id/licenseTitleTv"
         tools:text="License" />
 
     <TextView
-        android:id="@+id/info_cancel"
+        android:id="@+id/cancelTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/tips_cancel_margin_top"
@@ -96,6 +96,6 @@
         android:textSize="@dimen/tips_button_text_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/info_license" />
+        app:layout_constraintTop_toBottomOf="@id/licenseTv" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

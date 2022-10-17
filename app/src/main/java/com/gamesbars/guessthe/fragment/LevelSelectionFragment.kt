@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.GridLayoutManager
@@ -14,6 +13,7 @@ import com.gamesbars.guessthe.R
 import com.gamesbars.guessthe.Storage
 import com.gamesbars.guessthe.adapter.LevelSelectionAdapter
 import com.gamesbars.guessthe.ads.AdsUtils
+import com.gamesbars.guessthe.databinding.FragmentLevelselectionBinding
 import com.gamesbars.guessthe.playSound
 
 class LevelSelectionFragment : Fragment() {
@@ -33,6 +33,8 @@ class LevelSelectionFragment : Fragment() {
     var isClickable = true
 
     lateinit var recycler: RecyclerView
+    private var _binding: FragmentLevelselectionBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,18 +43,18 @@ class LevelSelectionFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         AdsUtils.fixDensity(resources)
-        val view = inflater.inflate(R.layout.fragment_levelselection, container, false)
+        _binding = FragmentLevelselectionBinding.inflate(inflater, container, false)
         val saves = activity!!.getSharedPreferences("saves", Context.MODE_PRIVATE)
 
-        view.findViewById<ImageView>(R.id.levelselection_back).setOnClickListener {
+        binding.backIv.setOnClickListener {
             if (isClickable) {
                 playSound(context!!, R.raw.button)
                 activity!!.onBackPressed()
             }
         }
 
-        recycler = view.findViewById(R.id.levelselection_recycler)
-        recycler.layoutManager = GridLayoutManager(view.context, 4)
+        recycler = binding.levelsRv
+        recycler.layoutManager = GridLayoutManager(binding.root.context, 4)
         val completedLevelCount = Storage.getCompletedLevels(pack)
         val adapter = LevelSelectionAdapter(pack, completedLevelCount)
         adapter.onItemClickListener = { level ->
@@ -63,18 +65,23 @@ class LevelSelectionFragment : Fragment() {
                 }
                 fragmentManager?.popBackStack()
                 fragmentManager?.beginTransaction()!!
-                    .replace(R.id.activity_play_fragment, LevelFragment.newInstance(pack), resources.getString(R.string.level_fragment_tag))
+                    .replace(R.id.fragmentFl, LevelFragment.newInstance(pack), resources.getString(R.string.level_fragment_tag))
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                     .commit()
             }
         }
         recycler.adapter = adapter
 
-        return view
+        return binding.root
     }
 
     override fun onStart() {
         super.onStart()
         isClickable = true
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

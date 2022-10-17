@@ -13,10 +13,10 @@ import com.gamesbars.guessthe.*
 import com.gamesbars.guessthe.ads.AdsUtils
 import com.gamesbars.guessthe.ads.BannerAdDelegate
 import com.gamesbars.guessthe.ads.RewardedAdDelegate
+import com.gamesbars.guessthe.databinding.ActivityCoinsBinding
 import com.gamesbars.guessthe.screen.coins.data.ProductDTO
 import com.gamesbars.guessthe.screen.coins.data.ProductDTOProvider
 import com.google.firebase.analytics.FirebaseAnalytics
-import kotlinx.android.synthetic.main.activity_coins.*
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
@@ -28,6 +28,7 @@ class CoinsActivity : AppCompatActivity(), CoroutineScope {
     }
 
     private val productAdapter = ProductAdapter()
+    private lateinit var binding: ActivityCoinsBinding
     private lateinit var productDTOList: List<ProductDTO>
     private lateinit var billingClient: BillingClient
     private lateinit var saves: SharedPreferences
@@ -44,7 +45,8 @@ class CoinsActivity : AppCompatActivity(), CoroutineScope {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AdsUtils.fixDensity(resources)
-        setContentView(R.layout.activity_coins)
+        binding = ActivityCoinsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
@@ -58,7 +60,7 @@ class CoinsActivity : AppCompatActivity(), CoroutineScope {
             .build()
         connectToBilling()
 
-        if (saves.getBoolean("ads", true)) bannerAdDelegate.loadBanner(this, adViewContainer)
+        if (saves.getBoolean("ads", true)) bannerAdDelegate.loadBanner(this, binding.adViewContainer)
 
         rewardedAdDelegate.loadRewardedAd()
 
@@ -79,40 +81,40 @@ class CoinsActivity : AppCompatActivity(), CoroutineScope {
 
     @MainThread
     private fun setupUI() {
-        backIv.setOnClickListener {
+        binding.backIv.setOnClickListener {
             playSound(this, R.raw.button)
             onBackPressed()
         }
 
-        productRv.adapter = productAdapter
-        productRv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        productRv.addItemDecoration(ProductDecoration(this))
+        binding.productRv.adapter = productAdapter
+        binding.productRv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.productRv.addItemDecoration(ProductDecoration(this))
         productAdapter.onItemClickListener = { product ->
             launchBillingFlow(product)
         }
 
-        coinsVideoTv.text = (2 * resources.getInteger(R.integer.level_reward)).toString()
-        coinsRewardedVideoLl.setOnClickListener {
+        binding.coinsVideoTv.text = (2 * resources.getInteger(R.integer.level_reward)).toString()
+        binding.coinsRewardedVideoLl.setOnClickListener {
             rewardedAdDelegate.showRewardedVideoAd()
         }
     }
 
     @MainThread
     private fun showLoader(isShow: Boolean) {
-        progressFl.isVisible = true
-        progressFl.animate()
+        binding.progressFl.isVisible = true
+        binding.progressFl.animate()
             .setDuration(LOADER_ANIMATION_DURATION)
             .alpha(if (isShow) 1f else 0f)
-            .withEndAction { if (!isShow) progressFl.isVisible = false }
+            .withEndAction { if (!isShow) binding.progressFl.isVisible = false }
             .start()
     }
 
     private fun updateBannerAd() {
         if (saves.getBoolean("ads", true)) {
-            adViewContainer.visibility = View.VISIBLE
-            bannerAdDelegate.updateBanner(this, adViewContainer)
+            binding.adViewContainer.visibility = View.VISIBLE
+            bannerAdDelegate.updateBanner(this, binding.adViewContainer)
         } else {
-            adViewContainer.visibility = View.GONE
+            binding.adViewContainer.visibility = View.GONE
         }
     }
 
@@ -159,7 +161,7 @@ class CoinsActivity : AppCompatActivity(), CoroutineScope {
     private fun updateCoins() {
         val coins = Storage.getCoins().toString()
         runOnUiThread {
-            coinsTv.text = coins
+            binding.coinsTv.text = coins
         }
         firebaseAnalytics.setUserProperty("coins", coins)
     }

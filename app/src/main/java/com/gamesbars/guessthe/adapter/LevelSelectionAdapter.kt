@@ -46,8 +46,8 @@ class LevelSelectionAdapter(
     }
 
     class LevelSelectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val image: ImageView = itemView.findViewById(R.id.item_levelselection_image)
-        val number: TextView = itemView.findViewById(R.id.item_levelselection_number)
+        val image: ImageView = itemView.findViewById(R.id.imageIv)
+        val number: TextView = itemView.findViewById(R.id.titleTv)
 
         init {
             image.setColorFilter(0x66000000.toInt(), PorterDuff.Mode.DARKEN)

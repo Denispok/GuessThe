@@ -6,9 +6,6 @@ import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.core.view.doOnNextLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -21,6 +18,7 @@ import com.gamesbars.guessthe.Storage.getLevelName
 import com.gamesbars.guessthe.Storage.getStringArrayResIdByName
 import com.gamesbars.guessthe.Storage.isLevelHaveInfo
 import com.gamesbars.guessthe.ads.AdsUtils
+import com.gamesbars.guessthe.databinding.FragmentLevelBinding
 import com.gamesbars.guessthe.level.Letter
 import com.gamesbars.guessthe.level.Letters
 import com.gamesbars.guessthe.level.WordLetters
@@ -36,6 +34,8 @@ class LevelFragment : Fragment() {
     lateinit var pack: String
     lateinit var letters: Letters
     lateinit var wordLetters: WordLetters
+    private var _binding: FragmentLevelBinding? = null
+    private val binding get() = _binding!!
     private var isFirstStart = true
     var isClickable = true
     private val tipsDialog = TipsDialogFragment()
@@ -74,41 +74,41 @@ class LevelFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         AdsUtils.fixDensity(resources)
-        val view = inflater.inflate(R.layout.fragment_level, container, false)
+        _binding = FragmentLevelBinding.inflate(inflater, container, false)
 
         val levelCaption = Storage.getLevelCaption(pack, getCurrentLevel(pack))
         if (levelCaption != null) {
-            view.findViewById<TextView>(R.id.imageCaptionTv).text = levelCaption
+            binding.imageCaptionTv.text = levelCaption
         } else {
-            view.findViewById<TextView>(R.id.imageCaptionTv).isVisible = false
+            binding.imageCaptionTv.isVisible = false
         }
 
-        view.findViewById<ImageView>(R.id.level_image).setImageResource(getDrawableResIdByName(image))
-        wordLetters.addLettersToLayout(view.findViewById(R.id.level_word))
-        letters.addLettersToLayout(view.findViewById(R.id.level_letters_1), view.findViewById(R.id.level_letters_2))
+        binding.levelImageIv.setImageResource(getDrawableResIdByName(image))
+        wordLetters.addLettersToLayout(binding.wordLettersL)
+        letters.addLettersToLayout(binding.letters1Ll, binding.letters2Ll)
 
-        view.findViewById<Button>(R.id.level_level).text = getString(R.string.level, getCurrentLevel(pack))
-        view.findViewById<ImageView>(R.id.level_back).setOnClickListener {
+        binding.levelTitleBtn.text = getString(R.string.level, getCurrentLevel(pack))
+        binding.backIv.setOnClickListener {
             if (isClickable) {
                 playSound(context!!, R.raw.button)
                 activity!!.onBackPressed()
             }
         }
-        view.findViewById<TextView>(R.id.level_level).setOnClickListener { startLevelSelection() }
-        view.findViewById<ImageView>(R.id.level_info).apply {
+        binding.levelTitleBtn.setOnClickListener { startLevelSelection() }
+        binding.levelInfoIv.apply {
             if (isLevelHaveInfo(pack, getCurrentLevel(pack))) {
                 setOnClickListener { info() }
             } else {
                 visibility = View.GONE
             }
         }
-        view.findViewById<TextView>(R.id.level_coins).setOnClickListener { coins() }
-        view.findViewById<TextView>(R.id.level_tips_button).setOnClickListener { tips() }
-        view.findViewById<TextView>(R.id.level_coins_button).setOnClickListener { coins() }
+        binding.coinsTv.setOnClickListener { coins() }
+        binding.tipsBtn.setOnClickListener { tips() }
+        binding.getCoinsBtn.setOnClickListener { coins() }
 
         if (isFirstStart) {
-            view.doOnNextLayout {
-                playSound(view.context, R.raw.start)
+            binding.root.doOnNextLayout {
+                playSound(binding.root.context, R.raw.start)
                 letters.showChosenLetters(wordLetters)
                 if (letters.removeTipUsed) letters.tipRemoveLetters(wordLetters)
             }
@@ -116,13 +116,18 @@ class LevelFragment : Fragment() {
             isFirstStart = false
         }
 
-        return view
+        return binding.root
     }
 
     override fun onStart() {
         super.onStart()
         isClickable = true
         updateCoins()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun loadLevel(pack: String) {
@@ -143,7 +148,7 @@ class LevelFragment : Fragment() {
             isClickable = false
             playSound(context!!, R.raw.button)
             fragmentManager!!.beginTransaction()
-                .replace(R.id.activity_play_fragment, LevelSelectionFragment.newInstance(pack))
+                .replace(R.id.fragmentFl, LevelSelectionFragment.newInstance(pack))
                 .addToBackStack(null)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .commit()
@@ -181,7 +186,7 @@ class LevelFragment : Fragment() {
 
     fun updateCoins() {
         val coins = Storage.getCoins().toString()
-        activity!!.findViewById<TextView>(R.id.level_coins).text = coins
+        binding.coinsTv.text = coins
         firebaseAnalytics.setUserProperty("coins", coins)
     }
 
@@ -190,9 +195,9 @@ class LevelFragment : Fragment() {
 
         val fragment = WinFragment.newInstance(word, image, arguments!!.getString("pack")!!, isLevelReward)
         fragmentManager!!.beginTransaction()
-            .replace(R.id.activity_play_fragment, fragment, resources.getString(R.string.win_fragment_tag))
+            .replace(R.id.fragmentFl, fragment, resources.getString(R.string.win_fragment_tag))
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-            .addSharedElement(activity!!.findViewById<ImageView>(R.id.level_image), "ImageTransition")
+            .addSharedElement(binding.levelImageIv, "ImageTransition")
             .commit()
     }
 }

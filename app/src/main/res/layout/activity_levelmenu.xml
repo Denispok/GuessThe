@@ -14,7 +14,7 @@
         android:paddingRight="4dp">
 
         <ImageView
-            android:id="@+id/levelmenu_back"
+            android:id="@+id/backIv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -33,7 +33,7 @@
             android:textSize="@dimen/top_pane_title_text_size" />
 
         <TextView
-            android:id="@+id/levelmenu_coins"
+            android:id="@+id/coinsTv"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentTop="true"
@@ -57,7 +57,7 @@
         android:layout_weight="1">
 
         <LinearLayout
-            android:id="@+id/levels_list"
+            android:id="@+id/levelsLl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
