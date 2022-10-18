@@ -8,6 +8,7 @@ import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
 import com.gamesbars.guessthe.AnalyticsHelper
 import com.gamesbars.guessthe.R
+import com.gamesbars.guessthe.Storage
 import com.gamesbars.guessthe.ads.AdsUtils
 import com.gamesbars.guessthe.playSound
 import com.gamesbars.guessthe.screen.LevelMenuActivity
@@ -39,14 +40,14 @@ class ConfirmDialogFragment : DialogFragment() {
         val saves = context!!.getSharedPreferences("saves", Context.MODE_PRIVATE)
         val packPrice = resources.getIntArray(R.array.packs_prices)[packId]
         val builder = AlertDialog.Builder(context)
-        if (saves.getInt("coins", 0) >= packPrice) {
+        if (Storage.getCoins() >= packPrice) {
             builder.setMessage(getString(R.string.confirm_dialog_message, packPrice))
             builder.setPositiveButton(R.string.ok) { _, _ ->
                 saves.edit().apply {
                     putBoolean(pack + "purchased", true)
-                    putInt("coins", saves.getInt("coins", 0) - packPrice)
                     apply()
                 }
+                Storage.addCoins(-packPrice)
 
                 AnalyticsHelper.logPackUnlock(pack, "coins")
 

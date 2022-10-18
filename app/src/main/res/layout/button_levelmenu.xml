@@ -10,7 +10,7 @@
     android:padding="@dimen/levelmenu_button_padding">
 
     <TextView
-        android:id="@+id/levelmenu_button_pack_name"
+        android:id="@+id/packNameTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -18,7 +18,7 @@
         android:textAlignment="center"
         android:textColor="@android:color/white"
         android:textSize="@dimen/levelmenu_button_text_size"
-        tools:text="Русские Авто" />
+        tools:text="Уровень 1" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -27,7 +27,7 @@
         android:minHeight="@dimen/levelmenu_progress_bar_height">
 
         <ProgressBar
-            android:id="@+id/levelmenu_button_progress_bar"
+            android:id="@+id/progressPb"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -42,7 +42,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/levelmenu_button_progress_bar_text"
+            android:id="@+id/progressTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/levelmenu_progress_bar_text_margin"
@@ -68,8 +68,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/levelmenu_button_progress_bar_text"
-            tools:text="@string/complete_levels_to_unlock" />
+            app:layout_constraintTop_toBottomOf="@id/progressTv"
+            tools:text="or complete 10 more levels" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

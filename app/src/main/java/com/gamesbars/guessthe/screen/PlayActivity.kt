@@ -12,14 +12,15 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.gamesbars.guessthe.R
+import com.gamesbars.guessthe.Storage
 import com.gamesbars.guessthe.ads.AdsUtils
 import com.gamesbars.guessthe.ads.BannerAdDelegate
 import com.gamesbars.guessthe.ads.InterstitialAdDelegate
 import com.gamesbars.guessthe.ads.RewardedAdDelegate
+import com.gamesbars.guessthe.databinding.ActivityPlayBinding
 import com.gamesbars.guessthe.fragment.InfoDialogFragment
 import com.gamesbars.guessthe.fragment.LevelFragment
 import com.gamesbars.guessthe.fragment.TipsDialogFragment
-import kotlinx.android.synthetic.main.activity_play.*
 
 class PlayActivity : AppCompatActivity() {
 
@@ -27,6 +28,7 @@ class PlayActivity : AppCompatActivity() {
         const val INTERSTITIAL_AD_FREQUENCY = 3 // every N level show ad
     }
 
+    private lateinit var binding: ActivityPlayBinding
     private lateinit var saves: SharedPreferences
     private lateinit var rewardedAdDelegate: RewardedAdDelegate
     private lateinit var interstitialAdDelegate: InterstitialAdDelegate
@@ -36,7 +38,8 @@ class PlayActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AdsUtils.fixDensity(resources)
-        setContentView(R.layout.activity_play)
+        binding = ActivityPlayBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
         rewardedAdDelegate = RewardedAdDelegate(this, saves, ::onRewardEarned)
@@ -44,7 +47,7 @@ class PlayActivity : AppCompatActivity() {
         bannerAdDelegate = BannerAdDelegate(this, saves)
 
         if (saves.getBoolean("ads", true)) {
-            bannerAdDelegate.loadBanner(this, adViewContainer)
+            bannerAdDelegate.loadBanner(this, binding.adViewContainer)
             interstitialAdDelegate.loadInterstitialAd()
         }
 
@@ -53,7 +56,7 @@ class PlayActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                 .replace(
-                    R.id.activity_play_fragment,
+                    R.id.fragmentFl,
                     LevelFragment.newInstance(intent.extras!!.getString("pack")!!),
                     resources.getString(R.string.level_fragment_tag)
                 )
@@ -87,23 +90,20 @@ class PlayActivity : AppCompatActivity() {
 
     private fun updateBannerAd() {
         if (saves.getBoolean("ads", true)) {
-            adViewContainer.visibility = View.VISIBLE
-            bannerAdDelegate.updateBanner(this, adViewContainer)
+            binding.adViewContainer.visibility = View.VISIBLE
+            bannerAdDelegate.updateBanner(this, binding.adViewContainer)
         } else {
-            adViewContainer.visibility = View.GONE
+            binding.adViewContainer.visibility = View.GONE
         }
     }
 
     private fun onRewardEarned() {
-        saves.edit().apply {
-            putInt("coins", saves.getInt("coins", 0) + 2 * resources.getInteger(R.integer.level_reward))
-            apply()
-        }
+        Storage.addCoins(2 * resources.getInteger(R.integer.level_reward))
         Toast.makeText(this, R.string.video_reward, Toast.LENGTH_LONG).show()
 
-        findViewById<LinearLayout>(R.id.winRewardedVideo)?.isClickable = false
-        findViewById<LinearLayout>(R.id.winX3Text)?.visibility = View.GONE
-        findViewById<TextView>(R.id.winX3)?.apply {
+        findViewById<LinearLayout>(R.id.rewardedLl)?.isClickable = false
+        findViewById<LinearLayout>(R.id.rewardedTextLl)?.visibility = View.GONE
+        findViewById<TextView>(R.id.rewardedX3Tv)?.apply {
             layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
             setBackgroundColor(Color.TRANSPARENT)
             setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.coin_icon_16, 0)

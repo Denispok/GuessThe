@@ -9,17 +9,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.billingclient.api.*
-import com.gamesbars.guessthe.R
+import com.gamesbars.guessthe.*
 import com.gamesbars.guessthe.ads.AdsUtils
 import com.gamesbars.guessthe.ads.BannerAdDelegate
 import com.gamesbars.guessthe.ads.RewardedAdDelegate
-import com.gamesbars.guessthe.playSound
+import com.gamesbars.guessthe.databinding.ActivityCoinsBinding
 import com.gamesbars.guessthe.screen.coins.data.ProductDTO
 import com.gamesbars.guessthe.screen.coins.data.ProductDTOProvider
-import com.gamesbars.guessthe.sliceUntilIndex
-import com.gamesbars.guessthe.toast
 import com.google.firebase.analytics.FirebaseAnalytics
-import kotlinx.android.synthetic.main.activity_coins.*
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
@@ -31,6 +28,7 @@ class CoinsActivity : AppCompatActivity(), CoroutineScope {
     }
 
     private val productAdapter = ProductAdapter()
+    private lateinit var binding: ActivityCoinsBinding
     private lateinit var productDTOList: List<ProductDTO>
     private lateinit var billingClient: BillingClient
     private lateinit var saves: SharedPreferences
@@ -47,7 +45,8 @@ class CoinsActivity : AppCompatActivity(), CoroutineScope {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AdsUtils.fixDensity(resources)
-        setContentView(R.layout.activity_coins)
+        binding = ActivityCoinsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
@@ -61,7 +60,7 @@ class CoinsActivity : AppCompatActivity(), CoroutineScope {
             .build()
         connectToBilling()
 
-        if (saves.getBoolean("ads", true)) bannerAdDelegate.loadBanner(this, adViewContainer)
+        if (saves.getBoolean("ads", true)) bannerAdDelegate.loadBanner(this, binding.adViewContainer)
 
         rewardedAdDelegate.loadRewardedAd()
 
@@ -82,48 +81,45 @@ class CoinsActivity : AppCompatActivity(), CoroutineScope {
 
     @MainThread
     private fun setupUI() {
-        backIv.setOnClickListener {
+        binding.backIv.setOnClickListener {
             playSound(this, R.raw.button)
             onBackPressed()
         }
 
-        productRv.adapter = productAdapter
-        productRv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        productRv.addItemDecoration(ProductDecoration(this))
+        binding.productRv.adapter = productAdapter
+        binding.productRv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.productRv.addItemDecoration(ProductDecoration(this))
         productAdapter.onItemClickListener = { product ->
             launchBillingFlow(product)
         }
 
-        coinsVideoTv.text = (2 * resources.getInteger(R.integer.level_reward)).toString()
-        coinsRewardedVideoLl.setOnClickListener {
+        binding.coinsVideoTv.text = (2 * resources.getInteger(R.integer.level_reward)).toString()
+        binding.coinsRewardedVideoLl.setOnClickListener {
             rewardedAdDelegate.showRewardedVideoAd()
         }
     }
 
     @MainThread
     private fun showLoader(isShow: Boolean) {
-        progressFl.isVisible = true
-        progressFl.animate()
+        binding.progressFl.isVisible = true
+        binding.progressFl.animate()
             .setDuration(LOADER_ANIMATION_DURATION)
             .alpha(if (isShow) 1f else 0f)
-            .withEndAction { if (!isShow) progressFl.isVisible = false }
+            .withEndAction { if (!isShow) binding.progressFl.isVisible = false }
             .start()
     }
 
     private fun updateBannerAd() {
         if (saves.getBoolean("ads", true)) {
-            adViewContainer.visibility = View.VISIBLE
-            bannerAdDelegate.updateBanner(this, adViewContainer)
+            binding.adViewContainer.visibility = View.VISIBLE
+            bannerAdDelegate.updateBanner(this, binding.adViewContainer)
         } else {
-            adViewContainer.visibility = View.GONE
+            binding.adViewContainer.visibility = View.GONE
         }
     }
 
     private fun onRewardEarned() {
-        saves.edit().apply {
-            putInt("coins", saves.getInt("coins", 0) + 2 * resources.getInteger(R.integer.level_reward))
-            apply()
-        }
+        Storage.addCoins(2 * resources.getInteger(R.integer.level_reward))
         toast(getString(R.string.video_reward))
         updateCoins()
     }
@@ -154,23 +150,24 @@ class CoinsActivity : AppCompatActivity(), CoroutineScope {
     }
 
     private fun addAndUpdateCoins(coins: Int, removeAds: Boolean = false) {
-        val editor = saves.edit()
-        if (removeAds) editor.putBoolean("ads", false)
-        editor.putInt("coins", saves.getInt("coins", 0) + coins)
-        editor.apply()
+        if (removeAds) saves.edit().apply {
+            putBoolean("ads", false)
+            apply()
+        }
+        Storage.addCoins(coins)
         updateCoins()
     }
 
     private fun updateCoins() {
-        val coins = saves.getInt("coins", 0).toString()
+        val coins = Storage.getCoins().toString()
         runOnUiThread {
-            coinsTv.text = coins
+            binding.coinsTv.text = coins
         }
         firebaseAnalytics.setUserProperty("coins", coins)
     }
 
     private suspend fun handlePurchase(purchase: Purchase) {
-        val productId = purchase.skus.getOrNull(0)
+        val productId = purchase.products.getOrNull(0)
 
         productDTOList.forEach { productDto ->
             if (productId == productDto.id) {
@@ -214,7 +211,10 @@ class CoinsActivity : AppCompatActivity(), CoroutineScope {
     }
 
     private suspend fun checkUnhandledPurchases() {
-        val purchasesResult = billingClient.queryPurchasesAsync(BillingClient.SkuType.INAPP)
+        val params = QueryPurchasesParams.newBuilder()
+            .setProductType(BillingClient.ProductType.INAPP)
+            .build()
+        val purchasesResult = billingClient.queryPurchasesAsync(params)
 
         if (purchasesResult.billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
             purchasesResult.purchasesList.forEach { purchase ->
@@ -229,8 +229,14 @@ class CoinsActivity : AppCompatActivity(), CoroutineScope {
 
     private fun launchBillingFlow(product: Product) {
         runOnUiThread { showLoader(true) }
+        val productDetailsParamsList =
+            listOf(
+                BillingFlowParams.ProductDetailsParams.newBuilder()
+                    .setProductDetails(product.productDetails)
+                    .build()
+            )
         val flowParams = BillingFlowParams.newBuilder()
-            .setSkuDetails(product.skuDetails)
+            .setProductDetailsParamsList(productDetailsParamsList)
             .build()
         val billingResult = billingClient.launchBillingFlow(this, flowParams)
         if (billingResult.responseCode != BillingClient.BillingResponseCode.OK) {
@@ -242,32 +248,35 @@ class CoinsActivity : AppCompatActivity(), CoroutineScope {
     private suspend fun loadProducts() {
         val ads = saves.getBoolean("ads", true)
 
-        val skuList = productDTOList.map { productDto ->
-            if (productDto.isSellingWithAds(ads)) productDto.adsId else productDto.id
+        val queryDetailsProductList = productDTOList.map { productDto ->
+            QueryProductDetailsParams.Product.newBuilder()
+                .setProductId(if (productDto.isSellingWithAds(ads)) productDto.adsId!! else productDto.id)
+                .setProductType(BillingClient.ProductType.INAPP)
+                .build()
         }
 
-        val params = SkuDetailsParams.newBuilder()
-            .setSkusList(skuList)
-            .setType(BillingClient.SkuType.INAPP)
+        val params = QueryProductDetailsParams.newBuilder()
+            .setProductList(queryDetailsProductList)
             .build()
 
-        val skuDetailsResult = billingClient.querySkuDetails(params)
+        val productDetailsResult = billingClient.queryProductDetails(params)
 
-        if (skuDetailsResult.billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-            val skuDetailsList = skuDetailsResult.skuDetailsList
-            if (!skuDetailsList.isNullOrEmpty()) {
+        if (productDetailsResult.billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
+            val productDetailsList = productDetailsResult.productDetailsList
+            if (!productDetailsList.isNullOrEmpty()) {
 
                 val productList = mutableListOf<Product>()
                 for (productDTO in productDTOList) {
 
-                    val productSku = if (productDTO.isSellingWithAds(ads)) productDTO.adsId else productDTO.id
-                    val skuDetails = skuDetailsList.find { productSku == it.sku }
-                    if (skuDetails != null) {
+                    val productId = if (productDTO.isSellingWithAds(ads)) productDTO.adsId else productDTO.id
+                    val productDetails = productDetailsList.find { productId == it.productId }
+                    val oneTimePurchaseOfferDetails = productDetails?.oneTimePurchaseOfferDetails
+                    if (productDetails != null && oneTimePurchaseOfferDetails != null) {
                         productList.add(
                             Product(
                                 coins = productDTO.coinsCount,
-                                price = skuDetails.price,
-                                skuDetails = skuDetails,
+                                price = oneTimePurchaseOfferDetails.formattedPrice,
+                                productDetails = productDetails,
                                 isAdsTitleVisible = productDTO.isSellingWithAds(ads)
                             )
                         )
@@ -279,11 +288,11 @@ class CoinsActivity : AppCompatActivity(), CoroutineScope {
             } else {
                 showBillingError(
                     getString(R.string.purchases_error),
-                    "skuDetailsList is null or empty: ${skuDetailsResult.billingResult.debugMessage}"
+                    "productDetailsList is null or empty: ${productDetailsResult.billingResult.debugMessage}"
                 )
             }
         } else {
-            showBillingError(getString(R.string.purchases_error), "loadProducts: ${skuDetailsResult.billingResult.debugMessage}")
+            showBillingError(getString(R.string.purchases_error), "loadProducts: ${productDetailsResult.billingResult.debugMessage}")
         }
     }
 

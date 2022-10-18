@@ -10,7 +10,7 @@
     android:paddingBottom="@dimen/tips_padding">
 
     <RelativeLayout
-        android:id="@+id/tips_letter"
+        android:id="@+id/tipLetterRl"
         style="@style/TipsButtonStyle"
         android:layout_marginBottom="@dimen/tips_button_margin">
 
@@ -35,11 +35,11 @@
             android:layout_gravity="center"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:layout_toStartOf="@id/tips_letter_cost"
+            android:layout_toStartOf="@id/tipLetterCostTv"
             android:background="@android:color/black" />
 
         <TextView
-            android:id="@+id/tips_letter_cost"
+            android:id="@+id/tipLetterCostTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -56,7 +56,7 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/tips_remove"
+        android:id="@+id/tipRemoveRl"
         style="@style/TipsButtonStyle"
         android:layout_marginBottom="@dimen/tips_button_margin">
 
@@ -81,11 +81,11 @@
             android:layout_gravity="center"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:layout_toStartOf="@id/tips_remove_cost"
+            android:layout_toStartOf="@id/tipRemoveCostTv"
             android:background="@android:color/black" />
 
         <TextView
-            android:id="@+id/tips_remove_cost"
+            android:id="@+id/tipRemoveCostTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -102,7 +102,7 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/tips_skip"
+        android:id="@+id/tipSkipRl"
         style="@style/TipsButtonStyle">
 
         <TextView
@@ -126,11 +126,11 @@
             android:layout_gravity="center"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:layout_toStartOf="@id/tips_skip_cost"
+            android:layout_toStartOf="@id/tipSkipCostTv"
             android:background="@android:color/black" />
 
         <TextView
-            android:id="@+id/tips_skip_cost"
+            android:id="@+id/tipSkipCostTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -147,7 +147,7 @@
     </RelativeLayout>
 
     <TextView
-        android:id="@+id/tips_cancel"
+        android:id="@+id/cancelTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/tips_cancel_margin_top"

@@ -17,19 +17,27 @@ object Storage {
         else winDrawableId
     }
 
+    fun getStringResIdByName(name: String): Int {
+        return resources.getIdentifier(name, "string", App.appContext.packageName)
+    }
+
     fun getStringArrayResIdByName(name: String): Int {
         return resources.getIdentifier(name, "array", App.appContext.packageName)
     }
 
     fun getCurrentLevel(pack: String) = saves.getInt(pack, 1)
 
+    fun getLevelName(pack: String, level: Int) = pack + "_" + level
+
     fun getLevelCount(pack: String): Int {
         val packId = resources.getStringArray(R.array.packs).indexOf(pack)
         return resources.getIntArray(R.array.packs_sizes)[packId]
     }
 
-    fun getLevelsToUnlock(packIndex: Int): Int {
-        return resources.getIntArray(R.array.packs_levels_to_unlock)[packIndex] - getCompletedLevelsCount()
+    fun getLevelsRemainingToUnlock(packIndex: Int): Int? {
+        val levelsToUnlock = resources.getIntArray(R.array.packs_levels_to_unlock)[packIndex]
+        if (levelsToUnlock == -1) return null
+        return levelsToUnlock - getCompletedLevelsCount()
     }
 
     fun getCompletedLevels(pack: String): Int {
@@ -41,6 +49,15 @@ object Storage {
         return packs.fold(0, { completedLevels, pack ->
             completedLevels + getCompletedLevels(pack)
         })
+    }
+
+    fun getCoins() = saves.getInt("coins", 0)
+
+    fun addCoins(coinsToAdd: Int) {
+        saves.edit().apply {
+            putInt("coins", getCoins() + coinsToAdd)
+            apply()
+        }
     }
 
     fun getAuthorAndLicense(pack: String, level: Int): Pair<String, String> {
@@ -58,8 +75,27 @@ object Storage {
         else getAuthorAndLicense(pack, level).first != "-"
     }
 
+    fun getLevelCaption(pack: String, level: Int): String? {
+        val levelCaptionsResId = getStringArrayResIdByName(pack + "_captions")
+        if (levelCaptionsResId != 0) {
+            val levelCaptions = resources.getStringArray(levelCaptionsResId)
+            val levelCaption = levelCaptions[level - 1]
+            if (levelCaption == "-") return null
+            if (levelCaption != "*") return levelCaption
+        }
+
+        val packCaptionResId = getStringResIdByName(pack + "_caption")
+        if (packCaptionResId != 0) {
+            return resources.getString(packCaptionResId)
+        }
+
+        return null
+    }
+
     fun isPackOpen(pack: String, packIndex: Int): Boolean {
-        return isPackPurchased(pack) || getCompletedLevelsCount() >= resources.getIntArray(R.array.packs_levels_to_unlock)[packIndex]
+        val levelsToUnlock = resources.getIntArray(R.array.packs_levels_to_unlock)[packIndex]
+        val isPackOpenedByLevels = levelsToUnlock != -1 && getCompletedLevelsCount() >= levelsToUnlock
+        return isPackPurchased(pack) || isPackOpenedByLevels
     }
 
     fun isPackPurchased(pack: String) = saves.getBoolean(pack + "purchased", false)
@@ -73,9 +109,9 @@ object Storage {
 
         val editor = saves.edit()
         editor.putString(levelName, saves.getString(levelName, "")!!.replace("!", "").replace("*", ""))
-        if (currentLevel > saves.getInt(pack + "completed", 0)) {
+        if (currentLevel > getCompletedLevels(pack)) {
             editor.putInt(pack + "completed", currentLevel)
-            editor.putInt("coins", saves.getInt("coins", 0) + resources.getInteger(R.integer.level_reward))
+            addCoins(resources.getInteger(R.integer.level_reward))
             isCompletedFirstTime = true
             AnalyticsHelper.logLevelComplete(pack, currentLevel)
         }

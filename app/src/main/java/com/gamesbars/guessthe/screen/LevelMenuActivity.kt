@@ -5,10 +5,6 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.ProgressBar
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
@@ -17,12 +13,12 @@ import com.gamesbars.guessthe.R
 import com.gamesbars.guessthe.Storage
 import com.gamesbars.guessthe.ads.AdsUtils
 import com.gamesbars.guessthe.ads.BannerAdDelegate
+import com.gamesbars.guessthe.databinding.ActivityLevelmenuBinding
+import com.gamesbars.guessthe.databinding.ButtonLevelmenuBinding
 import com.gamesbars.guessthe.fragment.ConfirmDialogFragment
 import com.gamesbars.guessthe.playSound
 import com.gamesbars.guessthe.screen.coins.CoinsActivity
 import com.google.firebase.analytics.FirebaseAnalytics
-import kotlinx.android.synthetic.main.activity_levelmenu.*
-import kotlinx.android.synthetic.main.button_levelmenu.view.*
 
 class LevelMenuActivity : AppCompatActivity() {
 
@@ -30,13 +26,15 @@ class LevelMenuActivity : AppCompatActivity() {
     var isClickable: Boolean = true
     var currentDialog: ConfirmDialogFragment? = null
 
+    private lateinit var binding: ActivityLevelmenuBinding
     private lateinit var firebaseAnalytics: FirebaseAnalytics
     private lateinit var bannerAdDelegate: BannerAdDelegate
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AdsUtils.fixDensity(resources)
-        setContentView(R.layout.activity_levelmenu)
+        binding = ActivityLevelmenuBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
@@ -44,21 +42,21 @@ class LevelMenuActivity : AppCompatActivity() {
 
         loadPacks()
 
-        findViewById<ImageView>(R.id.levelmenu_back).setOnClickListener {
+        binding.backIv.setOnClickListener {
             if (isClickable) {
                 playSound(this, R.raw.button)
                 this.onBackPressed()
             }
         }
 
-        findViewById<TextView>(R.id.levelmenu_coins).setOnClickListener {
+        binding.coinsTv.setOnClickListener {
             if (isClickable) {
                 isClickable = false
                 startActivity(Intent(applicationContext, CoinsActivity::class.java))
             }
         }
 
-        if (saves.getBoolean("ads", true)) bannerAdDelegate.loadBanner(this, adViewContainer)
+        if (saves.getBoolean("ads", true)) bannerAdDelegate.loadBanner(this, binding.adViewContainer)
     }
 
     override fun onResume() {
@@ -70,27 +68,27 @@ class LevelMenuActivity : AppCompatActivity() {
     }
 
     fun updateCoins() {
-        val coins = saves.getInt("coins", 0).toString()
-        findViewById<TextView>(R.id.levelmenu_coins).text = coins
+        val coins = Storage.getCoins().toString()
+        binding.coinsTv.text = coins
         firebaseAnalytics.setUserProperty("coins", coins)
     }
 
     private fun loadPacks() {
         val packsNames = resources.getStringArray(R.array.packs_names)
-        val packsList = findViewById<LinearLayout>(R.id.levels_list)
+        val packsList = binding.levelsLl
         for (id in 0 until packsNames.size) {
-            val button = layoutInflater.inflate(R.layout.button_levelmenu, packsList, false)
-            button.findViewById<TextView>(R.id.levelmenu_button_pack_name).text = packsNames[id]
-            packsList.addView(button)
+            val buttonBinding = ButtonLevelmenuBinding.inflate(layoutInflater, packsList, false)
+            buttonBinding.packNameTv.text = packsNames[id]
+            packsList.addView(buttonBinding.root)
         }
     }
 
     private fun updateBannerAd() {
         if (saves.getBoolean("ads", true)) {
-            adViewContainer.visibility = View.VISIBLE
-            bannerAdDelegate.updateBanner(this, adViewContainer)
+            binding.adViewContainer.visibility = View.VISIBLE
+            bannerAdDelegate.updateBanner(this, binding.adViewContainer)
         } else {
-            adViewContainer.visibility = View.GONE
+            binding.adViewContainer.visibility = View.GONE
         }
     }
 
@@ -98,25 +96,26 @@ class LevelMenuActivity : AppCompatActivity() {
         val packs = resources.getStringArray(R.array.packs)
         val packsSizes = resources.getIntArray(R.array.packs_sizes)
         val packPrices = resources.getIntArray(R.array.packs_prices)
-        val packsList = findViewById<LinearLayout>(R.id.levels_list)
+        val packsList = binding.levelsLl
 
         for (id in 0 until packsList.childCount) {
             val currentButton = packsList.getChildAt(id)
-            val progressBarText = currentButton.findViewById<TextView>(R.id.levelmenu_button_progress_bar_text)
+            val currentButtonBinding = ButtonLevelmenuBinding.bind(currentButton)
+            val progressBarText = currentButtonBinding.progressTv
             val currentPack = packs[id]
             if (Storage.isPackOpen(currentPack, id)) {
                 val completedLevels = Storage.getCompletedLevels(currentPack)
                 val levelCount = packsSizes[id]
                 val completedPercent = ((completedLevels + 1).toFloat() / levelCount * 100).toInt()
-                currentButton.findViewById<ProgressBar>(R.id.levelmenu_button_progress_bar).progress = completedPercent
+                currentButtonBinding.progressPb.progress = completedPercent
                 progressBarText.text =
                     if (completedLevels == levelCount) getString(R.string.completed)
                     else getString(R.string.percent, completedLevels + 1, levelCount)
                 progressBarText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
-                currentButton.levelmenu_button_progress_bar_text.updateLayoutParams<ConstraintLayout.LayoutParams> {
+                progressBarText.updateLayoutParams<ConstraintLayout.LayoutParams> {
                     topMargin = 0
                 }
-                currentButton.completeLevelsTv.isVisible = false
+                currentButtonBinding.completeLevelsTv.isVisible = false
                 currentButton.setOnClickListener {
                     if (isClickable) {
                         isClickable = false
@@ -129,14 +128,23 @@ class LevelMenuActivity : AppCompatActivity() {
             } else {
                 progressBarText.text = getString(R.string.buy_levels, packPrices[id])
                 progressBarText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.coin_icon_16, 0)
-                val levelsToUnlock = Storage.getLevelsToUnlock(id)
-                currentButton.levelmenu_button_progress_bar_text.updateLayoutParams<ConstraintLayout.LayoutParams> {
-                    topMargin = resources.getDimension(R.dimen.levelmenu_progress_bar_text_margin).toInt()
+
+                val levelsRemainingToUnlock = Storage.getLevelsRemainingToUnlock(id)
+                if (levelsRemainingToUnlock != null) {
+                    progressBarText.updateLayoutParams<ConstraintLayout.LayoutParams> {
+                        topMargin = resources.getDimension(R.dimen.levelmenu_progress_bar_text_margin).toInt()
+                    }
+                    currentButtonBinding.completeLevelsTv.isVisible = true
+                    currentButtonBinding.completeLevelsTv.text = resources.getQuantityString(
+                        R.plurals.complete_levels_to_unlock, levelsRemainingToUnlock, levelsRemainingToUnlock
+                    )
+                } else {
+                    progressBarText.updateLayoutParams<ConstraintLayout.LayoutParams> {
+                        topMargin = 0
+                    }
+                    currentButtonBinding.completeLevelsTv.isVisible = false
                 }
-                currentButton.completeLevelsTv.isVisible = true
-                currentButton.completeLevelsTv.text = resources.getQuantityString(
-                    R.plurals.complete_levels_to_unlock, levelsToUnlock, levelsToUnlock
-                )
+
                 currentButton.setOnClickListener {
                     if (isClickable) {
                         isClickable = false

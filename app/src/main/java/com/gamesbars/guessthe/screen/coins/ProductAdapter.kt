@@ -1,15 +1,13 @@
 package com.gamesbars.guessthe.screen.coins
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.gamesbars.guessthe.R
 import com.gamesbars.guessthe.ads.AdsUtils
-import kotlinx.android.synthetic.main.item_product.view.*
+import com.gamesbars.guessthe.databinding.ItemProductBinding
 
 class ProductAdapter : ListAdapter<Product, ProductAdapter.ProductViewHolder>(ProductItemCallback()) {
 
@@ -17,28 +15,26 @@ class ProductAdapter : ListAdapter<Product, ProductAdapter.ProductViewHolder>(Pr
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         AdsUtils.fixDensity(parent.resources)
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_product, parent, false)
-        view.setOnClickListener {
-            (view.tag as? Product)?.also { product ->
+        val binding = ItemProductBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        binding.root.setOnClickListener {
+            (binding.root.tag as? Product)?.also { product ->
                 onItemClickListener?.invoke(product)
             }
         }
-        return ProductViewHolder(view)
+        return ProductViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
 
-    class ProductViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ProductViewHolder(private val binding: ItemProductBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Product) {
-            itemView.apply {
-                tag = item
-                coinsTv.text = item.coins.toString()
-                priceTv.text = item.price
-                removeAdsTv.isVisible = item.isAdsTitleVisible
-            }
+            itemView.tag = item
+            binding.coinsTv.text = item.coins.toString()
+            binding.priceTv.text = item.price
+            binding.removeAdsTv.isVisible = item.isAdsTitleVisible
         }
     }
 

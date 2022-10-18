@@ -8,40 +8,41 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.gamesbars.guessthe.R
+import com.gamesbars.guessthe.Storage
 import com.gamesbars.guessthe.ads.AdsUtils
 import com.gamesbars.guessthe.ads.BannerAdDelegate
 import com.gamesbars.guessthe.ads.consent.ConsentInfoManager
+import com.gamesbars.guessthe.databinding.ActivityMenuBinding
 import com.gamesbars.guessthe.playSound
 import com.gamesbars.guessthe.screen.coins.CoinsActivity
 import com.google.firebase.analytics.FirebaseAnalytics
-import kotlinx.android.synthetic.main.activity_menu.*
 
 class MenuActivity : AppCompatActivity() {
 
     private lateinit var saves: SharedPreferences
     var isClickable: Boolean = true
 
+    private lateinit var binding: ActivityMenuBinding
     private lateinit var firebaseAnalytics: FirebaseAnalytics
     private lateinit var bannerAdDelegate: BannerAdDelegate
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AdsUtils.fixDensity(resources)
-        setContentView(R.layout.activity_menu)
+        binding = ActivityMenuBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         bannerAdDelegate = BannerAdDelegate(this, saves)
 
-        findViewById<TextView>(R.id.menu_rate_coins).text = "+".plus(resources.getInteger(R.integer.rate_reward))
-        findViewById<TextView>(R.id.privacy_policy).movementMethod = LinkMovementMethod.getInstance()
+        binding.rateCoinsTv.text = "+".plus(resources.getInteger(R.integer.rate_reward))
+        binding.privacyPolicyTv.movementMethod = LinkMovementMethod.getInstance()
 
-        val adsSettingsView = findViewById<TextView>(R.id.ads_settings)
+        val adsSettingsView = binding.adsSettingsTv
         adsSettingsView.setOnClickListener { ConsentInfoManager.showConsentForm(this) }
 
         ConsentInfoManager.isUserInConsentZoneAsync(this) { isUserInConsentZone ->
@@ -49,27 +50,26 @@ class MenuActivity : AppCompatActivity() {
         }
 
         val sound = saves.getBoolean("sound", true)
-        findViewById<ImageView>(R.id.menu_sound).setImageResource(
+        binding.soundIv.setImageResource(
             if (sound) R.drawable.baseline_volume_up_white_48
             else R.drawable.baseline_volume_off_white_48
         )
 
-        if (saves.getBoolean("ads", true)) bannerAdDelegate.loadBanner(this, adViewContainer)
+        if (saves.getBoolean("ads", true)) bannerAdDelegate.loadBanner(this, binding.adViewContainer)
     }
 
     private fun updateBannerAd() {
         if (saves.getBoolean("ads", true)) {
-            adViewContainer.visibility = View.VISIBLE
-            bannerAdDelegate.updateBanner(this, adViewContainer)
+            binding.adViewContainer.visibility = View.VISIBLE
+            bannerAdDelegate.updateBanner(this, binding.adViewContainer)
         } else {
-            adViewContainer.visibility = View.GONE
+            binding.adViewContainer.visibility = View.GONE
         }
     }
 
     override fun onResume() {
         super.onResume()
-        if (saves.getBoolean("rated", false))
-            findViewById<TextView>(R.id.menu_rate_coins).visibility = View.GONE
+        if (saves.getBoolean("rated", false)) binding.rateCoinsTv.visibility = View.GONE
         updateBannerAd()
         isClickable = true
     }
@@ -108,8 +108,8 @@ class MenuActivity : AppCompatActivity() {
             if (!saves.getBoolean("rated", false)) {
                 val editor = saves.edit()
                 editor.putBoolean("rated", true)
-                editor.putInt("coins", saves.getInt("coins", 0) + resources.getInteger(R.integer.rate_reward))
                 editor.apply()
+                Storage.addCoins(resources.getInteger(R.integer.rate_reward))
             }
         }
     }
@@ -122,7 +122,7 @@ class MenuActivity : AppCompatActivity() {
                 putBoolean("sound", !sound)
                 apply()
             }
-            findViewById<ImageView>(R.id.menu_sound).setImageResource(
+            binding.soundIv.setImageResource(
                 if (sound) R.drawable.baseline_volume_off_white_48
                 else R.drawable.baseline_volume_up_white_48
             )
