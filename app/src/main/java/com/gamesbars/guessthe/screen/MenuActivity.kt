@@ -32,7 +32,6 @@ class MenuActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        AdsUtils.fixDensity(resources)
         binding = ActivityMenuBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

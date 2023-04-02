@@ -11,7 +11,6 @@ import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import com.gamesbars.guessthe.R
 import com.gamesbars.guessthe.Storage
-import com.gamesbars.guessthe.ads.AdsUtils
 import com.gamesbars.guessthe.ads.BannerAdDelegate
 import com.gamesbars.guessthe.databinding.ActivityLevelmenuBinding
 import com.gamesbars.guessthe.databinding.ButtonLevelmenuBinding
@@ -32,7 +31,6 @@ class LevelMenuActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        AdsUtils.fixDensity(resources)
         binding = ActivityLevelmenuBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

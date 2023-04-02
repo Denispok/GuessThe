@@ -10,7 +10,6 @@ import androidx.fragment.app.DialogFragment
 import com.gamesbars.guessthe.R
 import com.gamesbars.guessthe.Storage.getAuthorAndLicense
 import com.gamesbars.guessthe.Storage.getCurrentLevel
-import com.gamesbars.guessthe.ads.AdsUtils
 import com.gamesbars.guessthe.databinding.DialogLevelInfoBinding
 import com.gamesbars.guessthe.screen.PlayActivity
 
@@ -40,7 +39,6 @@ class InfoDialogFragment : DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        AdsUtils.fixDensity(resources)
         val builder = AlertDialog.Builder(context)
         val binding = DialogLevelInfoBinding.inflate(activity!!.layoutInflater)
         val fragment = fragmentManager!!.findFragmentByTag(resources.getString(R.string.level_fragment_tag)) as LevelFragment

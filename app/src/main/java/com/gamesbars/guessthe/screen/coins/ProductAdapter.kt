@@ -6,7 +6,6 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.gamesbars.guessthe.ads.AdsUtils
 import com.gamesbars.guessthe.databinding.ItemProductBinding
 
 class ProductAdapter : ListAdapter<Product, ProductAdapter.ProductViewHolder>(ProductItemCallback()) {
@@ -14,7 +13,6 @@ class ProductAdapter : ListAdapter<Product, ProductAdapter.ProductViewHolder>(Pr
     var onItemClickListener: ((Product) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
-        AdsUtils.fixDensity(parent.resources)
         val binding = ItemProductBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         binding.root.setOnClickListener {
             (binding.root.tag as? Product)?.also { product ->

@@ -9,7 +9,6 @@ import androidx.fragment.app.DialogFragment
 import com.gamesbars.guessthe.AnalyticsHelper
 import com.gamesbars.guessthe.R
 import com.gamesbars.guessthe.Storage
-import com.gamesbars.guessthe.ads.AdsUtils
 import com.gamesbars.guessthe.playSound
 import com.gamesbars.guessthe.screen.LevelMenuActivity
 
@@ -36,7 +35,6 @@ class ConfirmDialogFragment : DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        AdsUtils.fixDensity(resources)
         val saves = context!!.getSharedPreferences("saves", Context.MODE_PRIVATE)
         val packPrice = resources.getIntArray(R.array.packs_prices)[packId]
         val builder = AlertDialog.Builder(context)

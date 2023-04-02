@@ -5,12 +5,9 @@ import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.view.WindowManager
-import android.widget.RelativeLayout
-import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import com.gamesbars.guessthe.R
 import com.gamesbars.guessthe.Storage
-import com.gamesbars.guessthe.ads.AdsUtils
 import com.gamesbars.guessthe.databinding.DialogLevelTipsBinding
 import com.gamesbars.guessthe.playSound
 import com.gamesbars.guessthe.screen.PlayActivity
@@ -21,7 +18,6 @@ class TipsDialogFragment : DialogFragment() {
     private lateinit var firebaseAnalytics: FirebaseAnalytics
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        AdsUtils.fixDensity(resources)
         val builder = AlertDialog.Builder(context)
         val binding = DialogLevelTipsBinding.inflate(activity!!.layoutInflater)
 
