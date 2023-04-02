@@ -1,7 +1,6 @@
 package com.gamesbars.guessthe.ads.consent
 
 import android.content.Context
-import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import com.appodeal.consent.Consent
 import com.appodeal.consent.ConsentManager
@@ -10,18 +9,13 @@ import com.gamesbars.guessthe.AnalyticsHelper.logAdsLocation
 import com.gamesbars.guessthe.AnalyticsHelper.logConsentError
 import com.gamesbars.guessthe.R
 import com.gamesbars.guessthe.ads.AdsUtils
-import com.gamesbars.guessthe.screen.SplashScreenActivity
-import com.google.ads.consent.*
 import com.google.firebase.analytics.FirebaseAnalytics
-import java.net.URL
 
 object ConsentInfoManager {
 
-    const val CONSENT_INIT_TIME = 5000L
-
-    fun requestConsentUpdate(activity: SplashScreenActivity, onConsentCompleted: () -> Unit) {
+    fun requestConsentUpdate(onConsentCompleted: () -> Unit) {
         when (AdsUtils.AD_MEDIATION_TYPE) {
-            AdsUtils.AD_MEDIATION_TYPE_ADMOB -> requestConsentUpdateAdmob(activity, onConsentCompleted)
+            AdsUtils.AD_MEDIATION_TYPE_ADMOB -> throw IllegalStateException("Consent for Admob not implemented")
             AdsUtils.AD_MEDIATION_TYPE_APPODEAL -> {
                 // Consent will be requested automatically
                 onConsentCompleted.invoke()
@@ -31,17 +25,14 @@ object ConsentInfoManager {
 
     fun showConsentForm(activity: AppCompatActivity, onConsentCompleted: (() -> Unit)? = null) {
         when (AdsUtils.AD_MEDIATION_TYPE) {
-            AdsUtils.AD_MEDIATION_TYPE_ADMOB -> showConsentFormAdmob(activity, onConsentCompleted)
+            AdsUtils.AD_MEDIATION_TYPE_ADMOB -> throw IllegalStateException("Consent for Admob not implemented")
             AdsUtils.AD_MEDIATION_TYPE_APPODEAL -> showConsentFormAppodeal(activity, onConsentCompleted)
         }
     }
 
     fun isUserInConsentZone(context: Context): Boolean {
         when (AdsUtils.AD_MEDIATION_TYPE) {
-            AdsUtils.AD_MEDIATION_TYPE_ADMOB -> {
-                val consentInformation = ConsentInformation.getInstance(context)
-                return consentInformation.isRequestLocationInEeaOrUnknown
-            }
+            AdsUtils.AD_MEDIATION_TYPE_ADMOB -> throw IllegalStateException("Consent for Admob not implemented")
             AdsUtils.AD_MEDIATION_TYPE_APPODEAL -> {
                 return ConsentManager.consent.isGDPRScope or ConsentManager.consent.isCCPAScope
             }
@@ -66,54 +57,6 @@ object ConsentInfoManager {
 
         val firebaseAnalytics = FirebaseAnalytics.getInstance(context)
         firebaseAnalytics.setUserProperty("npa", if (npa) "non-personalized" else "personalized")
-    }
-
-    private fun requestConsentUpdateAdmob(activity: SplashScreenActivity, onConsentCompleted: () -> Unit) {
-        val consentInformation = ConsentInformation.getInstance(activity)
-        val publisherIds = arrayOf(activity.getString(R.string.pub_id))
-        consentInformation.requestConsentInfoUpdate(publisherIds, object : ConsentInfoUpdateListener {
-
-            override fun onConsentInfoUpdated(consentStatus: ConsentStatus) {
-                if (consentInformation.isRequestLocationInEeaOrUnknown) {
-                    logAdsLocation(true)
-                    when (consentStatus) {
-                        ConsentStatus.UNKNOWN -> {
-                            showConsentFormAdmob(activity, onConsentCompleted)
-                            Handler().postDelayed({
-                                if (!activity.isConsentLoaded) {
-                                    logConsentError("Consent didn't loaded for $CONSENT_INIT_TIME millis")
-
-                                    activity.isConsentTimeOver = true
-                                    putNpa(activity, true)
-                                    onConsentCompleted.invoke()
-                                }
-                            }, CONSENT_INIT_TIME)
-                        }
-
-                        ConsentStatus.NON_PERSONALIZED -> {
-                            putNpa(activity, true)
-                            onConsentCompleted.invoke()
-                        }
-
-                        ConsentStatus.PERSONALIZED -> {
-                            putNpa(activity, false)
-                            onConsentCompleted.invoke()
-                        }
-                    }
-
-                } else {
-                    logAdsLocation(false)
-                    putNpa(activity, false)
-                    onConsentCompleted.invoke()
-                }
-            }
-
-            override fun onFailedToUpdateConsentInfo(errorDescription: String) {
-                logConsentError("onFailedToUpdateConsentInfo: $errorDescription")
-                putNpa(activity, true)
-                onConsentCompleted.invoke()
-            }
-        })
     }
 
     /** This method may not call the callback */
@@ -153,57 +96,6 @@ object ConsentInfoManager {
                     onConsentCompleted.invoke()
                 }
             })
-    }
-
-    private fun showConsentFormAdmob(activity: AppCompatActivity, onConsentCompleted: (() -> Unit)? = null) {
-        val privacyUrl = URL(activity.getString(R.string.privacy_policy_link))
-
-        var form: ConsentForm? = null
-        form = ConsentForm.Builder(activity, privacyUrl)
-            .withListener(object : ConsentFormListener() {
-
-                override fun onConsentFormLoaded() {
-                    if (activity is SplashScreenActivity) {
-                        if (activity.isConsentTimeOver) {
-                            logConsentError("onConsentFormLoaded: form loaded after consent time is over")
-                            return
-                        }
-                        activity.isConsentLoaded = true
-                    }
-                    form?.show()
-                }
-
-                override fun onConsentFormClosed(consentStatus: ConsentStatus, userPrefersAdFree: Boolean?) {
-                    when (consentStatus) {
-                        ConsentStatus.PERSONALIZED -> {
-                            putNpa(activity, false)
-                            onConsentCompleted?.invoke()
-                        }
-
-                        else -> {
-                            putNpa(activity, true)
-                            onConsentCompleted?.invoke()
-                        }
-                    }
-                }
-
-                override fun onConsentFormError(errorDescription: String) {
-                    logConsentError("onConsentFormError: $errorDescription")
-
-                    if (activity is SplashScreenActivity) {
-                        if (activity.isConsentTimeOver) return
-                        activity.isConsentLoaded = true
-                    }
-
-                    putNpa(activity, true)
-                    onConsentCompleted?.invoke()
-                }
-            })
-            .withPersonalizedAdsOption()
-            .withNonPersonalizedAdsOption()
-            .build()
-
-        form.load()
     }
 
     private fun showConsentFormAppodeal(activity: AppCompatActivity, onConsentCompleted: (() -> Unit)? = null) {
