@@ -10,6 +10,7 @@ import android.text.method.LinkMovementMethod
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import com.gamesbars.guessthe.AnalyticsHelper
 import com.gamesbars.guessthe.R
 import com.gamesbars.guessthe.Storage
 import com.gamesbars.guessthe.ads.AdsUtils
@@ -41,13 +42,7 @@ class MenuActivity : AppCompatActivity() {
 
         binding.rateCoinsTv.text = "+".plus(resources.getInteger(R.integer.rate_reward))
         binding.privacyPolicyTv.movementMethod = LinkMovementMethod.getInstance()
-
-        val adsSettingsView = binding.adsSettingsTv
-        adsSettingsView.setOnClickListener { ConsentInfoManager.showConsentForm(this) }
-
-        ConsentInfoManager.isUserInConsentZoneAsync(this) { isUserInConsentZone ->
-            runOnUiThread { adsSettingsView.isVisible = isUserInConsentZone }
-        }
+        binding.adsSettingsTv.setOnClickListener { ConsentInfoManager.showConsentForm(this) }
 
         val sound = saves.getBoolean("sound", true)
         binding.soundIv.setImageResource(
@@ -70,6 +65,7 @@ class MenuActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         if (saves.getBoolean("rated", false)) binding.rateCoinsTv.visibility = View.GONE
+        updateConsentInfo()
         updateBannerAd()
         isClickable = true
     }
@@ -141,5 +137,16 @@ class MenuActivity : AppCompatActivity() {
             sharingIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_subject))
             startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_chooser_title)))
         }
+    }
+
+    private fun updateConsentInfo() {
+        val isUserInConsentZone = ConsentInfoManager.isUserInConsentZone(this)
+        // Update location and npa here because consent in Appodeal requests automatically without callback
+        if (AdsUtils.AD_MEDIATION_TYPE == AdsUtils.AD_MEDIATION_TYPE_APPODEAL) {
+            val npa = ConsentInfoManager.nonPersonalizedAdsAppodeal()
+            ConsentInfoManager.putNpa(this, npa)
+            AnalyticsHelper.logAdsLocation(isUserInConsentZone)
+        }
+        binding.adsSettingsTv.isVisible = isUserInConsentZone
     }
 }

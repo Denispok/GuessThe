@@ -24,13 +24,6 @@ object ConsentInfoManager {
             AdsUtils.AD_MEDIATION_TYPE_ADMOB -> requestConsentUpdateAdmob(activity, onConsentCompleted)
             AdsUtils.AD_MEDIATION_TYPE_APPODEAL -> {
                 // Consent will be requested automatically
-                ConsentManager.addConsentObserver { consent ->
-                    logAdsLocation(isUserInConsentZone(activity))
-                    when (consent.status) {
-                        Consent.Status.PERSONALIZED -> putNpa(activity, false)
-                        else -> putNpa(activity, true)
-                    }
-                }
                 onConsentCompleted.invoke()
             }
         }
@@ -56,21 +49,23 @@ object ConsentInfoManager {
         return true
     }
 
-    fun isUserInConsentZoneAsync(context: Context, onConsentChanged: (isUserInConsentZone: Boolean) -> Unit) {
-        when (AdsUtils.AD_MEDIATION_TYPE) {
-            AdsUtils.AD_MEDIATION_TYPE_ADMOB -> {
-                val consentInformation = ConsentInformation.getInstance(context)
-                onConsentChanged.invoke(consentInformation.isRequestLocationInEeaOrUnknown)
-            }
-            AdsUtils.AD_MEDIATION_TYPE_APPODEAL -> {
-                var observer: ((Consent) -> Unit)? = null
-                observer = { consent ->
-                    onConsentChanged.invoke(consent.isGDPRScope or consent.isCCPAScope)
-                    observer?.let { ConsentManager.removeConsentObserver(it) }
-                }
-                ConsentManager.addConsentObserver(observer)
-            }
+    fun nonPersonalizedAdsAppodeal(): Boolean {
+        return when (ConsentManager.consentStatus) {
+            Consent.Status.PERSONALIZED -> false
+            Consent.Status.UNKNOWN -> ConsentManager.shouldShow
+            else -> true
         }
+    }
+
+    fun putNpa(context: Context, npa: Boolean) {
+        val saves = context.getSharedPreferences("saves", Context.MODE_PRIVATE)
+        saves.edit().apply {
+            putBoolean("npa", npa)
+            apply()
+        }
+
+        val firebaseAnalytics = FirebaseAnalytics.getInstance(context)
+        firebaseAnalytics.setUserProperty("npa", if (npa) "non-personalized" else "personalized")
     }
 
     private fun requestConsentUpdateAdmob(activity: SplashScreenActivity, onConsentCompleted: () -> Unit) {
@@ -242,16 +237,5 @@ object ConsentInfoManager {
 
         val consentForm = com.appodeal.consent.ConsentForm(activity, consentFormListener)
         consentForm.load()
-    }
-
-    private fun putNpa(context: Context, npa: Boolean) {
-        val saves = context.getSharedPreferences("saves", Context.MODE_PRIVATE)
-        saves.edit().apply {
-            putBoolean("npa", npa)
-            apply()
-        }
-
-        val firebaseAnalytics = FirebaseAnalytics.getInstance(context)
-        firebaseAnalytics.setUserProperty("npa", if (npa) "non-personalized" else "personalized")
     }
 }
