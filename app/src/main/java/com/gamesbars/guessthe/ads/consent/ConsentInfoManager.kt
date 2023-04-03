@@ -30,7 +30,7 @@ object ConsentInfoManager {
         }
     }
 
-    fun isUserInConsentZone(context: Context): Boolean {
+    fun isUserInConsentZone(): Boolean {
         when (AdsUtils.AD_MEDIATION_TYPE) {
             AdsUtils.AD_MEDIATION_TYPE_ADMOB -> throw IllegalStateException("Consent for Admob not implemented")
             AdsUtils.AD_MEDIATION_TYPE_APPODEAL -> {
