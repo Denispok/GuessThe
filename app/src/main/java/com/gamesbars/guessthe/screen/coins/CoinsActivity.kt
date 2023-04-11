@@ -10,7 +10,6 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.billingclient.api.*
 import com.gamesbars.guessthe.*
-import com.gamesbars.guessthe.ads.AdsUtils
 import com.gamesbars.guessthe.ads.BannerAdDelegate
 import com.gamesbars.guessthe.ads.RewardedAdDelegate
 import com.gamesbars.guessthe.databinding.ActivityCoinsBinding
@@ -44,7 +43,6 @@ class CoinsActivity : AppCompatActivity(), CoroutineScope {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        AdsUtils.fixDensity(resources)
         binding = ActivityCoinsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

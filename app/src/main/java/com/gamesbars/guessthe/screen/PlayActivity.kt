@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.gamesbars.guessthe.R
 import com.gamesbars.guessthe.Storage
-import com.gamesbars.guessthe.ads.AdsUtils
 import com.gamesbars.guessthe.ads.BannerAdDelegate
 import com.gamesbars.guessthe.ads.InterstitialAdDelegate
 import com.gamesbars.guessthe.ads.RewardedAdDelegate
@@ -37,7 +36,6 @@ class PlayActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        AdsUtils.fixDensity(resources)
         binding = ActivityPlayBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

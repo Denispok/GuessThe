@@ -17,7 +17,6 @@ import com.gamesbars.guessthe.Storage.getDrawableResIdByName
 import com.gamesbars.guessthe.Storage.getLevelName
 import com.gamesbars.guessthe.Storage.getStringArrayResIdByName
 import com.gamesbars.guessthe.Storage.isLevelHaveInfo
-import com.gamesbars.guessthe.ads.AdsUtils
 import com.gamesbars.guessthe.databinding.FragmentLevelBinding
 import com.gamesbars.guessthe.level.Letter
 import com.gamesbars.guessthe.level.Letters
@@ -56,8 +55,6 @@ class LevelFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        AdsUtils.fixDensity(resources)
-
         sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(context!!)
@@ -73,7 +70,6 @@ class LevelFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        AdsUtils.fixDensity(resources)
         _binding = FragmentLevelBinding.inflate(inflater, container, false)
 
         val levelCaption = Storage.getLevelCaption(pack, getCurrentLevel(pack))

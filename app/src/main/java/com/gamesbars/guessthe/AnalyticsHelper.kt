@@ -22,6 +22,7 @@ object AnalyticsHelper {
     private const val EVENT_ERROR_CONSENT_APPODEAL = "consent_error_appodeal"
     private const val EVENT_LEVEL_COMPLETE = "level_complete"
     private const val EVENT_PACK_UNLOCKED = "pack_unlocked"
+    private const val PROPERTY_ADSLOCATION = "adslocation"
     private const val PARAM_MESSAGE = "message"
     private const val PARAM_CONNECTIVITY_INFO = "connectivity_info"
 
@@ -114,7 +115,8 @@ object AnalyticsHelper {
 
     fun logAdsLocation(inEeaOrUnknown: Boolean) {
         val location = if (inEeaOrUnknown) "InEeaOrUnknown" else "None"
-        firebaseAnalytics.setUserProperty("adslocation", location)
+        if (BuildConfig.DEBUG) Log.d(TAG_DEBUG, "FA set user property $PROPERTY_ADSLOCATION to $location")
+        else firebaseAnalytics.setUserProperty(PROPERTY_ADSLOCATION, location)
     }
 
     private fun getConnectivityInfo(): String? {

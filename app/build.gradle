@@ -12,8 +12,8 @@ android {
         applicationId "com.gamesbars.guessthe"
         minSdkVersion 21
         targetSdkVersion 33
-        versionCode 13
-        versionName "1.13n"
+        versionCode 14
+        versionName "1.14o"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -59,26 +59,26 @@ dependencies {
 
     implementation "com.android.billingclient:billing-ktx:5.0.0"
 
-    implementation 'com.google.android.ads.consent:consent-library:1.0.7'
-    implementation 'com.google.android.gms:play-services-ads:21.1.0'
+    implementation 'com.google.android.gms:play-services-ads:21.4.0'
     implementation 'com.google.firebase:firebase-analytics:21.2.0'
     implementation 'com.google.firebase:firebase-crashlytics:18.3.1'
 
-    implementation 'com.appodeal.ads.sdk:core:3.0.0'
-    implementation 'com.appodeal.ads.sdk.networks:adcolony:3.0.0.4'
-    implementation 'com.appodeal.ads.sdk.networks:admob:3.0.0.3'
-    implementation 'com.appodeal.ads.sdk.networks:appodeal:3.0.0.0'
-    implementation 'com.appodeal.ads.sdk.networks:applovin:3.0.0.2'
-    implementation 'com.appodeal.ads.sdk.networks:bidmachine:3.0.0.4'
-    implementation 'com.appodeal.ads.sdk.networks:ironsource:3.0.0.2'
-    implementation 'com.appodeal.ads.sdk.networks:facebook:3.0.0.3'
-    implementation 'com.appodeal.ads.sdk.networks:my_target:3.0.0.4'
-    implementation 'com.appodeal.ads.sdk.networks:mraid:3.0.0.0'
-    implementation 'com.appodeal.ads.sdk.networks:vast:3.0.0.0'
-    implementation 'com.appodeal.ads.sdk.networks:vungle:3.0.0.4'
-    implementation 'com.appodeal.ads.sdk.networks:unity_ads:3.0.0.1'
-    implementation 'com.appodeal.ads.sdk.networks:yandex:3.0.0.3'
-    implementation 'com.appodeal.ads.sdk.services:stack_analytics:3.0.0.0'
+    def appodealSdkVersion = "3.0.2.0"
+    implementation "com.appodeal.ads.sdk:core:3.0.2"
+    implementation "com.appodeal.ads.sdk.networks:adcolony:$appodealSdkVersion"
+    implementation "com.appodeal.ads.sdk.networks:admob:$appodealSdkVersion"
+    implementation "com.appodeal.ads.sdk.networks:appodeal:$appodealSdkVersion"
+    implementation "com.appodeal.ads.sdk.networks:applovin:$appodealSdkVersion"
+    implementation "com.appodeal.ads.sdk.networks:bidmachine:$appodealSdkVersion"
+    implementation "com.appodeal.ads.sdk.networks:ironsource:$appodealSdkVersion"
+    implementation "com.appodeal.ads.sdk.networks:facebook:$appodealSdkVersion"
+    implementation "com.appodeal.ads.sdk.networks:my_target:$appodealSdkVersion"
+    implementation "com.appodeal.ads.sdk.networks:mraid:$appodealSdkVersion"
+    implementation "com.appodeal.ads.sdk.networks:vast:$appodealSdkVersion"
+    implementation "com.appodeal.ads.sdk.networks:vungle:$appodealSdkVersion"
+    implementation "com.appodeal.ads.sdk.networks:unity_ads:$appodealSdkVersion"
+    implementation "com.appodeal.ads.sdk.networks:yandex:$appodealSdkVersion"
+    implementation "com.appodeal.ads.sdk.services:stack_analytics:$appodealSdkVersion"
 
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     kapt 'com.github.bumptech.glide:compiler:4.12.0'

@@ -15,13 +15,6 @@ class SplashScreenActivity : AppCompatActivity() {
     private lateinit var firebaseAnalytics: FirebaseAnalytics
     private lateinit var saves: SharedPreferences
 
-    // FUCKING GOOGLE CONSENT SDK KOSTbIL'
-    @Volatile
-    var isConsentTimeOver: Boolean = false
-
-    @Volatile
-    var isConsentLoaded: Boolean = false
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splashscreen)
@@ -44,7 +37,7 @@ class SplashScreenActivity : AppCompatActivity() {
             firebaseAnalytics.setUserProperty("sound", "on")
         }
 
-        ConsentInfoManager.requestConsentUpdate(this, ::startGame)
+        ConsentInfoManager.requestConsentUpdate(::startGame)
     }
 
     private fun startGame() {

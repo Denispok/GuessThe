@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.gamesbars.guessthe.R
 import com.gamesbars.guessthe.Storage
-import com.gamesbars.guessthe.ads.AdsUtils
 import com.gamesbars.guessthe.databinding.FragmentWinBinding
 import com.gamesbars.guessthe.playSound
 import com.gamesbars.guessthe.screen.PlayActivity
@@ -48,7 +47,6 @@ class WinFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        AdsUtils.fixDensity(resources)
         _binding = FragmentWinBinding.inflate(inflater, container, false)
         return binding.root
     }
