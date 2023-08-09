@@ -10,14 +10,13 @@ import com.gamesbars.guessthe.AnalyticsHelper
 import com.gamesbars.guessthe.R
 import com.gamesbars.guessthe.Storage
 import com.gamesbars.guessthe.playSound
-import com.gamesbars.guessthe.screen.LevelMenuActivity
+import com.gamesbars.guessthe.screen.levelmenu.LevelMenuActivity
 
 class ConfirmDialogFragment : DialogFragment() {
 
     companion object {
-        fun newInstance(packId: Int, pack: String): ConfirmDialogFragment {
+        fun newInstance(pack: String): ConfirmDialogFragment {
             val args = Bundle()
-            args.putInt("packId", packId)
             args.putString("pack", pack)
             val fragment = ConfirmDialogFragment()
             fragment.arguments = args
@@ -25,18 +24,16 @@ class ConfirmDialogFragment : DialogFragment() {
         }
     }
 
-    private var packId: Int = -1
     private lateinit var pack: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        packId = arguments!!.getInt("packId")
         pack = arguments!!.getString("pack")!!
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val saves = context!!.getSharedPreferences("saves", Context.MODE_PRIVATE)
-        val packPrice = resources.getIntArray(R.array.packs_prices)[packId]
+        val packPrice = Storage.getPackPrice(pack)
         val builder = AlertDialog.Builder(context)
         if (Storage.getCoins() >= packPrice) {
             builder.setMessage(getString(R.string.confirm_dialog_message, packPrice))

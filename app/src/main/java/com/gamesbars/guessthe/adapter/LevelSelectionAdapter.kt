@@ -10,8 +10,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import com.gamesbars.guessthe.R
 import com.gamesbars.guessthe.Storage.getDrawableResIdByName
-import com.gamesbars.guessthe.Storage.getLevelCount
 import com.gamesbars.guessthe.Storage.getLevelName
+import com.gamesbars.guessthe.Storage.getPackSize
 import com.gamesbars.guessthe.customview.LevelView
 
 class LevelSelectionAdapter(
@@ -27,7 +27,7 @@ class LevelSelectionAdapter(
         return LevelSelectionViewHolder(view)
     }
 
-    override fun getItemCount(): Int = getLevelCount(pack)
+    override fun getItemCount(): Int = getPackSize(pack)
 
     override fun onBindViewHolder(viewHolder: LevelSelectionViewHolder, position: Int) {
         val number = position + 1

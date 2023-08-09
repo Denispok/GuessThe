@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Button xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="?android:attr/borderlessButtonStyle"
+    android:layout_width="@dimen/levelmenu_button_width"
+    android:layout_height="@dimen/menu_button_height"
+    android:layout_gravity="center"
+    android:layout_marginBottom="@dimen/menu_button_margin"
+    android:background="@drawable/button_selector_blue"
+    android:textAllCaps="false"
+    android:textColor="@color/colorText"
+    android:textSize="@dimen/menu_button_text_size"
+    tools:text="Папка 1" />

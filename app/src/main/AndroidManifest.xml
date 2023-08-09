@@ -53,7 +53,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".screen.LevelMenuActivity"
+            android:name=".screen.levelmenu.LevelMenuActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
 

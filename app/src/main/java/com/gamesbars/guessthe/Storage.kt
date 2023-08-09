@@ -1,7 +1,9 @@
 package com.gamesbars.guessthe
 
+import android.annotation.SuppressLint
 import android.content.Context
 
+@SuppressLint("DiscouragedApi")
 object Storage {
 
     val resources get() = App.appContext.resources!!
@@ -29,12 +31,8 @@ object Storage {
 
     fun getLevelName(pack: String, level: Int) = pack + "_" + level
 
-    fun getLevelCount(pack: String): Int {
-        val packId = resources.getStringArray(R.array.packs).indexOf(pack)
-        return resources.getIntArray(R.array.packs_sizes)[packId]
-    }
-
-    fun getLevelsRemainingToUnlock(packIndex: Int): Int? {
+    fun getLevelsRemainingToUnlock(pack: String): Int? {
+        val packIndex = getPackIndex(pack)
         val levelsToUnlock = resources.getIntArray(R.array.packs_levels_to_unlock)[packIndex]
         if (levelsToUnlock == -1) return null
         return levelsToUnlock - getCompletedLevelsCount()
@@ -92,7 +90,8 @@ object Storage {
         return null
     }
 
-    fun isPackOpen(pack: String, packIndex: Int): Boolean {
+    fun isPackOpen(pack: String): Boolean {
+        val packIndex = getPackIndex(pack)
         val levelsToUnlock = resources.getIntArray(R.array.packs_levels_to_unlock)[packIndex]
         val isPackOpenedByLevels = levelsToUnlock != -1 && getCompletedLevelsCount() >= levelsToUnlock
         return isPackPurchased(pack) || isPackOpenedByLevels
@@ -103,7 +102,7 @@ object Storage {
     /** @return is level completed first time */
     fun completeLevel(pack: String): Boolean {
         val currentLevel = getCurrentLevel(pack)
-        val levelCount = getLevelCount(pack)
+        val packSize = getPackSize(pack)
         val levelName = pack + currentLevel
         var isCompletedFirstTime = false
 
@@ -115,7 +114,7 @@ object Storage {
             isCompletedFirstTime = true
             AnalyticsHelper.logLevelComplete(pack, currentLevel)
         }
-        if (currentLevel + 1 > levelCount) editor.putInt(pack, 1)
+        if (currentLevel + 1 > packSize) editor.putInt(pack, 1)
         else editor.putInt(pack, currentLevel + 1)
         editor.apply()
 
@@ -136,4 +135,16 @@ object Storage {
             }
         }
     }
+
+    fun getPackSize(pack: String): Int {
+        val packIndex = getPackIndex(pack)
+        return resources.getIntArray(R.array.packs_sizes)[packIndex]
+    }
+
+    fun getPackPrice(pack: String): Int {
+        val packIndex = getPackIndex(pack)
+        return resources.getIntArray(R.array.packs_prices)[packIndex]
+    }
+
+    private fun getPackIndex(pack: String) = resources.getStringArray(R.array.packs).indexOf(pack)
 }

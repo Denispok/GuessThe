@@ -1,0 +1,15 @@
+{
+  "folder": {
+    "name": "Папка",
+    "items": {
+      "folder2": {
+        "name": "Папка 2",
+        "items": {
+          "russian_cars": "Русские Авто"
+        }
+      },
+      "test": "Тест"
+    }
+  },
+  "big_words_test": "Тест больших строк"
+}

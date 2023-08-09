@@ -54,12 +54,6 @@
 
     <string name="alphabet">abcdefghijklmnopqrstuvwxyz012345</string>
 
-    <string-array name="packs_names">
-        <item>Russian Auto</item>
-        <item>Test</item>
-        <item>Big string test</item>
-    </string-array>
-
     <array name="packs">
         <item>russian_cars</item>
         <item>test</item>

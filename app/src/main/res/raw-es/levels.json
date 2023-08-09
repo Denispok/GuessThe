@@ -1,0 +1,15 @@
+{
+  "folder": {
+    "name": "Carpeta",
+    "items": {
+      "folder2": {
+        "name": "Carpeta 2",
+        "items": {
+          "russian_cars": "Nivel 1"
+        }
+      },
+      "test": "Nivel 2"
+    }
+  },
+  "big_words_test": "Nivel 3"
+}

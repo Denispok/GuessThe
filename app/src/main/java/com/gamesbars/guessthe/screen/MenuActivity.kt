@@ -19,6 +19,7 @@ import com.gamesbars.guessthe.ads.consent.ConsentInfoManager
 import com.gamesbars.guessthe.databinding.ActivityMenuBinding
 import com.gamesbars.guessthe.playSound
 import com.gamesbars.guessthe.screen.coins.CoinsActivity
+import com.gamesbars.guessthe.screen.levelmenu.LevelMenuActivity
 import com.google.firebase.analytics.FirebaseAnalytics
 
 class MenuActivity : AppCompatActivity() {
@@ -73,7 +74,7 @@ class MenuActivity : AppCompatActivity() {
         if (isClickable) {
             isClickable = false
             playSound(this, R.raw.button)
-            startActivity(Intent(applicationContext, LevelMenuActivity::class.java))
+            startActivity(LevelMenuActivity.getIntent(this))
         }
     }
 
