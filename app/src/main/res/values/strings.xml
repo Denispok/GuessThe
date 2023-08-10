@@ -54,12 +54,6 @@
 
     <string name="alphabet">abcdefghijklmnopqrstuvwxyz012345</string>
 
-    <string-array name="packs_names">
-        <item>Russian Auto</item>
-        <item>Test</item>
-        <item>Big string test</item>
-    </string-array>
-
     <array name="packs">
         <item>russian_cars</item>
         <item>test</item>
@@ -87,7 +81,7 @@
         <item>Caption 1</item>
         <item>-</item>
         <item>*</item>
-        <item>Caption 4</item>
+        <item>Caption 4 is a very big caption, too big for one line</item>
         <item>*</item>
         <item>*</item>
         <item>*</item>
@@ -101,8 +95,8 @@
         <item>что</item>
         <item>тут про бе лы</item>
         <item>буквы и пробел</item>
-        <item>раз</item>
-        <item>два</item>
+        <item>ра\'з</item>
+        <item>дв-а</item>
         <item>три</item>
         <item>проверка</item>
         <item>тут всё</item>

@@ -55,12 +55,6 @@
 
     <string name="alphabet">абвгдеёжзийклмнопрстуфхцчшщъыьэюя012345</string>
 
-    <string-array name="packs_names">
-        <item>Русские Авто</item>
-        <item>Тест</item>
-        <item>Тест больших строк</item>
-    </string-array>
-
     <string-array name="russian_cars">
         <item>приора</item>
         <item>восьмёрка</item>

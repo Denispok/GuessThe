@@ -12,16 +12,24 @@ import com.gamesbars.guessthe.level.Letters.Companion.letterCount
 import com.gamesbars.guessthe.playSound
 
 class WordLetters(private val fragment: LevelFragment, private val word: String) {
+
+    companion object {
+
+        /** Static chars always visible */
+        val STATIC_CHARS = arrayOf(' ', '-', '\'')
+    }
+
     private lateinit var wordLayout: WordLettersLayout
     private val wordLetters = arrayListOf<WordLetter>()
     val animationDuration = 400L
 
     init {
-        var spaceCount = 0
+        var knownCharCount = 0
         for (i in 0 until word.length) {
-            val knownChar = if (i + 1 - spaceCount > letterCount) word[i] else null
-            val wordLetter = WordLetter(fragment.context!!, word[i] == ' ', knownChar)
-            if (wordLetter.isSpace) spaceCount++
+            val isStatic = STATIC_CHARS.contains(word[i])
+            val knownChar = if (i + 1 - knownCharCount > letterCount || isStatic) word[i] else null
+            val wordLetter = WordLetter(knownChar, fragment.context!!)
+            if (knownChar != null) knownCharCount++
             wordLetters.add(wordLetter)
         }
         for (wordLetter in wordLetters) {
@@ -43,10 +51,6 @@ class WordLetters(private val fragment: LevelFragment, private val word: String)
     private fun checkWord() {
         var userWord = ""
         for (wordLetter in wordLetters) {
-            if (wordLetter.isSpace) {
-                userWord += " "
-                continue
-            }
             if (wordLetter.text.isEmpty()) return // Be careful - model depends on view
             userWord += wordLetter.text
         }
@@ -58,7 +62,7 @@ class WordLetters(private val fragment: LevelFragment, private val word: String)
 
     private fun freeWordLetter(): WordLetter? {
         for (wordLetter in wordLetters) {
-            if (wordLetter.isSpace) continue
+            if (wordLetter.knownChar != null) continue
             if (wordLetter.letter == null) return wordLetter
         }
         return null

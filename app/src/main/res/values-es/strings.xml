@@ -48,13 +48,4 @@
     <string name="photo_info">Sobre la foto</string>
     <string name="info_license_title">La licencia: </string>
     <string name="info_author_title">El autor: </string>
-
-    <!--  Levels  -->
-
-    <string-array name="packs_names">
-        <item>Nivel 1</item>
-        <item>Nivel 2</item>
-        <item>Nivel 3</item>
-    </string-array>
-
 </resources>
