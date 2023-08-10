@@ -15,13 +15,34 @@ class WordLettersLayout(context: Context, attrs: AttributeSet? = null) : LinearL
     private val linearList = mutableListOf<LinearLayout>()
     private var wordLetters: List<WordLetter>? = null
 
-    private var currentLinear = inflateLinear()
-    private var currentLineSize = 0
-    private var currentWordSize = -1
-    private var currentSpacePosition = -1
+    override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
+        super.onLayout(changed, l, t, r, b)
+
+        if (wordLetters != null) {
+            val oldParams = wordLetters!![0].layoutParams as LayoutParams
+            var minSize = wordLetters!![0].width + oldParams.leftMargin + oldParams.rightMargin
+
+            for (linear in linearList) {
+                val size = linear.width / linear.childCount
+                if (size < minSize) minSize = size
+            }
+
+            val params = LayoutParams(minSize, wordLetters!![0].height)
+            wordLetters!!.forEach {
+                val oldLetterParams = it.layoutParams as LayoutParams
+                val oldLetterWidth = oldLetterParams.width + oldLetterParams.leftMargin + oldLetterParams.rightMargin
+                if (oldLetterWidth != params.width) it.layoutParams = params
+            }
+        }
+    }
 
     fun setWordLetters(list: List<WordLetter>) {
         wordLetters = list
+
+        var currentLinear = inflateLinear()
+        var currentLineSize = 0
+        var currentWordSize = -1
+        var currentSpacePosition = -1
 
         for (i in 0 until list.size) {
             if (list[i].isSpace) {
@@ -56,27 +77,6 @@ class WordLettersLayout(context: Context, attrs: AttributeSet? = null) : LinearL
         }
     }
 
-    override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
-        super.onLayout(changed, l, t, r, b)
-
-        if (wordLetters != null) {
-            val oldParams = wordLetters!![0].layoutParams as LayoutParams
-            var minSize = wordLetters!![0].width + oldParams.leftMargin + oldParams.rightMargin
-
-            for (linear in linearList) {
-                val size = linear.width / linear.childCount
-                if (size < minSize) minSize = size
-            }
-
-            val params = LayoutParams(minSize, wordLetters!![0].height)
-            wordLetters!!.forEach {
-                val oldLetterParams = it.layoutParams as LayoutParams
-                val oldLetterWidth = oldLetterParams.width + oldLetterParams.leftMargin + oldLetterParams.rightMargin
-                if (oldLetterWidth != params.width) it.layoutParams = params
-            }
-        }
-    }
-
     private fun inflateLinear(): LinearLayout {
         val linear = LinearLayout(context)
         linear.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
@@ -87,4 +87,5 @@ class WordLettersLayout(context: Context, attrs: AttributeSet? = null) : LinearL
         return linear
     }
 
+    private val WordLetter.isSpace get() = knownChar == ' '
 }

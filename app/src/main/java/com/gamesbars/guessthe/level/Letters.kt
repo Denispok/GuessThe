@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.gamesbars.guessthe.R
 import com.gamesbars.guessthe.Storage
+import com.gamesbars.guessthe.level.WordLetters.Companion.STATIC_CHARS
 import java.util.*
 
 class Letters(private val activity: Activity, word: String, pack: String) {
@@ -61,11 +62,11 @@ class Letters(private val activity: Activity, word: String, pack: String) {
         if (newLetters[0] == null || !isLettersCorrect(word, newLetters.requireNoNulls())) {
             for (i in 0 until newLetters.size) newLetters[i] = null
 
-            var spaceCount = 0
+            var staticCharsCount = 0
             for (id in 0 until word.length) {
-                if (id + 1 - spaceCount > letterCount) break
-                if (word[id] == ' ') {
-                    spaceCount++
+                if (id + 1 - staticCharsCount > letterCount) break
+                if (STATIC_CHARS.contains(word[id])) {
+                    staticCharsCount++
                     continue
                 }
                 var random: Int
@@ -100,7 +101,10 @@ class Letters(private val activity: Activity, word: String, pack: String) {
     }
 
     private fun isLettersCorrect(word: String, letters: Array<Letter>): Boolean {
-        var wordShouldBeGuessed = word.remove(' ')
+        var wordShouldBeGuessed = word
+        STATIC_CHARS.forEach {
+            wordShouldBeGuessed = wordShouldBeGuessed.remove(it)
+        }
         wordShouldBeGuessed = wordShouldBeGuessed.slice(0 until minOf(letterCount, wordShouldBeGuessed.length))
         for (i in letters) {
             wordShouldBeGuessed = wordShouldBeGuessed.replaceFirst(i.letter.toString(), "")

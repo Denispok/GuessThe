@@ -2,14 +2,18 @@ package com.gamesbars.guessthe.level
 
 import android.content.Context
 import android.graphics.Color
-import androidx.core.content.res.ResourcesCompat
 import android.util.TypedValue
 import android.view.Gravity
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.res.ResourcesCompat
 import com.gamesbars.guessthe.R
 
-class WordLetter(context: Context, val isSpace: Boolean = false, val knownChar: Char? = null) : TextView(context) {
+class WordLetter(
+    /** Known chars always visible and without background selector */
+    val knownChar: Char? = null,
+    context: Context
+) : TextView(context) {
 
     var letter: Letter? = null
     val dimension: Int
@@ -29,13 +33,10 @@ class WordLetter(context: Context, val isSpace: Boolean = false, val knownChar: 
         setPadding(0, 0, padding, padding)
         isClickable = false
 
-        if (!isSpace && knownChar == null) {
+        if (knownChar == null) {
             background = ResourcesCompat.getDrawable(resources, R.drawable.word_letter_selector, null)
-        }
-
-        if (knownChar != null) {
-            setText(knownChar.toString())
+        } else {
+            text = knownChar.toString()
         }
     }
-
 }
