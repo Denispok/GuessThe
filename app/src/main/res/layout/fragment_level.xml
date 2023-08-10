@@ -83,7 +83,9 @@
             android:id="@+id/imageCaptionTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
             android:layout_marginTop="8dp"
+            android:textAlignment="center"
             android:textColor="@color/colorText"
             android:textSize="20sp"
             tools:text="What is on the photo?" />
@@ -92,9 +94,8 @@
             android:id="@+id/levelImageIv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginHorizontal="10dp"
             android:layout_marginTop="8dp"
-            android:layout_marginRight="10dp"
             android:adjustViewBounds="true"
             android:contentDescription="@string/description_image"
             android:transitionName="ImageTransition"
@@ -107,7 +108,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="4dp" />
+        android:padding="4dp"
+        tools:background="@android:color/darker_gray"
+        tools:layout_height="@dimen/word_letter_size" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -149,7 +152,9 @@
         android:layout_marginStart="@dimen/letter_margins_small"
         android:layout_marginEnd="@dimen/letter_margins_small"
         android:gravity="center"
-        android:orientation="horizontal" />
+        android:orientation="horizontal"
+        tools:background="@android:color/darker_gray"
+        tools:layout_height="@dimen/letter_size" />
 
     <LinearLayout
         android:id="@+id/letters2Ll"
@@ -159,6 +164,8 @@
         android:layout_marginEnd="@dimen/letter_margins_small"
         android:layout_marginBottom="@dimen/buttons_margin"
         android:gravity="center"
-        android:orientation="horizontal" />
+        android:orientation="horizontal"
+        tools:background="@android:color/darker_gray"
+        tools:layout_height="@dimen/letter_size" />
 
 </LinearLayout>
