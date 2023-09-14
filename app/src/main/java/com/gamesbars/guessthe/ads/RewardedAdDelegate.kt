@@ -117,7 +117,7 @@ class RewardedAdDelegate(
                     logRewardedAdError("onRewardedVideoFailedToLoad: isInitialized=$isInitialized, isLoaded=$isLoaded")
                 }
 
-                override fun onRewardedVideoFinished(amount: Double, name: String?) {
+                override fun onRewardedVideoFinished(amount: Double, currency: String?) {
                     onRewardEarned.invoke()
                 }
 
