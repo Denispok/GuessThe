@@ -13,6 +13,7 @@ import com.gamesbars.guessthe.AnalyticsHelper.logAdSdkError
 import com.gamesbars.guessthe.AnalyticsHelper.logInterstitialAdError
 import com.gamesbars.guessthe.AnalyticsHelper.logRewardedAdError
 import com.gamesbars.guessthe.R
+import com.gamesbars.guessthe.ads.appodeal.AppodealAdRevenueCallbacks
 import com.google.ads.mediation.admob.AdMobAdapter
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
@@ -119,5 +120,7 @@ object AdsUtils {
             override fun onRewardedVideoShown() {
             }
         })
+
+        Appodeal.setAdRevenueCallbacks(AppodealAdRevenueCallbacks())
     }
 }
