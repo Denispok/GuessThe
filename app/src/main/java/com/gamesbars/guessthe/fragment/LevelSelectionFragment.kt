@@ -37,17 +37,17 @@ class LevelSelectionFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        pack = arguments!!.getString("pack")!!
+        pack = requireArguments().getString("pack")!!
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentLevelselectionBinding.inflate(inflater, container, false)
-        val saves = activity!!.getSharedPreferences("saves", Context.MODE_PRIVATE)
+        val saves = requireActivity().getSharedPreferences("saves", Context.MODE_PRIVATE)
 
         binding.backIv.setOnClickListener {
             if (isClickable) {
-                playSound(context!!, R.raw.button)
-                activity!!.onBackPressed()
+                playSound(requireContext(), R.raw.button)
+                requireActivity().onBackPressed()
             }
         }
 

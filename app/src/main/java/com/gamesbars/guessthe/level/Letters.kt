@@ -9,7 +9,7 @@ import android.widget.LinearLayout
 import com.gamesbars.guessthe.R
 import com.gamesbars.guessthe.Storage
 import com.gamesbars.guessthe.level.WordLetters.Companion.STATIC_CHARS
-import java.util.*
+import java.util.Random
 
 class Letters(private val activity: Activity, word: String, pack: String) {
 
@@ -52,7 +52,7 @@ class Letters(private val activity: Activity, word: String, pack: String) {
                     else if (id + 3 < letterString.length && letterString[id + 3] == '*') true
                     else false
 
-                    newLetters[letterId] = Letter(activity, letterId, char.toLowerCase(), wordLetterId, isGuessed)
+                    newLetters[letterId] = Letter(activity, letterId, char.lowercaseChar(), wordLetterId, isGuessed)
                     letterId++
                     isLetterNow = false
                 }

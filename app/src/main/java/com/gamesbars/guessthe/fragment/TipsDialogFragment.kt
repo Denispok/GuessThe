@@ -19,16 +19,16 @@ class TipsDialogFragment : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(context)
-        val binding = DialogLevelTipsBinding.inflate(activity!!.layoutInflater)
+        val binding = DialogLevelTipsBinding.inflate(requireActivity().layoutInflater)
 
-        firebaseAnalytics = FirebaseAnalytics.getInstance(context!!)
-        val fragment = fragmentManager!!.findFragmentByTag(resources.getString(R.string.level_fragment_tag)) as LevelFragment
+        firebaseAnalytics = FirebaseAnalytics.getInstance(requireContext())
+        val fragment = parentFragmentManager.findFragmentByTag(resources.getString(R.string.level_fragment_tag)) as LevelFragment
 
         val tipLetter = binding.tipLetterRl
         val tipRemove = binding.tipRemoveRl
         val tipSkip = binding.tipSkipRl
         binding.cancelTv.setOnClickListener {
-            playSound(context!!, R.raw.button)
+            playSound(requireContext(), R.raw.button)
             dismiss()
             updateFragment(fragment)
         }
@@ -41,7 +41,7 @@ class TipsDialogFragment : DialogFragment() {
         binding.tipRemoveCostTv.text = tipRemoveCost.toString()
         binding.tipSkipCostTv.text = tipSkipCost.toString()
 
-        val saves = context!!.getSharedPreferences("saves", Context.MODE_PRIVATE)
+        val saves = requireContext().getSharedPreferences("saves", Context.MODE_PRIVATE)
         val level = Storage.getCurrentLevel(fragment.pack)
         val levelName = Storage.getLevelName(fragment.pack, level)
         var levelString = saves.getString(levelName, "")
@@ -64,7 +64,7 @@ class TipsDialogFragment : DialogFragment() {
                 params.putString(FirebaseAnalytics.Param.LEVEL, "${fragment.pack} $level")
                 firebaseAnalytics.logEvent("tip_letter", params)
 
-                playSound(context!!, R.raw.tips)
+                playSound(requireContext(), R.raw.tips)
                 dismiss()
                 updateFragment(fragment)
             }
@@ -82,7 +82,7 @@ class TipsDialogFragment : DialogFragment() {
                 params.putString(FirebaseAnalytics.Param.LEVEL, "${fragment.pack} $level")
                 firebaseAnalytics.logEvent("tip_remove", params)
 
-                playSound(context!!, R.raw.tips)
+                playSound(requireContext(), R.raw.tips)
                 dismiss()
                 updateFragment(fragment)
             }
@@ -95,7 +95,7 @@ class TipsDialogFragment : DialogFragment() {
                 params.putString(FirebaseAnalytics.Param.LEVEL, "${fragment.pack} $level")
                 firebaseAnalytics.logEvent("tip_skip", params)
 
-                playSound(context!!, R.raw.tips)
+                playSound(requireContext(), R.raw.tips)
                 dismiss()
                 updateFragment(fragment)
                 fragment.win()
@@ -110,7 +110,7 @@ class TipsDialogFragment : DialogFragment() {
     }
 
     fun updateFragment(fragment: LevelFragment) {
-        (fragment.activity!! as PlayActivity).currentDialog = null
+        (fragment.requireActivity() as PlayActivity).currentDialog = null
         fragment.updateCoins()
         fragment.isClickable = true
     }

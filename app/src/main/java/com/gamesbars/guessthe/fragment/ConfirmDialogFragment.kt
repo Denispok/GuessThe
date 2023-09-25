@@ -28,11 +28,11 @@ class ConfirmDialogFragment : DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        pack = arguments!!.getString("pack")!!
+        pack = requireArguments().getString("pack")!!
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val saves = context!!.getSharedPreferences("saves", Context.MODE_PRIVATE)
+        val saves = requireContext().getSharedPreferences("saves", Context.MODE_PRIVATE)
         val packPrice = Storage.getPackPrice(pack)
         val builder = AlertDialog.Builder(context)
         if (Storage.getCoins() >= packPrice) {
@@ -46,17 +46,17 @@ class ConfirmDialogFragment : DialogFragment() {
 
                 AnalyticsHelper.logPackUnlock(pack, "coins")
 
-                playSound(context!!, R.raw.button)
+                playSound(requireContext(), R.raw.button)
                 updateActivity()
             }
             builder.setNegativeButton(R.string.cancel) { _, _ ->
-                playSound(context!!, R.raw.button)
+                playSound(requireContext(), R.raw.button)
                 updateActivity()
             }
         } else {
             builder.setMessage(getString(R.string.dont_enough_coins))
             builder.setPositiveButton(getString(R.string.ok)) { _, _ ->
-                playSound(context!!, R.raw.button)
+                playSound(requireContext(), R.raw.button)
                 updateActivity()
             }
         }
