@@ -1,15 +1,15 @@
 {
+  "russian_cars": "Русские Авто",
   "folder": {
     "name": "Папка",
     "items": {
       "folder2": {
         "name": "Папка 2",
         "items": {
-          "russian_cars": "Русские Авто"
+          "test": "Тест"
         }
       },
-      "test": "Тест"
+      "big_words_test": "Тест больших строк"
     }
-  },
-  "big_words_test": "Тест больших строк"
+  }
 }
