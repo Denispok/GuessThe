@@ -6,7 +6,7 @@
     android:layout_height="@dimen/menu_button_height"
     android:layout_gravity="center"
     android:layout_marginBottom="@dimen/menu_button_margin"
-    android:background="@drawable/button_selector_blue"
+    android:background="@drawable/button_selector_primary"
     android:textAllCaps="false"
     android:textColor="@color/colorText"
     android:textSize="@dimen/menu_button_text_size"

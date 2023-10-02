@@ -92,7 +92,7 @@ class WordLetters(private val fragment: LevelFragment, private val word: String)
         Handler().postDelayed({
             wordLetter.text = letter.text
             wordLetter.isEnabled = false
-            wordLetter.setTextColor(Color.parseColor("#ff7e00"))
+            wordLetter.setTextColor(fragment.resources.getColor(R.color.colorLetterGuessed))
             checkWord()
         }, animationDuration)
     }

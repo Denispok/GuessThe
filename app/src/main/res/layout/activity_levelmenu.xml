@@ -39,7 +39,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="@dimen/top_pane_side_padding"
-            android:background="@drawable/button_selector_green_up"
+            android:background="@drawable/button_selector_secondary_up"
             android:contentDescription="@string/coins_button"
             android:drawableEnd="@drawable/coin_icon_16"
             android:drawablePadding="@dimen/top_pane_coins_drawable_padding"

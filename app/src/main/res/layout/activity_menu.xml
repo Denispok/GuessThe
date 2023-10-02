@@ -27,7 +27,7 @@
         android:layout_height="@dimen/menu_button_height"
         android:layout_gravity="center"
         android:layout_marginBottom="@dimen/menu_button_margin"
-        android:background="@drawable/button_selector_blue"
+        android:background="@drawable/button_selector_primary"
         android:onClick="play"
         android:text="@string/play"
         android:textAllCaps="false"
@@ -40,7 +40,7 @@
         android:layout_height="@dimen/menu_button_height"
         android:layout_gravity="center"
         android:layout_marginBottom="@dimen/menu_button_margin"
-        android:background="@drawable/button_selector_blue"
+        android:background="@drawable/button_selector_primary"
         android:onClick="shop"
         android:text="@string/shop"
         android:textAllCaps="false"
@@ -57,7 +57,7 @@
             android:layout_width="@dimen/menu_button_width"
             android:layout_height="@dimen/menu_button_height"
             android:layout_centerInParent="true"
-            android:background="@drawable/button_selector_blue"
+            android:background="@drawable/button_selector_primary"
             android:gravity="center"
             android:onClick="rate"
             android:text="@string/rate"
@@ -72,7 +72,7 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="-36dp"
             android:layout_toEndOf="@id/rateTv"
-            android:background="@drawable/button_selector_green"
+            android:background="@drawable/button_selector_secondary"
             android:contentDescription="@string/description_coins"
             android:drawableEnd="@drawable/coin_icon_16"
             android:drawablePadding="2dp"
@@ -93,20 +93,22 @@
             android:layout_width="@dimen/menu_icon_dimen"
             android:layout_height="@dimen/menu_icon_dimen"
             android:layout_marginEnd="@dimen/menu_button_margin"
-            android:background="@drawable/button_selector_blue"
+            android:background="@drawable/button_selector_primary"
             android:contentDescription="@string/description_sound"
             android:onClick="sound"
             android:padding="6dp"
-            android:src="@drawable/baseline_volume_up_white_48" />
+            android:src="@drawable/baseline_volume_up_white_48"
+            app:tint="@color/colorText" />
 
         <ImageView
             android:layout_width="@dimen/menu_icon_dimen"
             android:layout_height="@dimen/menu_icon_dimen"
-            android:background="@drawable/button_selector_blue"
+            android:background="@drawable/button_selector_primary"
             android:contentDescription="@string/description_share"
             android:onClick="share"
             android:padding="6dp"
-            android:src="@drawable/baseline_share_white_48" />
+            android:src="@drawable/baseline_share_white_48"
+            app:tint="@color/colorText" />
 
     </LinearLayout>
 
