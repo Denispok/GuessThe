@@ -4,8 +4,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.appodeal.ads.Appodeal
 import com.appodeal.ads.RewardedVideoCallbacks
-import com.gamesbars.guessthe.AnalyticsHelper.logRewardedAdError
 import com.gamesbars.guessthe.R
+import com.gamesbars.guessthe.ads.AdsAnalytics.logRewardedAdError
 
 class RewardedAdDelegate(
     private val activity: AppCompatActivity,

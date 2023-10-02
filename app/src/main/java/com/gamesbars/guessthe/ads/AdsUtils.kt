@@ -6,10 +6,10 @@ import com.appodeal.ads.InterstitialCallbacks
 import com.appodeal.ads.RewardedVideoCallbacks
 import com.appodeal.ads.initializing.ApdInitializationCallback
 import com.appodeal.ads.initializing.ApdInitializationError
-import com.gamesbars.guessthe.AnalyticsHelper.logAdSdkError
-import com.gamesbars.guessthe.AnalyticsHelper.logInterstitialAdError
-import com.gamesbars.guessthe.AnalyticsHelper.logRewardedAdError
 import com.gamesbars.guessthe.R
+import com.gamesbars.guessthe.ads.AdsAnalytics.logAdSdkError
+import com.gamesbars.guessthe.ads.AdsAnalytics.logInterstitialAdError
+import com.gamesbars.guessthe.ads.AdsAnalytics.logRewardedAdError
 import com.gamesbars.guessthe.ads.appodeal.AppodealAdRevenueCallbacks
 
 object AdsUtils {

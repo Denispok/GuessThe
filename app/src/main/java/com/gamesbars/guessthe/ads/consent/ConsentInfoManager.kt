@@ -8,9 +8,9 @@ import com.appodeal.consent.ConsentFormListener
 import com.appodeal.consent.ConsentInfoUpdateListener
 import com.appodeal.consent.ConsentManager
 import com.appodeal.consent.ConsentManagerError
-import com.gamesbars.guessthe.AnalyticsHelper.logAdsLocation
-import com.gamesbars.guessthe.AnalyticsHelper.logConsentError
 import com.gamesbars.guessthe.R
+import com.gamesbars.guessthe.ads.AdsAnalytics.logAdsLocation
+import com.gamesbars.guessthe.ads.AdsAnalytics.logConsentError
 import com.google.firebase.analytics.FirebaseAnalytics
 
 object ConsentInfoManager {

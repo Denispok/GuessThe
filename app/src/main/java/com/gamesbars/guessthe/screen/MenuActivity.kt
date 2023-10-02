@@ -10,9 +10,9 @@ import android.text.method.LinkMovementMethod
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import com.gamesbars.guessthe.AnalyticsHelper
 import com.gamesbars.guessthe.R
 import com.gamesbars.guessthe.Storage
+import com.gamesbars.guessthe.ads.AdsAnalytics
 import com.gamesbars.guessthe.ads.BannerAdDelegate
 import com.gamesbars.guessthe.ads.consent.ConsentInfoManager
 import com.gamesbars.guessthe.databinding.ActivityMenuBinding
@@ -142,6 +142,6 @@ class MenuActivity : AppCompatActivity() {
         // Update location and npa here because consent in Appodeal requests automatically without callback
         val npa = ConsentInfoManager.nonPersonalizedAdsAppodeal()
         ConsentInfoManager.putNpa(this, npa)
-        AnalyticsHelper.logAdsLocation(isUserInConsentZone)
+        AdsAnalytics.logAdsLocation(isUserInConsentZone)
     }
 }
