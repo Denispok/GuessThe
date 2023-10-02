@@ -1,8 +1,5 @@
 package com.gamesbars.guessthe.ads
 
-import android.content.Context
-import android.content.SharedPreferences
-import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.appodeal.ads.Appodeal
 import com.appodeal.ads.InterstitialCallbacks
@@ -14,35 +11,11 @@ import com.gamesbars.guessthe.AnalyticsHelper.logInterstitialAdError
 import com.gamesbars.guessthe.AnalyticsHelper.logRewardedAdError
 import com.gamesbars.guessthe.R
 import com.gamesbars.guessthe.ads.appodeal.AppodealAdRevenueCallbacks
-import com.google.ads.mediation.admob.AdMobAdapter
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.MobileAds
 
 object AdsUtils {
 
-    const val AD_MEDIATION_TYPE_ADMOB = 0
-    const val AD_MEDIATION_TYPE_APPODEAL = 1
-    const val AD_MEDIATION_TYPE = AD_MEDIATION_TYPE_APPODEAL
-
     fun initMobileAds(activity: AppCompatActivity) {
-        when (AD_MEDIATION_TYPE) {
-            AD_MEDIATION_TYPE_APPODEAL -> initAppodeal(activity)
-            AD_MEDIATION_TYPE_ADMOB -> initAdmob(activity)
-        }
-    }
-
-    fun buildAdmobAdRequest(saves: SharedPreferences): AdRequest {
-        val adBuilder = AdRequest.Builder()
-        if (saves.getBoolean("npa", true)) {
-            val extras = Bundle()
-            extras.putString("npa", "1")
-            adBuilder.addNetworkExtrasBundle(AdMobAdapter::class.java, extras)
-        }
-        return adBuilder.build()
-    }
-
-    private fun initAdmob(context: Context) {
-        MobileAds.initialize(context)
+        initAppodeal(activity)
     }
 
     private fun initAppodeal(activity: AppCompatActivity) {

@@ -7,7 +7,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.gamesbars.guessthe.R
 import com.gamesbars.guessthe.ads.AdsUtils
-import com.gamesbars.guessthe.ads.consent.ConsentInfoManager
 import com.google.firebase.analytics.FirebaseAnalytics
 
 class SplashScreenActivity : AppCompatActivity() {
@@ -37,7 +36,7 @@ class SplashScreenActivity : AppCompatActivity() {
             firebaseAnalytics.setUserProperty("sound", "on")
         }
 
-        ConsentInfoManager.requestConsentUpdate(::startGame)
+        startGame()
     }
 
     private fun startGame() {

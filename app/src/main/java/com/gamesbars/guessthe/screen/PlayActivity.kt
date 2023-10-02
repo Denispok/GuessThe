@@ -40,16 +40,9 @@ class PlayActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
-        rewardedAdDelegate = RewardedAdDelegate(this, saves, ::onRewardEarned)
+        rewardedAdDelegate = RewardedAdDelegate(this, ::onRewardEarned)
         interstitialAdDelegate = InterstitialAdDelegate(this, saves)
-        bannerAdDelegate = BannerAdDelegate(this, saves)
-
-        if (saves.getBoolean("ads", true)) {
-            bannerAdDelegate.loadBanner(this, binding.adViewContainer)
-            interstitialAdDelegate.loadInterstitialAd()
-        }
-
-        rewardedAdDelegate.loadRewardedAd()
+        bannerAdDelegate = BannerAdDelegate(this)
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
@@ -89,7 +82,7 @@ class PlayActivity : AppCompatActivity() {
     private fun updateBannerAd() {
         if (saves.getBoolean("ads", true)) {
             binding.adViewContainer.visibility = View.VISIBLE
-            bannerAdDelegate.updateBanner(this, binding.adViewContainer)
+            bannerAdDelegate.updateBanner(binding.adViewContainer)
         } else {
             binding.adViewContainer.visibility = View.GONE
         }

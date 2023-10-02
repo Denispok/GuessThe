@@ -50,7 +50,7 @@ class LevelMenuActivity : AppCompatActivity() {
 
         saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
-        bannerAdDelegate = BannerAdDelegate(this, saves)
+        bannerAdDelegate = BannerAdDelegate(this)
         itemId = intent.extras!!.getString(KEY_ITEM_ID)
 
         loadPacks()
@@ -68,8 +68,6 @@ class LevelMenuActivity : AppCompatActivity() {
                 startActivity(Intent(applicationContext, CoinsActivity::class.java))
             }
         }
-
-        if (saves.getBoolean("ads", true)) bannerAdDelegate.loadBanner(this, binding.adViewContainer)
     }
 
     override fun onResume() {
@@ -115,7 +113,7 @@ class LevelMenuActivity : AppCompatActivity() {
     private fun updateBannerAd() {
         if (saves.getBoolean("ads", true)) {
             binding.adViewContainer.visibility = View.VISIBLE
-            bannerAdDelegate.updateBanner(this, binding.adViewContainer)
+            bannerAdDelegate.updateBanner(binding.adViewContainer)
         } else {
             binding.adViewContainer.visibility = View.GONE
         }

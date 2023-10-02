@@ -12,12 +12,7 @@
 
     <!--  Ads  -->
 
-    <string name="pub_id">INSERT PUB ID</string>
-    <string name="ads_id">ca-app-pub-3940256099942544~3347511713</string>
-    <string name="banner_id">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="interstitial_id">ca-app-pub-3940256099942544/1033173712</string>
-    <string name="rewarded_video_id">ca-app-pub-3940256099942544/5224354917</string>
-
+    <string name="admob_ads_id">ca-app-pub-3940256099942544~3347511713</string>
     <string name="appodeal_app_id">INSERT APPODEAL APP ID</string>
 
 </resources>
