@@ -103,7 +103,7 @@ object Storage {
     fun completeLevel(pack: String): Boolean {
         val currentLevel = getCurrentLevel(pack)
         val packSize = getPackSize(pack)
-        val levelName = pack + currentLevel
+        val levelName = getLevelName(pack, currentLevel)
         var isCompletedFirstTime = false
 
         val editor = saves.edit()
