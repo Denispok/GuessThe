@@ -3,6 +3,8 @@ package com.gamesbars.guessthe
 import android.app.Application
 import android.content.Context
 import com.gamesbars.guessthe.util.Migrator
+import com.gamesbars.guessthe.util.RemoteConfig
+import com.gamesbars.guessthe.util.TimeUtil
 
 class App : Application() {
 
@@ -15,6 +17,10 @@ class App : Application() {
         super.onCreate()
         appContext = applicationContext
 
+        if (!isProcessMain()) return
+
+        TimeUtil.appLaunchTime = TimeUtil.currentTimeMillis()
+        RemoteConfig.init()
         Migrator.migrate()
     }
 }

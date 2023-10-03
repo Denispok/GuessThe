@@ -58,6 +58,7 @@ object AdsUtils {
             }
 
             override fun onInterstitialShown() {
+                InterstitialAdDelegate.interstitialShown()
             }
         })
 

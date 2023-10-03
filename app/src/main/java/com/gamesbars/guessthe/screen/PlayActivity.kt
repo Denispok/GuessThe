@@ -23,10 +23,6 @@ import com.gamesbars.guessthe.fragment.TipsDialogFragment
 
 class PlayActivity : AppCompatActivity() {
 
-    companion object {
-        const val INTERSTITIAL_AD_FREQUENCY = 3 // every N level show ad
-    }
-
     private lateinit var binding: ActivityPlayBinding
     private lateinit var saves: SharedPreferences
     private lateinit var rewardedAdDelegate: RewardedAdDelegate
@@ -71,8 +67,8 @@ class PlayActivity : AppCompatActivity() {
         }
     }
 
-    fun showInterstitialAd() {
-        interstitialAdDelegate.showInterstitialAd()
+    fun showInterstitialAd(currentLevel: Int) {
+        interstitialAdDelegate.showInterstitialAd(currentLevel)
     }
 
     fun showRewardedVideoAd() {

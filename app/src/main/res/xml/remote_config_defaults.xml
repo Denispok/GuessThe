@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<defaultsMap>
+    <entry>
+        <key>new_interstitial_timing_enabled</key>
+        <value>false</value>
+    </entry>
+    <entry>
+        <key>interstitial_start_delay</key>
+        <value>120000</value>
+    </entry>
+    <entry>
+        <key>interstitial_between_delay</key>
+        <value>120000</value>
+    </entry>
+</defaultsMap>

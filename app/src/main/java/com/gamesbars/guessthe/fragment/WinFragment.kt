@@ -11,7 +11,6 @@ import com.gamesbars.guessthe.Storage
 import com.gamesbars.guessthe.databinding.FragmentWinBinding
 import com.gamesbars.guessthe.playSound
 import com.gamesbars.guessthe.screen.PlayActivity
-import com.gamesbars.guessthe.screen.PlayActivity.Companion.INTERSTITIAL_AD_FREQUENCY
 
 class WinFragment : Fragment() {
 
@@ -87,8 +86,6 @@ class WinFragment : Fragment() {
                 .addSharedElement(binding.winImageIv, "ImageTransition")
                 .commit()
         }
-        if (Storage.getCurrentLevel(pack) % INTERSTITIAL_AD_FREQUENCY == 1) {
-            (requireActivity() as PlayActivity).showInterstitialAd()
-        }
+        (requireActivity() as PlayActivity).showInterstitialAd(Storage.getCurrentLevel(pack))
     }
 }
