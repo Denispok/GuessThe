@@ -2,6 +2,7 @@ package com.gamesbars.guessthe
 
 import android.app.Application
 import android.content.Context
+import com.gamesbars.guessthe.util.Migrator
 
 class App : Application() {
 
@@ -13,5 +14,7 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         appContext = applicationContext
+
+        Migrator.migrate()
     }
 }
