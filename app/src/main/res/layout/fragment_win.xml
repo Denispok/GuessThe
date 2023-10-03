@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -40,10 +41,10 @@
         android:gravity="center"
         android:shadowColor="@color/colorTextShadow"
         android:shadowRadius="@dimen/textShadowRadiusLight"
-        android:text="word"
         android:textAllCaps="true"
         android:textColor="@color/colorText"
-        android:textSize="@dimen/win_word_text_size" />
+        android:textSize="@dimen/win_word_text_size"
+        tools:text="word" />
 
     <TextView
         android:id="@+id/rewardCoinsTv"
@@ -52,14 +53,14 @@
         android:layout_marginBottom="@dimen/win_margin"
         android:background="@drawable/button_selector_secondary"
         android:contentDescription="@string/description_coins"
-        android:drawableEnd="@drawable/coin_icon_16"
         android:drawablePadding="@dimen/win_coins_drawable_padding"
         android:padding="6dp"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
-        android:text="10"
         android:textColor="@color/colorText"
-        android:textSize="@dimen/win_text_size" />
+        android:textSize="@dimen/win_text_size"
+        app:drawableEndCompat="@drawable/coin_icon_16"
+        tools:text="10" />
 
     <LinearLayout
         android:id="@+id/rewardedLl"

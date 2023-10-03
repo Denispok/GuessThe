@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/coins_item_height"
@@ -16,12 +17,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/description_coins"
-        android:drawableEnd="@drawable/coin_icon_16"
         android:drawablePadding="@dimen/coins_item_drawable_padding"
         android:shadowColor="@color/colorTextShadow"
         android:shadowRadius="@dimen/textShadowRadiusLight"
         android:textColor="@color/colorText"
         android:textSize="@dimen/coins_item_text_size"
+        app:drawableEndCompat="@drawable/coin_icon_16"
         tools:text="500" />
 
     <TextView
