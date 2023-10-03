@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
+    android:clipChildren="false"
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
@@ -12,6 +13,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/win_margin"
         android:layout_marginBottom="@dimen/win_margin"
+        android:shadowColor="@color/colorTextShadow"
+        android:shadowRadius="@dimen/textShadowRadiusLight"
         android:text="@string/success"
         android:textColor="@color/colorText"
         android:textSize="@dimen/win_success_text_size" />
@@ -35,6 +38,8 @@
         android:background="@android:color/transparent"
         android:fontFamily="@font/exo2_bold"
         android:gravity="center"
+        android:shadowColor="@color/colorTextShadow"
+        android:shadowRadius="@dimen/textShadowRadiusLight"
         android:text="word"
         android:textAllCaps="true"
         android:textColor="@color/colorText"

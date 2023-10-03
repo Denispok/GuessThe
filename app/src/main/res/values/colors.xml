@@ -11,6 +11,7 @@
     <color name="colorNavigationBar">#3F51B5</color>
 
     <color name="colorText">#ffffff</color>
+    <color name="colorTextShadow">#000000</color>
     <color name="colorBackground">#4665ce</color>
 
     <color name="colorLetterGuessed">#ff7e00</color>

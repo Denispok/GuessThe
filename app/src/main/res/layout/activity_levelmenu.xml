@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/top_pane_height"
         android:layout_marginBottom="12dp"
+        android:clipChildren="false"
         android:paddingLeft="4dp"
         android:paddingRight="4dp">
 
@@ -28,6 +29,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:shadowColor="@color/colorTextShadow"
+            android:shadowRadius="@dimen/textShadowRadiusLight"
             android:text="@string/levels"
             android:textColor="@color/colorText"
             android:textSize="@dimen/top_pane_title_text_size" />

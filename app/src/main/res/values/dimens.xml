@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- small screens / default -->
+    <item name="textShadowRadiusLight" format="float" type="dimen">0f</item>
+    <item name="textShadowRadiusStrong" format="float" type="dimen">0f</item>
 
     <!-- top_pane -->
     <dimen name="top_pane_height">40dp</dimen>
