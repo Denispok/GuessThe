@@ -2,7 +2,7 @@ package com.gamesbars.guessthe.data
 
 import android.content.Context
 import com.gamesbars.guessthe.App
-import com.gamesbars.guessthe.R
+import com.gamesbars.guessthe.util.RemoteConfig
 
 object CoinsStorage {
 
@@ -19,10 +19,10 @@ object CoinsStorage {
     }
 
     fun getLevelReward(): Int {
-        return resources.getInteger(R.integer.level_reward)
-    }    
-    
+        return RemoteConfig.getLevelReward()
+    }
+
     fun getRateReward(): Int {
-        return resources.getInteger(R.integer.rate_reward)
+        return RemoteConfig.getRateReward()
     }
 }

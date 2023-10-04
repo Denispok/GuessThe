@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer name="level_reward">10</integer>
-    <integer name="rate_reward">50</integer>
-
     <integer-array name="packs_prices">
         <item>50</item>
         <item>100</item>

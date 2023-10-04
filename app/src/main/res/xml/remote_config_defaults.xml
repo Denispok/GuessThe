@@ -12,4 +12,12 @@
         <key>interstitial_between_delay</key>
         <value>120000</value>
     </entry>
+    <entry>
+        <key>level_reward</key>
+        <value>10</value>
+    </entry>
+    <entry>
+        <key>rate_reward</key>
+        <value>50</value>
+    </entry>
 </defaultsMap>
