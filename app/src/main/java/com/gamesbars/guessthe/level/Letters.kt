@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.gamesbars.guessthe.R
-import com.gamesbars.guessthe.Storage
+import com.gamesbars.guessthe.data.Storage
 import com.gamesbars.guessthe.level.WordLetters.Companion.STATIC_CHARS
 import java.util.Random
 

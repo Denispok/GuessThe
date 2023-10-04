@@ -10,7 +10,7 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gamesbars.guessthe.R
-import com.gamesbars.guessthe.Storage
+import com.gamesbars.guessthe.data.Storage
 import com.gamesbars.guessthe.adapter.LevelSelectionAdapter
 import com.gamesbars.guessthe.databinding.FragmentLevelselectionBinding
 import com.gamesbars.guessthe.playSound

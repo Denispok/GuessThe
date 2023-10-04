@@ -7,7 +7,8 @@ import android.os.Bundle
 import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
 import com.gamesbars.guessthe.R
-import com.gamesbars.guessthe.Storage
+import com.gamesbars.guessthe.data.CoinsStorage
+import com.gamesbars.guessthe.data.Storage
 import com.gamesbars.guessthe.databinding.DialogLevelTipsBinding
 import com.gamesbars.guessthe.playSound
 import com.gamesbars.guessthe.screen.PlayActivity
@@ -46,7 +47,7 @@ class TipsDialogFragment : DialogFragment() {
         val levelName = Storage.getLevelName(fragment.pack, level)
         var levelString = saves.getString(levelName, "")
 
-        val coins = Storage.getCoins()
+        val coins = CoinsStorage.getCoins()
         if (coins >= tipLetterCost) {
             tipLetter.setOnClickListener {
                 val letter = fragment.letters.tipShowLetter(fragment.wordLetters)
@@ -58,7 +59,7 @@ class TipsDialogFragment : DialogFragment() {
                 val editor = saves.edit()
                 editor.putString(levelName, levelString)
                 editor.apply()
-                Storage.addCoins(-tipLetterCost)
+                CoinsStorage.addCoins(-tipLetterCost)
 
                 val params = Bundle()
                 params.putString(FirebaseAnalytics.Param.LEVEL, "${fragment.pack} $level")
@@ -76,7 +77,7 @@ class TipsDialogFragment : DialogFragment() {
                 val editor = saves.edit()
                 editor.putString(levelName, "$levelString!")
                 editor.apply()
-                Storage.addCoins(-tipRemoveCost)
+                CoinsStorage.addCoins(-tipRemoveCost)
 
                 val params = Bundle()
                 params.putString(FirebaseAnalytics.Param.LEVEL, "${fragment.pack} $level")
@@ -89,7 +90,7 @@ class TipsDialogFragment : DialogFragment() {
         } else tipRemove.isEnabled = false
         if (coins >= tipSkipCost) {
             tipSkip.setOnClickListener {
-                Storage.addCoins(-tipSkipCost)
+                CoinsStorage.addCoins(-tipSkipCost)
 
                 val params = Bundle()
                 params.putString(FirebaseAnalytics.Param.LEVEL, "${fragment.pack} $level")

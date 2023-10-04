@@ -10,8 +10,9 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import com.gamesbars.guessthe.R
-import com.gamesbars.guessthe.Storage
 import com.gamesbars.guessthe.ads.BannerAdDelegate
+import com.gamesbars.guessthe.data.CoinsStorage
+import com.gamesbars.guessthe.data.Storage
 import com.gamesbars.guessthe.databinding.ActivityLevelmenuBinding
 import com.gamesbars.guessthe.databinding.ButtonLevelmenuFolderBinding
 import com.gamesbars.guessthe.databinding.ButtonLevelmenuPackBinding
@@ -79,7 +80,7 @@ class LevelMenuActivity : AppCompatActivity() {
     }
 
     fun updateCoins() {
-        val coins = Storage.getCoins().toString()
+        val coins = CoinsStorage.getCoins().toString()
         binding.coinsTv.text = coins
         firebaseAnalytics.setUserProperty("coins", coins)
     }

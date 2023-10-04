@@ -2,6 +2,7 @@ package com.gamesbars.guessthe
 
 import android.os.Bundle
 import android.util.Log
+import com.gamesbars.guessthe.data.Storage
 import com.google.firebase.analytics.FirebaseAnalytics
 
 object AnalyticsHelper {

@@ -11,12 +11,13 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.gamesbars.guessthe.R
-import com.gamesbars.guessthe.Storage
-import com.gamesbars.guessthe.Storage.getCurrentLevel
-import com.gamesbars.guessthe.Storage.getDrawableResIdByName
-import com.gamesbars.guessthe.Storage.getLevelName
-import com.gamesbars.guessthe.Storage.getStringArrayResIdByName
-import com.gamesbars.guessthe.Storage.isLevelHaveInfo
+import com.gamesbars.guessthe.data.CoinsStorage
+import com.gamesbars.guessthe.data.Storage
+import com.gamesbars.guessthe.data.Storage.getCurrentLevel
+import com.gamesbars.guessthe.data.Storage.getDrawableResIdByName
+import com.gamesbars.guessthe.data.Storage.getLevelName
+import com.gamesbars.guessthe.data.Storage.getStringArrayResIdByName
+import com.gamesbars.guessthe.data.Storage.isLevelHaveInfo
 import com.gamesbars.guessthe.databinding.FragmentLevelBinding
 import com.gamesbars.guessthe.level.Letter
 import com.gamesbars.guessthe.level.Letters
@@ -181,7 +182,7 @@ class LevelFragment : Fragment() {
     }
 
     fun updateCoins() {
-        val coins = Storage.getCoins().toString()
+        val coins = CoinsStorage.getCoins().toString()
         binding.coinsTv.text = coins
         firebaseAnalytics.setUserProperty("coins", coins)
     }

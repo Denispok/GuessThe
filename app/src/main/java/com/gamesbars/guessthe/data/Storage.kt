@@ -1,7 +1,10 @@
-package com.gamesbars.guessthe
+package com.gamesbars.guessthe.data
 
 import android.annotation.SuppressLint
 import android.content.Context
+import com.gamesbars.guessthe.AnalyticsHelper
+import com.gamesbars.guessthe.App
+import com.gamesbars.guessthe.R
 
 @SuppressLint("DiscouragedApi")
 object Storage {
@@ -44,17 +47,8 @@ object Storage {
 
     fun getCompletedLevelsCount(): Int {
         val packs = resources.getStringArray(R.array.packs)
-        return packs.fold(0, { completedLevels, pack ->
+        return packs.fold(0) { completedLevels, pack ->
             completedLevels + getCompletedLevels(pack)
-        })
-    }
-
-    fun getCoins() = saves.getInt("coins", 0)
-
-    fun addCoins(coinsToAdd: Int) {
-        saves.edit().apply {
-            putInt("coins", getCoins() + coinsToAdd)
-            apply()
         }
     }
 
@@ -110,7 +104,7 @@ object Storage {
         editor.putString(levelName, saves.getString(levelName, "")!!.replace("!", "").replace("*", ""))
         if (currentLevel > getCompletedLevels(pack)) {
             editor.putInt(pack + "completed", currentLevel)
-            addCoins(resources.getInteger(R.integer.level_reward))
+            CoinsStorage.addCoins(CoinsStorage.getLevelReward())
             isCompletedFirstTime = true
             AnalyticsHelper.logLevelComplete(pack, currentLevel)
         }

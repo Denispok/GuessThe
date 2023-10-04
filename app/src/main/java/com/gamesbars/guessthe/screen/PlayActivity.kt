@@ -12,10 +12,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.gamesbars.guessthe.R
-import com.gamesbars.guessthe.Storage
 import com.gamesbars.guessthe.ads.BannerAdDelegate
 import com.gamesbars.guessthe.ads.InterstitialAdDelegate
 import com.gamesbars.guessthe.ads.RewardedAdDelegate
+import com.gamesbars.guessthe.data.CoinsStorage
 import com.gamesbars.guessthe.databinding.ActivityPlayBinding
 import com.gamesbars.guessthe.fragment.InfoDialogFragment
 import com.gamesbars.guessthe.fragment.LevelFragment
@@ -85,7 +85,7 @@ class PlayActivity : AppCompatActivity() {
     }
 
     private fun onRewardEarned() {
-        Storage.addCoins(2 * resources.getInteger(R.integer.level_reward))
+        CoinsStorage.addCoins(2 * CoinsStorage.getLevelReward())
         Toast.makeText(this, R.string.video_reward, Toast.LENGTH_LONG).show()
 
         findViewById<LinearLayout>(R.id.rewardedLl)?.isClickable = false
@@ -95,7 +95,7 @@ class PlayActivity : AppCompatActivity() {
             setBackgroundColor(Color.TRANSPARENT)
             setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.coin_icon_16, 0)
             compoundDrawablePadding = resources.getDimension(R.dimen.win_coins_drawable_padding).toInt()
-            text = "+".plus(2 * resources.getInteger(R.integer.level_reward))
+            text = "+".plus(2 * CoinsStorage.getLevelReward())
         }
     }
 }

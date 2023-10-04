@@ -7,7 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.gamesbars.guessthe.R
-import com.gamesbars.guessthe.Storage
+import com.gamesbars.guessthe.data.CoinsStorage
+import com.gamesbars.guessthe.data.Storage
 import com.gamesbars.guessthe.databinding.FragmentWinBinding
 import com.gamesbars.guessthe.playSound
 import com.gamesbars.guessthe.screen.PlayActivity
@@ -56,10 +57,10 @@ class WinFragment : Fragment() {
         binding.winWordTv.text = word
 
         if (isLevelReward) {
-            binding.rewardCoinsTv.text = requireActivity().resources.getInteger(R.integer.level_reward).toString()
+            binding.rewardCoinsTv.text = CoinsStorage.getLevelReward().toString()
         } else {
             binding.rewardCoinsTv.visibility = View.GONE
-            binding.rewardedX3Tv.text = (2 * requireActivity().resources.getInteger(R.integer.level_reward)).toString()
+            binding.rewardedX3Tv.text = (2 * CoinsStorage.getLevelReward()).toString()
         }
 
         binding.rewardedTextLl.setOnClickListener {

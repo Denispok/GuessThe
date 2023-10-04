@@ -23,9 +23,9 @@ import com.android.billingclient.api.consumePurchase
 import com.android.billingclient.api.queryProductDetails
 import com.android.billingclient.api.queryPurchasesAsync
 import com.gamesbars.guessthe.R
-import com.gamesbars.guessthe.Storage
 import com.gamesbars.guessthe.ads.BannerAdDelegate
 import com.gamesbars.guessthe.ads.RewardedAdDelegate
+import com.gamesbars.guessthe.data.CoinsStorage
 import com.gamesbars.guessthe.databinding.ActivityCoinsBinding
 import com.gamesbars.guessthe.playSound
 import com.gamesbars.guessthe.screen.coins.data.ProductDTO
@@ -110,7 +110,7 @@ class CoinsActivity : AppCompatActivity(), CoroutineScope {
             launchBillingFlow(product)
         }
 
-        binding.coinsVideoTv.text = (2 * resources.getInteger(R.integer.level_reward)).toString()
+        binding.coinsVideoTv.text = (2 * CoinsStorage.getLevelReward()).toString()
         binding.coinsRewardedVideoLl.setOnClickListener {
             rewardedAdDelegate.showRewardedVideoAd()
         }
@@ -136,7 +136,7 @@ class CoinsActivity : AppCompatActivity(), CoroutineScope {
     }
 
     private fun onRewardEarned() {
-        Storage.addCoins(2 * resources.getInteger(R.integer.level_reward))
+        CoinsStorage.addCoins(2 * CoinsStorage.getLevelReward())
         toast(getString(R.string.video_reward))
         updateCoins()
     }
@@ -171,12 +171,12 @@ class CoinsActivity : AppCompatActivity(), CoroutineScope {
             putBoolean("ads", false)
             apply()
         }
-        Storage.addCoins(coins)
+        CoinsStorage.addCoins(coins)
         updateCoins()
     }
 
     private fun updateCoins() {
-        val coins = Storage.getCoins().toString()
+        val coins = CoinsStorage.getCoins().toString()
         runOnUiThread {
             binding.coinsTv.text = coins
         }

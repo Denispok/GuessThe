@@ -8,8 +8,8 @@ import android.text.method.LinkMovementMethod
 import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
 import com.gamesbars.guessthe.R
-import com.gamesbars.guessthe.Storage.getAuthorAndLicense
-import com.gamesbars.guessthe.Storage.getCurrentLevel
+import com.gamesbars.guessthe.data.Storage.getAuthorAndLicense
+import com.gamesbars.guessthe.data.Storage.getCurrentLevel
 import com.gamesbars.guessthe.databinding.DialogLevelInfoBinding
 import com.gamesbars.guessthe.screen.PlayActivity
 
