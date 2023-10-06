@@ -12,12 +12,6 @@
         <item>10</item>
     </integer-array>
 
-    <integer-array name="packs_levels_to_unlock">
-        <item>0</item>
-        <item>5</item>
-        <item>-1</item>
-    </integer-array>
-
     <integer name="tip_letter_cost">20</integer>
     <integer name="tip_remove_cost">40</integer>
     <integer name="tip_skip_cost">60</integer>

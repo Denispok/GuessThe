@@ -5,6 +5,7 @@ import android.content.Context
 import com.gamesbars.guessthe.AnalyticsHelper
 import com.gamesbars.guessthe.App
 import com.gamesbars.guessthe.R
+import com.gamesbars.guessthe.util.RemoteConfig
 
 @SuppressLint("DiscouragedApi")
 object Storage {
@@ -36,7 +37,7 @@ object Storage {
 
     fun getLevelsRemainingToUnlock(pack: String): Int? {
         val packIndex = getPackIndex(pack)
-        val levelsToUnlock = resources.getIntArray(R.array.packs_levels_to_unlock)[packIndex]
+        val levelsToUnlock = getPacksLevelsToUnlock()[packIndex]
         if (levelsToUnlock == -1) return null
         return levelsToUnlock - getCompletedLevelsCount()
     }
@@ -86,7 +87,7 @@ object Storage {
 
     fun isPackOpen(pack: String): Boolean {
         val packIndex = getPackIndex(pack)
-        val levelsToUnlock = resources.getIntArray(R.array.packs_levels_to_unlock)[packIndex]
+        val levelsToUnlock = getPacksLevelsToUnlock()[packIndex]
         val isPackOpenedByLevels = levelsToUnlock != -1 && getCompletedLevelsCount() >= levelsToUnlock
         return isPackPurchased(pack) || isPackOpenedByLevels
     }
@@ -119,7 +120,7 @@ object Storage {
 
     private fun checkUnlockedLevels() {
         val packs = resources.getStringArray(R.array.packs)
-        val packsLevelsToUnlock = resources.getIntArray(R.array.packs_levels_to_unlock)
+        val packsLevelsToUnlock = getPacksLevelsToUnlock()
         val completedLevelsCount = getCompletedLevelsCount()
 
         for (id in packs.indices) {
@@ -141,4 +142,8 @@ object Storage {
     }
 
     private fun getPackIndex(pack: String) = resources.getStringArray(R.array.packs).indexOf(pack)
+
+    private fun getPacksLevelsToUnlock(): IntArray {
+        return RemoteConfig.getPacksLevelsToUnlock()
+    }
 }
