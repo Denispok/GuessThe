@@ -3,41 +3,24 @@ package com.gamesbars.guessthe.ads.consent
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import com.appodeal.consent.Consent
+import com.appodeal.consent.ConsentForm
+import com.appodeal.consent.ConsentFormListener
+import com.appodeal.consent.ConsentInfoUpdateListener
 import com.appodeal.consent.ConsentManager
 import com.appodeal.consent.ConsentManagerError
-import com.gamesbars.guessthe.AnalyticsHelper.logAdsLocation
-import com.gamesbars.guessthe.AnalyticsHelper.logConsentError
 import com.gamesbars.guessthe.R
-import com.gamesbars.guessthe.ads.AdsUtils
+import com.gamesbars.guessthe.ads.AdsAnalytics.logAdsLocation
+import com.gamesbars.guessthe.ads.AdsAnalytics.logConsentError
 import com.google.firebase.analytics.FirebaseAnalytics
 
 object ConsentInfoManager {
 
-    fun requestConsentUpdate(onConsentCompleted: () -> Unit) {
-        when (AdsUtils.AD_MEDIATION_TYPE) {
-            AdsUtils.AD_MEDIATION_TYPE_ADMOB -> throw IllegalStateException("Consent for Admob not implemented")
-            AdsUtils.AD_MEDIATION_TYPE_APPODEAL -> {
-                // Consent will be requested automatically
-                onConsentCompleted.invoke()
-            }
-        }
-    }
-
     fun showConsentForm(activity: AppCompatActivity, onConsentCompleted: (() -> Unit)? = null) {
-        when (AdsUtils.AD_MEDIATION_TYPE) {
-            AdsUtils.AD_MEDIATION_TYPE_ADMOB -> throw IllegalStateException("Consent for Admob not implemented")
-            AdsUtils.AD_MEDIATION_TYPE_APPODEAL -> showConsentFormAppodeal(activity, onConsentCompleted)
-        }
+        showConsentFormAppodeal(activity, onConsentCompleted)
     }
 
     fun isUserInConsentZone(): Boolean {
-        when (AdsUtils.AD_MEDIATION_TYPE) {
-            AdsUtils.AD_MEDIATION_TYPE_ADMOB -> throw IllegalStateException("Consent for Admob not implemented")
-            AdsUtils.AD_MEDIATION_TYPE_APPODEAL -> {
-                return ConsentManager.consent.isGDPRScope or ConsentManager.consent.isCCPAScope
-            }
-        }
-        return true
+        return ConsentManager.consent.isGDPRScope or ConsentManager.consent.isCCPAScope
     }
 
     fun nonPersonalizedAdsAppodeal(): Boolean {
@@ -64,7 +47,7 @@ object ConsentInfoManager {
         ConsentManager.requestConsentInfoUpdate(
             activity,
             activity.getString(R.string.appodeal_app_id),
-            object : com.appodeal.consent.ConsentInfoUpdateListener() {
+            object : ConsentInfoUpdateListener() {
 
                 override fun onConsentInfoUpdated(consent: Consent) {
                     logAdsLocation(consent.isGDPRScope)
@@ -99,7 +82,7 @@ object ConsentInfoManager {
     }
 
     private fun showConsentFormAppodeal(activity: AppCompatActivity, onConsentCompleted: (() -> Unit)? = null) {
-        val consentFormListener = object : com.appodeal.consent.ConsentFormListener() {
+        val consentFormListener = object : ConsentFormListener() {
 
             override fun onConsentFormClosed(consent: Consent) {
                 when (consent.status) {
@@ -122,12 +105,12 @@ object ConsentInfoManager {
                 onConsentCompleted?.invoke()
             }
 
-            override fun onConsentFormLoaded(consentForm: com.appodeal.consent.ConsentForm) {
+            override fun onConsentFormLoaded(consentForm: ConsentForm) {
                 consentForm.show()
             }
         }
 
-        val consentForm = com.appodeal.consent.ConsentForm(activity, consentFormListener)
+        val consentForm = ConsentForm(activity, consentFormListener)
         consentForm.load()
     }
 }

@@ -1,47 +1,21 @@
 package com.gamesbars.guessthe.ads
 
-import android.content.Context
-import android.content.SharedPreferences
-import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.appodeal.ads.Appodeal
 import com.appodeal.ads.InterstitialCallbacks
 import com.appodeal.ads.RewardedVideoCallbacks
 import com.appodeal.ads.initializing.ApdInitializationCallback
 import com.appodeal.ads.initializing.ApdInitializationError
-import com.gamesbars.guessthe.AnalyticsHelper.logAdSdkError
-import com.gamesbars.guessthe.AnalyticsHelper.logInterstitialAdError
-import com.gamesbars.guessthe.AnalyticsHelper.logRewardedAdError
 import com.gamesbars.guessthe.R
-import com.google.ads.mediation.admob.AdMobAdapter
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.MobileAds
+import com.gamesbars.guessthe.ads.AdsAnalytics.logAdSdkError
+import com.gamesbars.guessthe.ads.AdsAnalytics.logInterstitialAdError
+import com.gamesbars.guessthe.ads.AdsAnalytics.logRewardedAdError
+import com.gamesbars.guessthe.ads.appodeal.AppodealAdRevenueCallbacks
 
 object AdsUtils {
 
-    const val AD_MEDIATION_TYPE_ADMOB = 0
-    const val AD_MEDIATION_TYPE_APPODEAL = 1
-    const val AD_MEDIATION_TYPE = AD_MEDIATION_TYPE_APPODEAL
-
     fun initMobileAds(activity: AppCompatActivity) {
-        when (AD_MEDIATION_TYPE) {
-            AD_MEDIATION_TYPE_APPODEAL -> initAppodeal(activity)
-            AD_MEDIATION_TYPE_ADMOB -> initAdmob(activity)
-        }
-    }
-
-    fun buildAdmobAdRequest(saves: SharedPreferences): AdRequest {
-        val adBuilder = AdRequest.Builder()
-        if (saves.getBoolean("npa", true)) {
-            val extras = Bundle()
-            extras.putString("npa", "1")
-            adBuilder.addNetworkExtrasBundle(AdMobAdapter::class.java, extras)
-        }
-        return adBuilder.build()
-    }
-
-    private fun initAdmob(context: Context) {
-        MobileAds.initialize(context)
+        initAppodeal(activity)
     }
 
     private fun initAppodeal(activity: AppCompatActivity) {
@@ -84,6 +58,7 @@ object AdsUtils {
             }
 
             override fun onInterstitialShown() {
+                InterstitialAdDelegate.interstitialShown()
             }
         })
 
@@ -104,7 +79,7 @@ object AdsUtils {
                 logRewardedAdError("onRewardedVideoFailedToLoad: isInitialized=$isInitialized, isLoaded=$isLoaded")
             }
 
-            override fun onRewardedVideoFinished(amount: Double, name: String?) {
+            override fun onRewardedVideoFinished(amount: Double, currency: String?) {
             }
 
             override fun onRewardedVideoLoaded(isPrecache: Boolean) {
@@ -119,5 +94,7 @@ object AdsUtils {
             override fun onRewardedVideoShown() {
             }
         })
+
+        Appodeal.setAdRevenueCallbacks(AppodealAdRevenueCallbacks())
     }
 }

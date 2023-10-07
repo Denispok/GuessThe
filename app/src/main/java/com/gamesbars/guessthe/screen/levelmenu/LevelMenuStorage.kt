@@ -1,7 +1,7 @@
 package com.gamesbars.guessthe.screen.levelmenu
 
 import com.gamesbars.guessthe.R
-import com.gamesbars.guessthe.Storage
+import com.gamesbars.guessthe.data.Storage
 import org.json.JSONArray
 import org.json.JSONObject
 

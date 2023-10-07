@@ -8,15 +8,38 @@ import androidx.annotation.MainThread
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.android.billingclient.api.*
-import com.gamesbars.guessthe.*
+import com.android.billingclient.api.AcknowledgePurchaseParams
+import com.android.billingclient.api.BillingClient
+import com.android.billingclient.api.BillingClientStateListener
+import com.android.billingclient.api.BillingFlowParams
+import com.android.billingclient.api.BillingResult
+import com.android.billingclient.api.ConsumeParams
+import com.android.billingclient.api.Purchase
+import com.android.billingclient.api.PurchasesUpdatedListener
+import com.android.billingclient.api.QueryProductDetailsParams
+import com.android.billingclient.api.QueryPurchasesParams
+import com.android.billingclient.api.acknowledgePurchase
+import com.android.billingclient.api.consumePurchase
+import com.android.billingclient.api.queryProductDetails
+import com.android.billingclient.api.queryPurchasesAsync
+import com.gamesbars.guessthe.R
 import com.gamesbars.guessthe.ads.BannerAdDelegate
 import com.gamesbars.guessthe.ads.RewardedAdDelegate
+import com.gamesbars.guessthe.data.CoinsStorage
 import com.gamesbars.guessthe.databinding.ActivityCoinsBinding
+import com.gamesbars.guessthe.playSound
 import com.gamesbars.guessthe.screen.coins.data.ProductDTO
 import com.gamesbars.guessthe.screen.coins.data.ProductDTOProvider
+import com.gamesbars.guessthe.sliceUntilIndex
+import com.gamesbars.guessthe.toast
 import com.google.firebase.analytics.FirebaseAnalytics
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlin.coroutines.CoroutineContext
 
 class CoinsActivity : AppCompatActivity(), CoroutineScope {
@@ -49,18 +72,14 @@ class CoinsActivity : AppCompatActivity(), CoroutineScope {
         saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         productDTOList = ProductDTOProvider.getProductDTOList(resources)
-        rewardedAdDelegate = RewardedAdDelegate(this, saves, ::onRewardEarned)
-        bannerAdDelegate = BannerAdDelegate(this, saves)
+        rewardedAdDelegate = RewardedAdDelegate(this, ::onRewardEarned)
+        bannerAdDelegate = BannerAdDelegate(this)
 
         billingClient = BillingClient.newBuilder(this)
             .setListener(PurchasesUpdatedListenerImpl())
             .enablePendingPurchases()
             .build()
         connectToBilling()
-
-        if (saves.getBoolean("ads", true)) bannerAdDelegate.loadBanner(this, binding.adViewContainer)
-
-        rewardedAdDelegate.loadRewardedAd()
 
         setupUI()
         updateCoins()
@@ -91,7 +110,7 @@ class CoinsActivity : AppCompatActivity(), CoroutineScope {
             launchBillingFlow(product)
         }
 
-        binding.coinsVideoTv.text = (2 * resources.getInteger(R.integer.level_reward)).toString()
+        binding.coinsVideoTv.text = (2 * CoinsStorage.getLevelReward()).toString()
         binding.coinsRewardedVideoLl.setOnClickListener {
             rewardedAdDelegate.showRewardedVideoAd()
         }
@@ -110,14 +129,14 @@ class CoinsActivity : AppCompatActivity(), CoroutineScope {
     private fun updateBannerAd() {
         if (saves.getBoolean("ads", true)) {
             binding.adViewContainer.visibility = View.VISIBLE
-            bannerAdDelegate.updateBanner(this, binding.adViewContainer)
+            bannerAdDelegate.updateBanner(binding.adViewContainer)
         } else {
             binding.adViewContainer.visibility = View.GONE
         }
     }
 
     private fun onRewardEarned() {
-        Storage.addCoins(2 * resources.getInteger(R.integer.level_reward))
+        CoinsStorage.addCoins(2 * CoinsStorage.getLevelReward())
         toast(getString(R.string.video_reward))
         updateCoins()
     }
@@ -152,12 +171,12 @@ class CoinsActivity : AppCompatActivity(), CoroutineScope {
             putBoolean("ads", false)
             apply()
         }
-        Storage.addCoins(coins)
+        CoinsStorage.addCoins(coins)
         updateCoins()
     }
 
     private fun updateCoins() {
-        val coins = Storage.getCoins().toString()
+        val coins = CoinsStorage.getCoins().toString()
         runOnUiThread {
             binding.coinsTv.text = coins
         }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/top_pane_height"
         android:layout_marginBottom="12dp"
+        android:clipChildren="false"
         android:paddingLeft="4dp"
         android:paddingRight="4dp">
 
@@ -28,6 +30,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:shadowColor="@color/colorTextShadow"
+            android:shadowRadius="@dimen/textShadowRadiusLight"
             android:text="@string/levels"
             android:textColor="@color/colorText"
             android:textSize="@dimen/top_pane_title_text_size" />
@@ -39,15 +43,15 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="@dimen/top_pane_side_padding"
-            android:background="@drawable/button_selector_green_up"
+            android:background="@drawable/button_selector_secondary_up"
             android:contentDescription="@string/coins_button"
-            android:drawableEnd="@drawable/coin_icon_16"
             android:drawablePadding="@dimen/top_pane_coins_drawable_padding"
             android:gravity="center_vertical"
             android:padding="@dimen/top_pane_coins_padding"
-            android:text="500"
             android:textColor="@color/colorText"
-            android:textSize="@dimen/top_pane_text_size" />
+            android:textSize="@dimen/top_pane_text_size"
+            app:drawableEndCompat="@drawable/coin_icon_16"
+            tools:text="500" />
 
     </RelativeLayout>
 

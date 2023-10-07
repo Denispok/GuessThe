@@ -5,14 +5,14 @@
         <layer-list>
             <item android:left="2dp">
                 <shape>
-                    <solid android:color="#219fae" />
+                    <solid android:color="@color/colorPrimaryDark" />
                     <corners android:radius="10dip" />
                 </shape>
             </item>
 
             <item android:bottom="2dp" android:right="2dp">
                 <shape>
-                    <solid android:color="#26c6da" />
+                    <solid android:color="@color/colorPrimary" />
                     <corners android:radius="10dip" />
                 </shape>
             </item>

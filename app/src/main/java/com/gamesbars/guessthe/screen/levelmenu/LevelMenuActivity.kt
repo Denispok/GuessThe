@@ -10,8 +10,9 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import com.gamesbars.guessthe.R
-import com.gamesbars.guessthe.Storage
 import com.gamesbars.guessthe.ads.BannerAdDelegate
+import com.gamesbars.guessthe.data.CoinsStorage
+import com.gamesbars.guessthe.data.Storage
 import com.gamesbars.guessthe.databinding.ActivityLevelmenuBinding
 import com.gamesbars.guessthe.databinding.ButtonLevelmenuFolderBinding
 import com.gamesbars.guessthe.databinding.ButtonLevelmenuPackBinding
@@ -50,7 +51,7 @@ class LevelMenuActivity : AppCompatActivity() {
 
         saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
-        bannerAdDelegate = BannerAdDelegate(this, saves)
+        bannerAdDelegate = BannerAdDelegate(this)
         itemId = intent.extras!!.getString(KEY_ITEM_ID)
 
         loadPacks()
@@ -68,8 +69,6 @@ class LevelMenuActivity : AppCompatActivity() {
                 startActivity(Intent(applicationContext, CoinsActivity::class.java))
             }
         }
-
-        if (saves.getBoolean("ads", true)) bannerAdDelegate.loadBanner(this, binding.adViewContainer)
     }
 
     override fun onResume() {
@@ -81,7 +80,7 @@ class LevelMenuActivity : AppCompatActivity() {
     }
 
     fun updateCoins() {
-        val coins = Storage.getCoins().toString()
+        val coins = CoinsStorage.getCoins().toString()
         binding.coinsTv.text = coins
         firebaseAnalytics.setUserProperty("coins", coins)
     }
@@ -115,7 +114,7 @@ class LevelMenuActivity : AppCompatActivity() {
     private fun updateBannerAd() {
         if (saves.getBoolean("ads", true)) {
             binding.adViewContainer.visibility = View.VISIBLE
-            bannerAdDelegate.updateBanner(this, binding.adViewContainer)
+            bannerAdDelegate.updateBanner(binding.adViewContainer)
         } else {
             binding.adViewContainer.visibility = View.GONE
         }

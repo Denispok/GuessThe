@@ -28,7 +28,7 @@ class WordLetters(private val fragment: LevelFragment, private val word: String)
         for (i in 0 until word.length) {
             val isStatic = STATIC_CHARS.contains(word[i])
             val knownChar = if (i + 1 - knownCharCount > letterCount || isStatic) word[i] else null
-            val wordLetter = WordLetter(knownChar, fragment.context!!)
+            val wordLetter = WordLetter(knownChar, fragment.requireContext())
             if (knownChar != null) knownCharCount++
             wordLetters.add(wordLetter)
         }
@@ -41,7 +41,7 @@ class WordLetters(private val fragment: LevelFragment, private val word: String)
     }
 
     private fun playIsFullAnimation() {
-        playSound(fragment.context!!, R.raw.isfull)
+        playSound(fragment.requireContext(), R.raw.isfull)
         val animator = ObjectAnimator.ofFloat(wordLayout, "translationX", 0f, -14f, 14f, -14f, 14f, -14f, 14f, -14f, 14f, 0f)
         animator.interpolator = LinearInterpolator()
         animator.duration = 700
@@ -92,7 +92,7 @@ class WordLetters(private val fragment: LevelFragment, private val word: String)
         Handler().postDelayed({
             wordLetter.text = letter.text
             wordLetter.isEnabled = false
-            wordLetter.setTextColor(Color.parseColor("#ff7e00"))
+            wordLetter.setTextColor(fragment.resources.getColor(R.color.colorLetterGuessed))
             checkWord()
         }, animationDuration)
     }
@@ -102,7 +102,7 @@ class WordLetters(private val fragment: LevelFragment, private val word: String)
         if (freeWordLetter == null) {
             playIsFullAnimation()
         } else {
-            playSound(fragment.context!!, R.raw.choosein)
+            playSound(fragment.requireContext(), R.raw.choosein)
             letter.chooseIn(freeWordLetter, animationDuration)
             freeWordLetter.letter = letter
             Handler().postDelayed({
@@ -114,7 +114,7 @@ class WordLetters(private val fragment: LevelFragment, private val word: String)
     }
 
     private fun removeOutLetter(wordLetter: WordLetter) {
-        playSound(fragment.context!!, R.raw.chooseout)
+        playSound(fragment.requireContext(), R.raw.chooseout)
         wordLetter.letter?.chooseOut(animationDuration)
         removeLetter(wordLetter)
     }

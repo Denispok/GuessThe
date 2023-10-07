@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#40C4FF</color>
+    <color name="colorPrimary">@color/blue</color>
+    <color name="colorPrimaryDark">@color/blueDark</color>
+    <color name="colorAccent">@color/blue</color>
+
+    <color name="colorSecondary">@color/green</color>
+    <color name="colorSecondaryDark">@color/greenDark</color>
+
+    <color name="colorStatusBar">#303F9F</color>
+    <color name="colorNavigationBar">#3F51B5</color>
 
     <color name="colorText">#ffffff</color>
+    <color name="colorTextShadow">#000000</color>
     <color name="colorBackground">#4665ce</color>
 
+    <color name="colorLetterGuessed">#ff7e00</color>
     <color name="colorLevelSelectionItemBack">#56C6DA</color>
+
+    <color name="blue">#26c6da</color>
+    <color name="blueDark">#219fae</color>
+    <color name="green">#69de7b</color>
+    <color name="greenDark">#41b653</color>
 </resources>

@@ -11,12 +11,13 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.gamesbars.guessthe.R
-import com.gamesbars.guessthe.Storage
-import com.gamesbars.guessthe.Storage.getCurrentLevel
-import com.gamesbars.guessthe.Storage.getDrawableResIdByName
-import com.gamesbars.guessthe.Storage.getLevelName
-import com.gamesbars.guessthe.Storage.getStringArrayResIdByName
-import com.gamesbars.guessthe.Storage.isLevelHaveInfo
+import com.gamesbars.guessthe.data.CoinsStorage
+import com.gamesbars.guessthe.data.Storage
+import com.gamesbars.guessthe.data.Storage.getCurrentLevel
+import com.gamesbars.guessthe.data.Storage.getDrawableResIdByName
+import com.gamesbars.guessthe.data.Storage.getLevelName
+import com.gamesbars.guessthe.data.Storage.getStringArrayResIdByName
+import com.gamesbars.guessthe.data.Storage.isLevelHaveInfo
 import com.gamesbars.guessthe.databinding.FragmentLevelBinding
 import com.gamesbars.guessthe.level.Letter
 import com.gamesbars.guessthe.level.Letters
@@ -57,13 +58,13 @@ class LevelFragment : Fragment() {
         super.onCreate(savedInstanceState)
         sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
 
-        firebaseAnalytics = FirebaseAnalytics.getInstance(context!!)
+        firebaseAnalytics = FirebaseAnalytics.getInstance(requireContext())
 
-        pack = arguments!!.getString("pack")!!
+        pack = requireArguments().getString("pack")!!
         loadLevel(pack)
 
         wordLetters = WordLetters(this, word)
-        letters = Letters(activity!!, word, pack)
+        letters = Letters(requireActivity(), word, pack)
         letters.setLettersOnClickListener {
             if (isClickable) wordLetters.addLetter(it as Letter)
         }
@@ -86,8 +87,8 @@ class LevelFragment : Fragment() {
         binding.levelTitleBtn.text = getString(R.string.level, getCurrentLevel(pack))
         binding.backIv.setOnClickListener {
             if (isClickable) {
-                playSound(context!!, R.raw.button)
-                activity!!.onBackPressed()
+                playSound(requireContext(), R.raw.button)
+                requireActivity().onBackPressed()
             }
         }
         binding.levelTitleBtn.setOnClickListener { startLevelSelection() }
@@ -142,8 +143,8 @@ class LevelFragment : Fragment() {
     private fun startLevelSelection() {
         if (isClickable) {
             isClickable = false
-            playSound(context!!, R.raw.button)
-            fragmentManager!!.beginTransaction()
+            playSound(requireContext(), R.raw.button)
+            parentFragmentManager.beginTransaction()
                 .replace(R.id.fragmentFl, LevelSelectionFragment.newInstance(pack))
                 .addToBackStack(null)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
@@ -154,9 +155,9 @@ class LevelFragment : Fragment() {
     private fun info() {
         if (isClickable) {
             isClickable = false
-            playSound(context!!, R.raw.button)
-            (activity!! as PlayActivity).currentDialog = infoDialog
-            infoDialog.show(fragmentManager!!, null)
+            playSound(requireContext(), R.raw.button)
+            (requireActivity() as PlayActivity).currentDialog = infoDialog
+            infoDialog.show(parentFragmentManager, null)
             val params = Bundle()
             params.putString(FirebaseAnalytics.Param.LEVEL, "$pack ${getCurrentLevel(pack)}")
             firebaseAnalytics.logEvent("level_info", params)
@@ -166,22 +167,22 @@ class LevelFragment : Fragment() {
     private fun tips() {
         if (isClickable) {
             isClickable = false
-            playSound(context!!, R.raw.button)
-            (activity!! as PlayActivity).currentDialog = tipsDialog
-            tipsDialog.show(fragmentManager!!, resources.getString(R.string.tips_dialog_fragment_tag))
+            playSound(requireContext(), R.raw.button)
+            (requireActivity() as PlayActivity).currentDialog = tipsDialog
+            tipsDialog.show(parentFragmentManager, resources.getString(R.string.tips_dialog_fragment_tag))
         }
     }
 
     private fun coins() {
         if (isClickable) {
             isClickable = false
-            playSound(context!!, R.raw.button)
+            playSound(requireContext(), R.raw.button)
             startActivity(Intent(context, CoinsActivity::class.java))
         }
     }
 
     fun updateCoins() {
-        val coins = Storage.getCoins().toString()
+        val coins = CoinsStorage.getCoins().toString()
         binding.coinsTv.text = coins
         firebaseAnalytics.setUserProperty("coins", coins)
     }
@@ -189,8 +190,8 @@ class LevelFragment : Fragment() {
     fun win() {
         val isLevelReward = Storage.completeLevel(pack)
 
-        val fragment = WinFragment.newInstance(word, image, arguments!!.getString("pack")!!, isLevelReward)
-        fragmentManager!!.beginTransaction()
+        val fragment = WinFragment.newInstance(word, image, requireArguments().getString("pack")!!, isLevelReward)
+        parentFragmentManager.beginTransaction()
             .replace(R.id.fragmentFl, fragment, resources.getString(R.string.win_fragment_tag))
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             .addSharedElement(binding.levelImageIv, "ImageTransition")

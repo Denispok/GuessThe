@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer name="level_reward">10</integer>
-    <integer name="rate_reward">50</integer>
-
     <integer-array name="packs_prices">
         <item>50</item>
         <item>100</item>
@@ -13,12 +10,6 @@
         <item>10</item>
         <item>10</item>
         <item>10</item>
-    </integer-array>
-
-    <integer-array name="packs_levels_to_unlock">
-        <item>0</item>
-        <item>5</item>
-        <item>-1</item>
     </integer-array>
 
     <integer name="tip_letter_cost">20</integer>

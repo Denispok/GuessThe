@@ -8,8 +8,8 @@ import android.text.method.LinkMovementMethod
 import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
 import com.gamesbars.guessthe.R
-import com.gamesbars.guessthe.Storage.getAuthorAndLicense
-import com.gamesbars.guessthe.Storage.getCurrentLevel
+import com.gamesbars.guessthe.data.Storage.getAuthorAndLicense
+import com.gamesbars.guessthe.data.Storage.getCurrentLevel
 import com.gamesbars.guessthe.databinding.DialogLevelInfoBinding
 import com.gamesbars.guessthe.screen.PlayActivity
 
@@ -30,7 +30,7 @@ class InfoDialogFragment : DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val pack = arguments!!.getString("pack")!!
+        val pack = requireArguments().getString("pack")!!
         val currentLevel = getCurrentLevel(pack)
 
         val authorAndLicense = getAuthorAndLicense(pack, currentLevel)
@@ -40,8 +40,8 @@ class InfoDialogFragment : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(context)
-        val binding = DialogLevelInfoBinding.inflate(activity!!.layoutInflater)
-        val fragment = fragmentManager!!.findFragmentByTag(resources.getString(R.string.level_fragment_tag)) as LevelFragment
+        val binding = DialogLevelInfoBinding.inflate(requireActivity().layoutInflater)
+        val fragment = parentFragmentManager.findFragmentByTag(resources.getString(R.string.level_fragment_tag)) as LevelFragment
 
         binding.apply {
             authorTv.also {
@@ -66,7 +66,7 @@ class InfoDialogFragment : DialogFragment() {
     }
 
     fun updateFragment(fragment: LevelFragment) {
-        (fragment.activity!! as PlayActivity).currentDialog = null
+        (fragment.requireActivity() as PlayActivity).currentDialog = null
         fragment.isClickable = true
     }
 }

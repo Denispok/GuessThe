@@ -1,15 +1,15 @@
 {
+  "russian_cars": "Russian Auto",
   "folder": {
     "name": "Folder",
     "items": {
       "folder2": {
         "name": "Folder 2",
         "items": {
-          "russian_cars": "Russian Auto"
+          "test": "Test"
         }
       },
-      "test": "Test"
+      "big_words_test": "Big string test"
     }
-  },
-  "big_words_test": "Big string test"
+  }
 }

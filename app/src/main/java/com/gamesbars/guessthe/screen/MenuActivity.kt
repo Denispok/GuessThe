@@ -10,12 +10,11 @@ import android.text.method.LinkMovementMethod
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import com.gamesbars.guessthe.AnalyticsHelper
 import com.gamesbars.guessthe.R
-import com.gamesbars.guessthe.Storage
-import com.gamesbars.guessthe.ads.AdsUtils
+import com.gamesbars.guessthe.ads.AdsAnalytics
 import com.gamesbars.guessthe.ads.BannerAdDelegate
 import com.gamesbars.guessthe.ads.consent.ConsentInfoManager
+import com.gamesbars.guessthe.data.CoinsStorage
 import com.gamesbars.guessthe.databinding.ActivityMenuBinding
 import com.gamesbars.guessthe.playSound
 import com.gamesbars.guessthe.screen.coins.CoinsActivity
@@ -38,9 +37,9 @@ class MenuActivity : AppCompatActivity() {
 
         saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
-        bannerAdDelegate = BannerAdDelegate(this, saves)
+        bannerAdDelegate = BannerAdDelegate(this)
 
-        binding.rateCoinsTv.text = "+".plus(resources.getInteger(R.integer.rate_reward))
+        binding.rateCoinsTv.text = "+".plus(CoinsStorage.getRateReward())
         binding.privacyPolicyTv.movementMethod = LinkMovementMethod.getInstance()
         binding.adsSettingsTv.setOnClickListener { ConsentInfoManager.showConsentForm(this) }
 
@@ -49,14 +48,12 @@ class MenuActivity : AppCompatActivity() {
             if (sound) R.drawable.baseline_volume_up_white_48
             else R.drawable.baseline_volume_off_white_48
         )
-
-        if (saves.getBoolean("ads", true)) bannerAdDelegate.loadBanner(this, binding.adViewContainer)
     }
 
     private fun updateBannerAd() {
         if (saves.getBoolean("ads", true)) {
             binding.adViewContainer.visibility = View.VISIBLE
-            bannerAdDelegate.updateBanner(this, binding.adViewContainer)
+            bannerAdDelegate.updateBanner(binding.adViewContainer)
         } else {
             binding.adViewContainer.visibility = View.GONE
         }
@@ -92,7 +89,7 @@ class MenuActivity : AppCompatActivity() {
             playSound(this, R.raw.button)
 
             val params = Bundle()
-            val rateReward = resources.getInteger(R.integer.rate_reward)
+            val rateReward = CoinsStorage.getRateReward()
             params.putString("reward", if (saves.getBoolean("rated", false)) "none" else "$rateReward coins")
             firebaseAnalytics.logEvent("rate", params)
 
@@ -105,7 +102,7 @@ class MenuActivity : AppCompatActivity() {
                 val editor = saves.edit()
                 editor.putBoolean("rated", true)
                 editor.apply()
-                Storage.addCoins(resources.getInteger(R.integer.rate_reward))
+                CoinsStorage.addCoins(rateReward)
             }
         }
     }
@@ -141,12 +138,10 @@ class MenuActivity : AppCompatActivity() {
 
     private fun updateConsentInfo() {
         val isUserInConsentZone = ConsentInfoManager.isUserInConsentZone()
-        // Update location and npa here because consent in Appodeal requests automatically without callback
-        if (AdsUtils.AD_MEDIATION_TYPE == AdsUtils.AD_MEDIATION_TYPE_APPODEAL) {
-            val npa = ConsentInfoManager.nonPersonalizedAdsAppodeal()
-            ConsentInfoManager.putNpa(this, npa)
-            AnalyticsHelper.logAdsLocation(isUserInConsentZone)
-        }
         binding.adsSettingsTv.isVisible = isUserInConsentZone
+        // Update location and npa here because consent in Appodeal requests automatically without callback
+        val npa = ConsentInfoManager.nonPersonalizedAdsAppodeal()
+        ConsentInfoManager.putNpa(this, npa)
+        AdsAnalytics.logAdsLocation(isUserInConsentZone)
     }
 }

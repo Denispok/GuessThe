@@ -7,11 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.gamesbars.guessthe.R
-import com.gamesbars.guessthe.Storage
+import com.gamesbars.guessthe.data.CoinsStorage
+import com.gamesbars.guessthe.data.Storage
 import com.gamesbars.guessthe.databinding.FragmentWinBinding
 import com.gamesbars.guessthe.playSound
 import com.gamesbars.guessthe.screen.PlayActivity
-import com.gamesbars.guessthe.screen.PlayActivity.Companion.INTERSTITIAL_AD_FREQUENCY
 
 class WinFragment : Fragment() {
 
@@ -40,10 +40,10 @@ class WinFragment : Fragment() {
 
         sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
 
-        word = arguments!!.getString("word")!!
-        image = arguments!!.getString("image")!!
-        pack = arguments!!.getString("pack")!!
-        isLevelReward = arguments!!.getBoolean("isLevelReward")
+        word = requireArguments().getString("word")!!
+        image = requireArguments().getString("image")!!
+        pack = requireArguments().getString("pack")!!
+        isLevelReward = requireArguments().getBoolean("isLevelReward")
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -52,19 +52,19 @@ class WinFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        playSound(context!!, R.raw.win)
+        playSound(requireContext(), R.raw.win)
         binding.winImageIv.setImageResource(Storage.getWinImageResId(image))
         binding.winWordTv.text = word
 
         if (isLevelReward) {
-            binding.rewardCoinsTv.text = activity!!.resources.getInteger(R.integer.level_reward).toString()
+            binding.rewardCoinsTv.text = CoinsStorage.getLevelReward().toString()
         } else {
             binding.rewardCoinsTv.visibility = View.GONE
-            binding.rewardedX3Tv.text = (2 * activity!!.resources.getInteger(R.integer.level_reward)).toString()
+            binding.rewardedX3Tv.text = (2 * CoinsStorage.getLevelReward()).toString()
         }
 
         binding.rewardedTextLl.setOnClickListener {
-            (activity!! as PlayActivity).showRewardedVideoAd()
+            (requireActivity() as PlayActivity).showRewardedVideoAd()
         }
 
         binding.nextBtn.setOnClickListener {
@@ -79,16 +79,14 @@ class WinFragment : Fragment() {
 
     private fun nextLevel() {
         if (Storage.getCurrentLevel(pack) == 1) {
-            activity!!.finish()
+            requireActivity().finish()
         } else {
             val fragment = LevelFragment.newInstance(pack)
-            fragmentManager!!.beginTransaction()
+            parentFragmentManager.beginTransaction()
                 .replace(R.id.fragmentFl, fragment, resources.getString(R.string.level_fragment_tag))
                 .addSharedElement(binding.winImageIv, "ImageTransition")
                 .commit()
         }
-        if (Storage.getCurrentLevel(pack) % INTERSTITIAL_AD_FREQUENCY == 1) {
-            (activity!! as PlayActivity).showInterstitialAd()
-        }
+        (requireActivity() as PlayActivity).showInterstitialAd(Storage.getCurrentLevel(pack))
     }
 }

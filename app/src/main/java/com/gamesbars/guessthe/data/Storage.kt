@@ -1,7 +1,11 @@
-package com.gamesbars.guessthe
+package com.gamesbars.guessthe.data
 
 import android.annotation.SuppressLint
 import android.content.Context
+import com.gamesbars.guessthe.AnalyticsHelper
+import com.gamesbars.guessthe.App
+import com.gamesbars.guessthe.R
+import com.gamesbars.guessthe.util.RemoteConfig
 
 @SuppressLint("DiscouragedApi")
 object Storage {
@@ -33,7 +37,7 @@ object Storage {
 
     fun getLevelsRemainingToUnlock(pack: String): Int? {
         val packIndex = getPackIndex(pack)
-        val levelsToUnlock = resources.getIntArray(R.array.packs_levels_to_unlock)[packIndex]
+        val levelsToUnlock = getPacksLevelsToUnlock()[packIndex]
         if (levelsToUnlock == -1) return null
         return levelsToUnlock - getCompletedLevelsCount()
     }
@@ -44,17 +48,8 @@ object Storage {
 
     fun getCompletedLevelsCount(): Int {
         val packs = resources.getStringArray(R.array.packs)
-        return packs.fold(0, { completedLevels, pack ->
+        return packs.fold(0) { completedLevels, pack ->
             completedLevels + getCompletedLevels(pack)
-        })
-    }
-
-    fun getCoins() = saves.getInt("coins", 0)
-
-    fun addCoins(coinsToAdd: Int) {
-        saves.edit().apply {
-            putInt("coins", getCoins() + coinsToAdd)
-            apply()
         }
     }
 
@@ -92,7 +87,7 @@ object Storage {
 
     fun isPackOpen(pack: String): Boolean {
         val packIndex = getPackIndex(pack)
-        val levelsToUnlock = resources.getIntArray(R.array.packs_levels_to_unlock)[packIndex]
+        val levelsToUnlock = getPacksLevelsToUnlock()[packIndex]
         val isPackOpenedByLevels = levelsToUnlock != -1 && getCompletedLevelsCount() >= levelsToUnlock
         return isPackPurchased(pack) || isPackOpenedByLevels
     }
@@ -103,14 +98,14 @@ object Storage {
     fun completeLevel(pack: String): Boolean {
         val currentLevel = getCurrentLevel(pack)
         val packSize = getPackSize(pack)
-        val levelName = pack + currentLevel
+        val levelName = getLevelName(pack, currentLevel)
         var isCompletedFirstTime = false
 
         val editor = saves.edit()
         editor.putString(levelName, saves.getString(levelName, "")!!.replace("!", "").replace("*", ""))
         if (currentLevel > getCompletedLevels(pack)) {
             editor.putInt(pack + "completed", currentLevel)
-            addCoins(resources.getInteger(R.integer.level_reward))
+            CoinsStorage.addCoins(CoinsStorage.getLevelReward())
             isCompletedFirstTime = true
             AnalyticsHelper.logLevelComplete(pack, currentLevel)
         }
@@ -125,7 +120,7 @@ object Storage {
 
     private fun checkUnlockedLevels() {
         val packs = resources.getStringArray(R.array.packs)
-        val packsLevelsToUnlock = resources.getIntArray(R.array.packs_levels_to_unlock)
+        val packsLevelsToUnlock = getPacksLevelsToUnlock()
         val completedLevelsCount = getCompletedLevelsCount()
 
         for (id in packs.indices) {
@@ -147,4 +142,8 @@ object Storage {
     }
 
     private fun getPackIndex(pack: String) = resources.getStringArray(R.array.packs).indexOf(pack)
+
+    private fun getPacksLevelsToUnlock(): IntArray {
+        return RemoteConfig.getPacksLevelsToUnlock()
+    }
 }
