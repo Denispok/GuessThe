@@ -64,12 +64,15 @@ dependencies {
     implementation 'com.google.firebase:firebase-config-ktx:21.4.1'
     implementation 'com.google.firebase:firebase-crashlytics-ktx:18.4.3'
 
-    def appodealSdkVersion = "3.1.3.0"
-    implementation "com.appodeal.ads.sdk:core:3.1.3"
+    def appodealSdkVersion = "3.2.0.0"
+    implementation "com.appodeal.ads.sdk:core:3.2.0"
     implementation "com.appodeal.ads.sdk.networks:adcolony:$appodealSdkVersion"
     implementation "com.appodeal.ads.sdk.networks:admob:$appodealSdkVersion"
     implementation "com.appodeal.ads.sdk.networks:applovin:$appodealSdkVersion"
     implementation "com.appodeal.ads.sdk.networks:bidmachine:$appodealSdkVersion"
+    implementation "com.appodeal.ads.sdk.networks:bidon:$appodealSdkVersion"
+    implementation "com.appodeal.ads.sdk.networks:bigo_ads:$appodealSdkVersion"
+    implementation "com.appodeal.ads.sdk.networks:dt_exchange:$appodealSdkVersion"
     implementation "com.appodeal.ads.sdk.networks:iab:$appodealSdkVersion"
     implementation "com.appodeal.ads.sdk.networks:ironsource:$appodealSdkVersion"
     implementation "com.appodeal.ads.sdk.networks:meta:$appodealSdkVersion"
