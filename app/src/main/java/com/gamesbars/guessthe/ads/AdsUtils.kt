@@ -11,6 +11,7 @@ import com.gamesbars.guessthe.ads.AdsAnalytics.logAdSdkError
 import com.gamesbars.guessthe.ads.AdsAnalytics.logInterstitialAdError
 import com.gamesbars.guessthe.ads.AdsAnalytics.logRewardedAdError
 import com.gamesbars.guessthe.ads.appodeal.AppodealAdRevenueCallbacks
+import com.gamesbars.guessthe.util.RemoteConfig
 
 object AdsUtils {
 
@@ -19,6 +20,7 @@ object AdsUtils {
     }
 
     private fun initAppodeal(activity: AppCompatActivity) {
+        Appodeal.setSmartBanners(RemoteConfig.getSmartBannersEnabled())
         Appodeal.initialize(
             activity,
             activity.getString(R.string.appodeal_app_id),
