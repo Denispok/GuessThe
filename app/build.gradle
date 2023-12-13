@@ -6,12 +6,12 @@ apply plugin: 'kotlin-kapt'
 
 android {
     namespace 'com.gamesbars.guessthe'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.gamesbars.guessthe"
         minSdkVersion 21
-        targetSdkVersion 33
+        targetSdkVersion 34
         versionCode 16
         versionName "1.16q"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
