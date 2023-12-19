@@ -20,6 +20,7 @@ object RemoteConfig {
     private const val LEVEL_REWARD = "level_reward"
     private const val RATE_REWARD = "rate_reward"
     private const val PACKS_LEVELS_TO_UNLOCK = "packs_levels_to_unlock"
+    private const val SMART_BANNERS_ENABLED = "smart_banners_enabled"
 
     private val resources get() = App.appContext.resources
     private val remoteConfig: FirebaseRemoteConfig get() = Firebase.remoteConfig
@@ -51,6 +52,10 @@ object RemoteConfig {
 
     fun getRateReward(): Int {
         return remoteConfig.getLong(RATE_REWARD).toInt()
+    }
+
+    fun getSmartBannersEnabled(): Boolean {
+        return remoteConfig.getBoolean(SMART_BANNERS_ENABLED)
     }
 
     /** Locally we always store array with correct size. If remote config sends us other size we will use local value */

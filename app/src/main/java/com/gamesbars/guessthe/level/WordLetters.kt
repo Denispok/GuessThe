@@ -16,7 +16,7 @@ class WordLetters(private val fragment: LevelFragment, private val word: String)
     companion object {
 
         /** Static chars always visible */
-        val STATIC_CHARS = arrayOf(' ', '-', '\'')
+        val STATIC_CHARS = arrayOf(' ', '-', '\'', '&')
     }
 
     private lateinit var wordLayout: WordLettersLayout

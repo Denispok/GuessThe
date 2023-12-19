@@ -21,6 +21,10 @@
         <value>50</value>
     </entry>
     <entry>
+        <key>smart_banners_enabled</key>
+        <value>false</value>
+    </entry>
+    <entry>
         <key>packs_levels_to_unlock</key>
         <value>[0, 5, -1]</value>
     </entry>
