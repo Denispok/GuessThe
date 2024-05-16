@@ -140,8 +140,7 @@ class MenuActivity : AppCompatActivity() {
         val isUserInConsentZone = ConsentInfoManager.isUserInConsentZone()
         binding.adsSettingsTv.isVisible = isUserInConsentZone
         // Update location and npa here because consent in Appodeal requests automatically without callback
-        val npa = ConsentInfoManager.nonPersonalizedAdsAppodeal()
-        ConsentInfoManager.putNpa(this, npa)
+        ConsentInfoManager.updateNpa(this)
         AdsAnalytics.logAdsLocation(isUserInConsentZone)
     }
 }
