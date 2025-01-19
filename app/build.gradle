@@ -6,14 +6,14 @@ apply plugin: 'kotlin-kapt'
 
 android {
     namespace 'com.gamesbars.guessthe'
-    compileSdk 34
+    compileSdk 35
 
     defaultConfig {
         applicationId "com.gamesbars.guessthe"
         minSdkVersion 21
-        targetSdkVersion 34
-        versionCode 19
-        versionName "1.19t"
+        targetSdkVersion 35
+        versionCode 20
+        versionName "1.20u"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -60,11 +60,11 @@ dependencies {
 
     implementation "com.android.billingclient:billing-ktx:6.0.1"
 
-    implementation 'com.google.firebase:firebase-analytics:22.0.0'
-    implementation 'com.google.firebase:firebase-config:22.0.0'
-    implementation 'com.google.firebase:firebase-crashlytics:19.0.0'
+    implementation 'com.google.firebase:firebase-analytics:22.1.2'
+    implementation 'com.google.firebase:firebase-config:22.0.1'
+    implementation 'com.google.firebase:firebase-crashlytics:19.3.0'
 
-    implementation ("com.appodeal.ads:sdk:3.3.3.0") {
+    implementation ("com.appodeal.ads:sdk:3.4.1.0") {
         exclude group: "com.appodeal.ads.sdk.networks", module: "amazon"
         exclude group: "com.appodeal.ads.sdk.networks", module: "meta"
         exclude group: "com.appodeal.ads.sdk.services", module: "adjust"
