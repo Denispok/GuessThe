@@ -10,10 +10,10 @@ android {
 
     defaultConfig {
         applicationId "com.gamesbars.guessthe"
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 35
-        versionCode 20
-        versionName "1.20u"
+        versionCode 21
+        versionName "1.21v"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -37,12 +37,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11.toString()
+        jvmTarget = JavaVersion.VERSION_17.toString()
     }
 }
 
@@ -64,15 +64,17 @@ dependencies {
     implementation 'com.google.firebase:firebase-config:22.0.1'
     implementation 'com.google.firebase:firebase-crashlytics:19.3.0'
 
-    implementation ("com.appodeal.ads:sdk:3.4.1.0") {
+    implementation("com.appodeal.ads:sdk:3.8.1.0") {
+        exclude group: "com.applovin.mediation", module: "amazon-tam-adapter"
+        exclude group: "com.applovin.mediation", module: "facebook-adapter"
         exclude group: "com.appodeal.ads.sdk.networks", module: "amazon"
         exclude group: "com.appodeal.ads.sdk.networks", module: "meta"
         exclude group: "com.appodeal.ads.sdk.services", module: "adjust"
         exclude group: "com.appodeal.ads.sdk.services", module: "appsflyer"
         exclude group: "com.appodeal.ads.sdk.services", module: "facebook_analytics"
         exclude group: "com.appodeal.ads.sdk.services", module: "firebase"
-        exclude group: "com.applovin.mediation", module: "amazon-tam-adapter"
-        exclude group: "com.applovin.mediation", module: "facebook-adapter"
+        exclude group: "com.unity3d.ads-mediation", module: "aps-adapter"
+        exclude group: "com.unity3d.ads-mediation", module: "facebook-adapter"
         exclude group: "io.bidmachine", module: "ads.networks.amazon"
         exclude group: "io.bidmachine", module: "ads.networks.meta_audience"
         exclude group: "org.bidon", module: "amazon-adapter"
