@@ -2,7 +2,6 @@ package com.gamesbars.guessthe.ads
 
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.core.content.ContextCompat
@@ -31,7 +30,7 @@ object AdsAnalytics {
         val params = Bundle()
         val connectivityInfo = getConnectivityInfo()
 
-        if (connectivityInfo != null) params.putString(PARAM_CONNECTIVITY_INFO, connectivityInfo.sliceUntilIndex(99))
+        params.putString(PARAM_CONNECTIVITY_INFO, connectivityInfo.sliceUntilIndex(99))
         params.putString(PARAM_MESSAGE, message.sliceUntilIndex(99))
 
         if (BuildConfig.DEBUG) {
@@ -45,7 +44,7 @@ object AdsAnalytics {
         val params = Bundle()
         val connectivityInfo = getConnectivityInfo()
 
-        if (connectivityInfo != null) params.putString(PARAM_CONNECTIVITY_INFO, connectivityInfo.sliceUntilIndex(99))
+        params.putString(PARAM_CONNECTIVITY_INFO, connectivityInfo.sliceUntilIndex(99))
         params.putString(PARAM_MESSAGE, message.sliceUntilIndex(99))
 
         val eventName = EVENT_ERROR_AD_INTERSTITIAL_APPODEAL
@@ -61,7 +60,7 @@ object AdsAnalytics {
         val params = Bundle()
         val connectivityInfo = getConnectivityInfo()
 
-        if (connectivityInfo != null) params.putString(PARAM_CONNECTIVITY_INFO, connectivityInfo.sliceUntilIndex(99))
+        params.putString(PARAM_CONNECTIVITY_INFO, connectivityInfo.sliceUntilIndex(99))
         params.putString(PARAM_MESSAGE, message.sliceUntilIndex(99))
 
         val eventName = EVENT_ERROR_AD_REWARDED_APPODEAL
@@ -101,20 +100,17 @@ object AdsAnalytics {
         }
     }
 
-    private fun getConnectivityInfo(): String? {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            val cm = ContextCompat.getSystemService(App.appContext, ConnectivityManager::class.java)
-            val hasInternet = cm?.getNetworkCapabilities(cm.activeNetwork)?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
-            val hasValidated = cm?.getNetworkCapabilities(cm.activeNetwork)?.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
+    private fun getConnectivityInfo(): String {
+        val cm = ContextCompat.getSystemService(App.appContext, ConnectivityManager::class.java)
+        val hasInternet = cm?.getNetworkCapabilities(cm.activeNetwork)?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+        val hasValidated = cm?.getNetworkCapabilities(cm.activeNetwork)?.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
 
-            return if (cm == null) {
-                "ConnectivityManager is null"
-            } else if (cm.activeNetwork == null) {
-                "activeNetwork is null"
-            } else {
-                "hasInternet: $hasInternet, hasValidated: $hasValidated"
-            }
+        return if (cm == null) {
+            "ConnectivityManager is null"
+        } else if (cm.activeNetwork == null) {
+            "activeNetwork is null"
+        } else {
+            "hasInternet: $hasInternet, hasValidated: $hasValidated"
         }
-        return null
     }
 }
