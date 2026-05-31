@@ -39,7 +39,12 @@ class MenuActivity : AppCompatActivity() {
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         bannerAdDelegate = BannerAdDelegate(this)
 
-        binding.rateCoinsTv.text = "+".plus(CoinsStorage.getRateReward())
+        val rateReward = CoinsStorage.getRateReward()
+        if (rateReward == 0) {
+            binding.rateCoinsTv.visibility = View.GONE
+        } else {
+            binding.rateCoinsTv.text = "+".plus(CoinsStorage.getRateReward())
+        }
         binding.privacyPolicyTv.movementMethod = LinkMovementMethod.getInstance()
         binding.adsSettingsTv.setOnClickListener { ConsentInfoManager.showConsentForm(this) }
 
