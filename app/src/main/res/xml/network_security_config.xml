@@ -4,6 +4,10 @@
         <trust-anchors>
             <certificates src="system" />
         </trust-anchors>
+        <!-- Android 17 turns on Certificate Transparency checks and Encrypted Client Hello by default for
+             targetSdk 37. Both stay off to keep TLS behavior as before; remove these two lines to adopt them. -->
+        <certificateTransparency enabled="false" />
+        <domainEncryption mode="disabled" />
     </base-config>
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">127.0.0.1</domain>
