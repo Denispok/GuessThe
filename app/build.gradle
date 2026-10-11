@@ -10,8 +10,8 @@ android {
         applicationId = "com.gamesbars.guessthe"
         minSdk = 24
         targetSdk = 37
-        versionCode = 22
-        versionName = "1.22x"
+        versionCode = 23
+        versionName = "1.23x"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
