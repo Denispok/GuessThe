@@ -33,6 +33,7 @@ import com.gamesbars.guessthe.screen.coins.data.ProductDTO
 import com.gamesbars.guessthe.screen.coins.data.ProductDTOProvider
 import com.gamesbars.guessthe.sliceUntilIndex
 import com.gamesbars.guessthe.toast
+import com.gamesbars.guessthe.util.applySystemBarsCompat
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
@@ -69,6 +70,7 @@ class CoinsActivity : AppCompatActivity(), CoroutineScope {
         super.onCreate(savedInstanceState)
         binding = ActivityCoinsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        applySystemBarsCompat()
 
         saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
@@ -101,7 +103,7 @@ class CoinsActivity : AppCompatActivity(), CoroutineScope {
     private fun setupUI() {
         binding.backIv.setOnClickListener {
             playSound(this, R.raw.button)
-            onBackPressed()
+            onBackPressedDispatcher.onBackPressed()
         }
 
         binding.productRv.adapter = productAdapter

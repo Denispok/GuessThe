@@ -10,8 +10,8 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gamesbars.guessthe.R
-import com.gamesbars.guessthe.data.Storage
 import com.gamesbars.guessthe.adapter.LevelSelectionAdapter
+import com.gamesbars.guessthe.data.Storage
 import com.gamesbars.guessthe.databinding.FragmentLevelselectionBinding
 import com.gamesbars.guessthe.playSound
 
@@ -47,7 +47,7 @@ class LevelSelectionFragment : Fragment() {
         binding.backIv.setOnClickListener {
             if (isClickable) {
                 playSound(requireContext(), R.raw.button)
-                requireActivity().onBackPressed()
+                requireActivity().onBackPressedDispatcher.onBackPressed()
             }
         }
 

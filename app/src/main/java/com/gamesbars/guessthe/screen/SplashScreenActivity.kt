@@ -7,6 +7,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.gamesbars.guessthe.R
 import com.gamesbars.guessthe.ads.AdsUtils
+import com.gamesbars.guessthe.util.applySystemBarsCompat
 import com.google.firebase.analytics.FirebaseAnalytics
 
 class SplashScreenActivity : AppCompatActivity() {
@@ -17,6 +18,7 @@ class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splashscreen)
+        applySystemBarsCompat()
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         saves = getSharedPreferences("saves", Context.MODE_PRIVATE)

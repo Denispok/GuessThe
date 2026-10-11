@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
@@ -20,6 +21,7 @@ import com.gamesbars.guessthe.fragment.ConfirmDialogFragment
 import com.gamesbars.guessthe.playSound
 import com.gamesbars.guessthe.screen.PlayActivity
 import com.gamesbars.guessthe.screen.coins.CoinsActivity
+import com.gamesbars.guessthe.util.applySystemBarsCompat
 import com.google.firebase.analytics.FirebaseAnalytics
 
 class LevelMenuActivity : AppCompatActivity() {
@@ -37,7 +39,21 @@ class LevelMenuActivity : AppCompatActivity() {
 
     private lateinit var saves: SharedPreferences
     var isClickable: Boolean = true
+
+    private val dialogBackCallback = object : OnBackPressedCallback(false) {
+        override fun handleOnBackPressed() {
+            currentDialog?.apply {
+                updateActivity()
+                dismiss()
+            }
+        }
+    }
+
     var currentDialog: ConfirmDialogFragment? = null
+        set(value) {
+            field = value
+            dialogBackCallback.isEnabled = value != null
+        }
 
     private lateinit var binding: ActivityLevelmenuBinding
     private lateinit var firebaseAnalytics: FirebaseAnalytics
@@ -48,6 +64,8 @@ class LevelMenuActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLevelmenuBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        applySystemBarsCompat()
+        onBackPressedDispatcher.addCallback(this, dialogBackCallback)
 
         saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
@@ -59,7 +77,7 @@ class LevelMenuActivity : AppCompatActivity() {
         binding.backIv.setOnClickListener {
             if (isClickable) {
                 playSound(this, R.raw.button)
-                this.onBackPressed()
+                onBackPressedDispatcher.onBackPressed()
             }
         }
 
@@ -186,12 +204,5 @@ class LevelMenuActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    override fun onBackPressed() {
-        currentDialog?.apply {
-            updateActivity()
-            dismiss()
-        } ?: super.onBackPressed()
     }
 }
