@@ -10,7 +10,7 @@ import com.gamesbars.guessthe.App
 import com.gamesbars.guessthe.BuildConfig
 import com.gamesbars.guessthe.sliceUntilIndex
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.analytics.logEvent
 
 object AdsAnalytics {
 

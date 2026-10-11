@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The app is declared as a game (android:appCategory="game") only to keep its portrait lock on large
+     screens under Android 17. Games can get OEM Game Mode interventions (resolution downscaling, FPS
+     override, ANGLE driver); all of them are disabled here so rendering stays unchanged. -->
+<game-mode-config xmlns:android="http://schemas.android.com/apk/res/android"
+    android:allowGameAngleDriver="false"
+    android:allowGameDownscaling="false"
+    android:allowGameFpsOverride="false" />

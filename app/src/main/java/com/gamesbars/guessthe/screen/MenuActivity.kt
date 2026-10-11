@@ -19,6 +19,7 @@ import com.gamesbars.guessthe.databinding.ActivityMenuBinding
 import com.gamesbars.guessthe.playSound
 import com.gamesbars.guessthe.screen.coins.CoinsActivity
 import com.gamesbars.guessthe.screen.levelmenu.LevelMenuActivity
+import com.gamesbars.guessthe.util.applySystemBarsCompat
 import com.google.firebase.analytics.FirebaseAnalytics
 
 class MenuActivity : AppCompatActivity() {
@@ -34,6 +35,7 @@ class MenuActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMenuBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        applySystemBarsCompat()
 
         saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)

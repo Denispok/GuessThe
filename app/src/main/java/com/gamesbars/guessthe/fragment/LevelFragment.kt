@@ -88,7 +88,7 @@ class LevelFragment : Fragment() {
         binding.backIv.setOnClickListener {
             if (isClickable) {
                 playSound(requireContext(), R.raw.button)
-                requireActivity().onBackPressed()
+                requireActivity().onBackPressedDispatcher.onBackPressed()
             }
         }
         binding.levelTitleBtn.setOnClickListener { startLevelSelection() }

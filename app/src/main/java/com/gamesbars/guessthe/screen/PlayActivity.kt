@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.gamesbars.guessthe.R
@@ -20,6 +21,7 @@ import com.gamesbars.guessthe.databinding.ActivityPlayBinding
 import com.gamesbars.guessthe.fragment.InfoDialogFragment
 import com.gamesbars.guessthe.fragment.LevelFragment
 import com.gamesbars.guessthe.fragment.TipsDialogFragment
+import com.gamesbars.guessthe.util.applySystemBarsCompat
 
 class PlayActivity : AppCompatActivity() {
 
@@ -28,12 +30,35 @@ class PlayActivity : AppCompatActivity() {
     private lateinit var rewardedAdDelegate: RewardedAdDelegate
     private lateinit var interstitialAdDelegate: InterstitialAdDelegate
     private lateinit var bannerAdDelegate: BannerAdDelegate
+
+    private val dialogBackCallback = object : OnBackPressedCallback(false) {
+        override fun handleOnBackPressed() {
+            when (val dialog = currentDialog) {
+                is TipsDialogFragment -> {
+                    dialog.updateFragment(findLevelFragment())
+                    dialog.dismiss()
+                }
+
+                is InfoDialogFragment -> {
+                    dialog.updateFragment(findLevelFragment())
+                    dialog.dismiss()
+                }
+            }
+        }
+    }
+
     var currentDialog: DialogFragment? = null
+        set(value) {
+            field = value
+            dialogBackCallback.isEnabled = value != null
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPlayBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        applySystemBarsCompat()
+        onBackPressedDispatcher.addCallback(this, dialogBackCallback)
 
         saves = getSharedPreferences("saves", Context.MODE_PRIVATE)
         rewardedAdDelegate = RewardedAdDelegate(this, ::onRewardEarned)
@@ -56,16 +81,8 @@ class PlayActivity : AppCompatActivity() {
         updateBannerAd()
     }
 
-    override fun onBackPressed() {
-        if (currentDialog == null) super.onBackPressed()
-        else if (currentDialog is TipsDialogFragment) (currentDialog as TipsDialogFragment).apply {
-            updateFragment(supportFragmentManager.findFragmentByTag(resources.getString(R.string.level_fragment_tag)) as LevelFragment)
-            dismiss()
-        } else if (currentDialog is InfoDialogFragment) (currentDialog as InfoDialogFragment).apply {
-            updateFragment(supportFragmentManager.findFragmentByTag(resources.getString(R.string.level_fragment_tag)) as LevelFragment)
-            dismiss()
-        }
-    }
+    private fun findLevelFragment(): LevelFragment =
+        supportFragmentManager.findFragmentByTag(resources.getString(R.string.level_fragment_tag)) as LevelFragment
 
     fun showInterstitialAd(currentLevel: Int) {
         interstitialAdDelegate.showInterstitialAd(currentLevel)

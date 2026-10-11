@@ -19,3 +19,8 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# AGP 9 accepts only proguard-android-optimize.txt as the default rules file.
+# The app used to be built with proguard-android.txt (R8 optimization disabled),
+# so that behavior is kept explicitly. Remove this rule to enable R8 optimization.
+-dontoptimize

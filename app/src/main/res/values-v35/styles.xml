@@ -9,6 +9,8 @@
         <item name="android:fontFamily">@font/exo2_medium</item>
         <item name="android:statusBarColor">@color/colorStatusBar</item>
         <item name="android:navigationBarColor">@color/colorNavigationBar</item>
+        <!-- Honored on Android 15 only. On Android 16+ edge-to-edge is enforced for targetSdk 36 and
+             the same look is reproduced by Activity.applySystemBarsCompat() (util/SystemBarsCompat.kt). -->
         <item name="android:windowOptOutEdgeToEdgeEnforcement">true</item>
     </style>
 </resources>
