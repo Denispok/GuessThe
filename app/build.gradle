@@ -59,11 +59,11 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
-    implementation "com.android.billingclient:billing-ktx:8.0.0"
+    implementation "com.android.billingclient:billing-ktx:9.1.0"
 
-    implementation 'com.google.firebase:firebase-analytics:22.1.2'
-    implementation 'com.google.firebase:firebase-config:22.0.1'
-    implementation 'com.google.firebase:firebase-crashlytics:19.3.0'
+    implementation 'com.google.firebase:firebase-analytics:23.2.0'
+    implementation 'com.google.firebase:firebase-config:23.1.0'
+    implementation 'com.google.firebase:firebase-crashlytics:20.1.1'
 
     // Appodeal Sdk
     implementation("com.appodeal.ads.sdk:core:4.4.0")

@@ -2,11 +2,11 @@ package com.gamesbars.guessthe.util
 
 import com.gamesbars.guessthe.App
 import com.gamesbars.guessthe.R
-import com.google.firebase.crashlytics.ktx.crashlytics
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.Firebase
+import com.google.firebase.crashlytics.crashlytics
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
-import com.google.firebase.remoteconfig.ktx.remoteConfig
-import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
+import com.google.firebase.remoteconfig.remoteConfig
+import com.google.firebase.remoteconfig.remoteConfigSettings
 import org.json.JSONArray
 import org.xmlpull.v1.XmlPullParser
 
